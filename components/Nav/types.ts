@@ -16,3 +16,8 @@ export interface NavNodeType extends NavNodeBaseType {
 export type NavItemStyleType = Pick<NavNodeType, 'isOpen' | 'isSelected' | 'level'> & {
   hasSubItems: boolean;
 };
+
+export interface NavContextType {
+  navItems: NavNodeBaseType[];
+  setNavItems(items: NavNodeBaseType[]): void;
+}

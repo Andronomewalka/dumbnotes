@@ -63,7 +63,7 @@ export const NavItem = styled.div<NavItemStyleType>`
     display: ${(props) => (props.hasSubItems ? 'inline-block' : 'none')};
     content: '\\003e';
     transform: rotate(${(props) => (props.isOpen ? '90deg' : '0')}) scaleY(1.5);
-    transform-origin: 40% 50%;
+    transform-origin: center;
     padding-right: 3px;
     transition: all ease 0.3s;
   }

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { FC, useState, useRef, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Splitter } from 'components/Splitter';
 import { NavTreeNode } from './NavTreeNode';
@@ -6,20 +6,27 @@ import { NavNodeType } from './types';
 import { Wrapper, NavWrapper, NavUl } from './styles';
 import { iterateNavNode } from './utils';
 import { navMock, getNavNodes } from './mock';
+import { useNavContext } from './context';
 
 const minNavWidth = 250;
 const navItemsBase = getNavNodes(navMock);
 
-export const Nav = () => {
+export const Nav: FC = () => {
   const router = useRouter();
+  // const { navItems: navItemsContext } = useNavContext();
   const [navItems, setNavItems] = useState<NavNodeType[]>([]);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  // const navItemsBase = useMemo(() => {
+  //   return getNavNodes(navItemsContext);
+  // }, [navItemsContext]);
 
   const onNavClick = (selectedNode: NavNodeType) => {
     const newNavItems = [...navItemsBase];
     const isSelectedNodeHasSubNodes =
       selectedNode.subItems && selectedNode.subItems.length > 0;
     let changesOccured = false;
+    let navigationNeeded = false;
 
     newNavItems.forEach((node) => {
       iterateNavNode(node, (node) => {
@@ -30,16 +37,20 @@ export const Nav = () => {
           if (node.isSelected && node.id !== selectedNode.id) {
             node.isSelected = false;
             changesOccured = true;
+            navigationNeeded = true;
           } else if (!node.isSelected && node.id === selectedNode.id) {
             node.isSelected = true;
             changesOccured = true;
+            navigationNeeded = true;
           }
         }
       });
     });
 
     if (changesOccured) {
-      router.push(`http://localhost:3000/${selectedNode.path}`);
+      if (navigationNeeded) {
+        router.push(`http://localhost:3000/${selectedNode.path}`);
+      }
       setNavItems(newNavItems);
     }
   };
