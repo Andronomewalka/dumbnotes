@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { NavItemStyleType } from './types';
+import styled, { css } from 'styled-components';
+import { NavItemExpandableStyleType, NavItemLinkStyleType } from './types';
 
 export const Wrapper = styled.div<{ minWidth: string }>`
   display: flex;
@@ -34,7 +34,8 @@ export const NavUl = styled.ul<{ isOpen: boolean }>`
 export const NavWrapper = styled.nav`
   width: 100%;
   height: 100%;
-  padding: 10px;
+  padding: 10px 2px 10px 10px;
+  overflow-y: auto;
 
   > ${NavUl}:hover {
     ${NavIndent} {
@@ -47,10 +48,26 @@ export const NavLi = styled.li`
   color: ${(props) => props.theme.palette.foreground};
 `;
 
-export const NavItem = styled.div<NavItemStyleType>`
+const BaseNavItem = css`
+  min-height: 30px;
   padding: 5px 10px;
-  padding-left: ${(props) => `${props.level * 10}px`};
   border-radius: 5px;
+`;
+
+export const NavItemExpandable = styled.div<NavItemExpandableStyleType>`
+  ${BaseNavItem}
+  padding-left: ${(props) => `${props.level * 10}px`};
+  cursor: pointer;
+
+  :hover {
+    background: ${(props) => props.theme.palette.backgroundHover};
+  }
+`;
+
+export const NavItemLink = styled.a<NavItemLinkStyleType>`
+  ${BaseNavItem}
+  display: block;
+  padding-left: ${(props) => `${props.level * 10}px`};
   cursor: pointer;
   background: ${(props) =>
     props.isSelected ? props.theme.palette.backgroundHover : 'transparent'};
@@ -58,13 +75,40 @@ export const NavItem = styled.div<NavItemStyleType>`
   :hover {
     background: ${(props) => props.theme.palette.backgroundHover};
   }
+`;
+
+export const NavExpandItems = styled.div<{ isOpen: boolean }>`
+  display: inline-block;
+  margin-right: 6px;
 
   ::before {
-    display: ${(props) => (props.hasSubItems ? 'inline-block' : 'none')};
+    display: inline-block;
+    position: relative;
+    top: -1px;
     content: '\\003e';
     transform: rotate(${(props) => (props.isOpen ? '90deg' : '0')}) scaleY(1.5);
     transform-origin: center;
-    padding-right: 3px;
     transition: all ease 0.3s;
+  }
+`;
+
+export const NavStubItem = styled.div<{ number: number }>`
+  ${BaseNavItem}
+  margin-bottom: 5px;
+  background: linear-gradient(
+    90deg,
+    rgba(221, 223, 244, 1) 0%,
+    rgba(255, 255, 255, 0) 74%
+  );
+  background-repeat: repeat-y;
+  background-size: 85%, 100%;
+  background-position: 0 0;
+  animation: loading 1.3s ease-out infinite alternate;
+  animation-delay: ${(props) => `${props.number}50ms`};
+
+  @keyframes loading {
+    to {
+      background-position: 150% 0, 0 0;
+    }
   }
 `;

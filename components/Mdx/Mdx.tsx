@@ -3,6 +3,11 @@ import { MDXRemote } from 'next-mdx-remote';
 import useSWR from 'swr';
 import { MdxType } from './types';
 import { serializeMdx } from './utility';
+import { MdxLink } from './MdxLink';
+
+const components = {
+  MdxLink,
+};
 
 export const Mdx: FC<MdxType> = ({ getUrl }) => {
   const { data } = useSWR(getUrl);
@@ -24,5 +29,10 @@ export const Mdx: FC<MdxType> = ({ getUrl }) => {
     })();
   }, [data]);
 
-  return <MDXRemote {...(isSwrDataReady.current ? swrData : preRenderData.current)} />;
+  return (
+    <MDXRemote
+      {...(isSwrDataReady.current ? swrData : preRenderData.current)}
+      components={components}
+    />
+  );
 };

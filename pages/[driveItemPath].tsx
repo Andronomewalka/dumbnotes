@@ -23,11 +23,10 @@ const DriveItemPath: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = 
       <SWRConfig
         value={{
           fallback,
-          refreshInterval: 5000,
           fetcher: (url: string) => axios.get(url).then((response) => response.data),
         }}
       >
-        <Wrapper>{!!error ? error : <Mdx getUrl={Object.keys(fallback)[0]} />}</Wrapper>
+        <Wrapper>{!!error ? error : <Mdx getUrl={Object.keys(fallback!)[0]} />}</Wrapper>
       </SWRConfig>
     </>
   );
@@ -43,12 +42,7 @@ const Wrapper = styled.section`
 `;
 
 export async function getStaticProps(context: any) {
-  // console.log('context', context);
-  console.log('getStaticProps run');
   try {
-    // console.log('getStaticProps before getNavItems');
-    // res.props.navItems = await getNavItems();
-    // console.log('getStaticProps after getNavItems');
     const driveItemId = await getDriveIdByPath(context.params.driveItemPath);
     if (driveItemId) {
       const postResponse = await getDriveItem(driveItemId);
@@ -58,15 +52,14 @@ export async function getStaticProps(context: any) {
         props: {
           fallback: {
             [`/api/getDriveItem?id=${driveItemId}`]: mdxSource,
-            // '/api/getDriveItem?id=${driveItemId}': '',
           },
           error: postResponse.error,
         },
         revalidate: 3600,
       };
     }
+    throw 'no driveItemId found';
   } catch (e: any) {
-    console.log('error', e);
     return {
       props: {
         error: e + '',
@@ -77,7 +70,6 @@ export async function getStaticProps(context: any) {
 
 export async function getStaticPaths() {
   await loadDrivePathes();
-  // await loadNavItems();
   const cachedDrivePathes = await getDrivePathes();
   return {
     paths: cachedDrivePathes

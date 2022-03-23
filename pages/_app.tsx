@@ -2,19 +2,25 @@ import type { AppProps } from 'next/app';
 import { GlobalStyle, theme } from 'GlobalStyle';
 import styled, { ThemeProvider } from 'styled-components';
 import { MediaContextProvider } from 'components/Media';
-import { Nav, NavProvider } from 'components/Nav';
+import { Nav } from 'components/Nav';
+import { SWRConfig } from 'swr';
+import axios from 'axios';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MediaContextProvider>
       <ThemeProvider theme={theme}>
-        <NavProvider>
-          <Wrapper>
-            <GlobalStyle />
+        <Wrapper>
+          <GlobalStyle />
+          <SWRConfig
+            value={{
+              fetcher: (url: string) => axios.get(url).then((response) => response.data),
+            }}
+          >
             <Nav />
-            <Component {...pageProps} />
-          </Wrapper>
-        </NavProvider>
+          </SWRConfig>
+          <Component {...pageProps} />
+        </Wrapper>
       </ThemeProvider>
     </MediaContextProvider>
   );

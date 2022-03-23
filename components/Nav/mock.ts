@@ -1,5 +1,4 @@
-import { NavNodeBaseType, NavNodeType } from './types';
-import { iterateNavNode } from './utils';
+import { NavNodeBaseType } from './types';
 
 export const navMock: NavNodeBaseType[] = [
   {
@@ -45,17 +44,3 @@ export const navMock: NavNodeBaseType[] = [
     path: 'link 2',
   },
 ];
-
-export const getNavNodes = (navItems: NavNodeBaseType[]): NavNodeType[] => {
-  const res: NavNodeType[] = JSON.parse(JSON.stringify(navItems));
-
-  res.forEach((item: NavNodeType) => {
-    iterateNavNode(item, (item) => {
-      item.isOpen = false;
-      item.isSelected = false;
-      item.level = 1;
-    });
-  });
-
-  return res;
-};

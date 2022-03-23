@@ -9,15 +9,16 @@ export interface NavNodeType extends NavNodeBaseType {
   isOpen: boolean;
   isSelected: boolean;
   level: number;
+  parent: NavNodeType | null;
   onClick?(node: NavNodeType): void;
   subItems?: NavNodeType[];
 }
 
-export type NavItemStyleType = Pick<NavNodeType, 'isOpen' | 'isSelected' | 'level'> & {
-  hasSubItems: boolean;
-};
+export type NavItemExpandableStyleType = Pick<NavNodeType, 'isOpen' | 'level'>;
+
+export type NavItemLinkStyleType = Pick<NavNodeType, 'isSelected' | 'level'>;
 
 export interface NavContextType {
-  navItems: NavNodeBaseType[];
-  setNavItems(items: NavNodeBaseType[]): void;
+  selected: NavNodeBaseType;
+  setSelected(items: NavNodeBaseType): void;
 }

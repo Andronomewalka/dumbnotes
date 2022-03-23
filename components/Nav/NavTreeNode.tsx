@@ -1,9 +1,17 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { NavNodeType } from './types';
-import { NavUl, NavLi, NavItem, NavIndent } from './styles';
+import {
+  NavUl,
+  NavLi,
+  NavIndent,
+  NavExpandItems,
+  NavItemLink,
+  NavItemExpandable,
+} from './styles';
+import Link from 'next/link';
 
 export const NavTreeNode: FC<NavNodeType> = (prop) => {
-  const { name, subItems, isOpen, isSelected, level, onClick } = prop;
+  const { name, path, subItems, isOpen, isSelected, level, onClick } = prop;
   const hasSubItems = (subItems && subItems.length > 0) ?? false;
 
   const onClickInternal = (e: any) => {
@@ -12,24 +20,30 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
   };
 
   return (
-    <NavLi onClick={onClickInternal}>
-      <NavItem
-        level={level}
-        isOpen={isOpen}
-        isSelected={isSelected}
-        hasSubItems={hasSubItems}
-      >
-        {name}
-      </NavItem>
-      {hasSubItems && (
-        <NavUl isOpen={isOpen}>
-          <>
-            <NavIndent level={level + 1} />
-            {subItems?.map((item) => (
-              <NavTreeNode key={item.id} {...item} level={level + 1} />
-            ))}
-          </>
-        </NavUl>
+    <NavLi>
+      {hasSubItems ? (
+        <>
+          <NavItemExpandable level={level} isOpen={isOpen} onClick={onClickInternal}>
+            <NavExpandItems isOpen={isOpen} />
+            {name}
+          </NavItemExpandable>
+          {hasSubItems && (
+            <NavUl isOpen={isOpen}>
+              <>
+                <NavIndent level={level + 1} />
+                {subItems?.map((item) => (
+                  <NavTreeNode key={item.id} {...item} level={level + 1} />
+                ))}
+              </>
+            </NavUl>
+          )}
+        </>
+      ) : (
+        <Link href={`/${path}`} passHref>
+          <NavItemLink level={level} isSelected={isSelected}>
+            {name}
+          </NavItemLink>
+        </Link>
       )}
     </NavLi>
   );
