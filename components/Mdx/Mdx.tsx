@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { MDXRemote } from 'next-mdx-remote';
 import useSWR from 'swr';
 import { MdxType } from './types';
@@ -9,30 +9,20 @@ const components = {
   MdxLink,
 };
 
-export const Mdx: FC<MdxType> = ({ getUrl }) => {
-  const { data } = useSWR(getUrl);
+export const Mdx: FC<MdxType> = ({ url, prefetchedData }) => {
+  const { data: response } = useSWR(url);
   const [swrData, setSwrData] = useState<any>();
-  const isSwrDataReady = useRef(false);
-  const preRenderData = useRef();
-
-  if (!preRenderData.current) {
-    preRenderData.current = { ...data };
-  }
 
   useEffect(() => {
-    (async () => {
-      if (data?.data?.content) {
-        const newData = await serializeMdx(data.data.content);
+    if (response?.data?.content) {
+      serializeMdx(response.data.content).then((newData) => {
         setSwrData(newData);
-        isSwrDataReady.current = true;
-      }
-    })();
-  }, [data]);
+      });
+    }
+    return () => {
+      setSwrData(null);
+    };
+  }, [response]);
 
-  return (
-    <MDXRemote
-      {...(isSwrDataReady.current ? swrData : preRenderData.current)}
-      components={components}
-    />
-  );
+  return <MDXRemote {...(swrData ? swrData : prefetchedData)} components={components} />;
 };

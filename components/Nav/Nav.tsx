@@ -35,10 +35,6 @@ export const Nav: FC = () => {
     return [];
   }, [data]);
 
-  // useEffect(() => {
-  //   axios.post('/api/updateDrivePathes');
-  // }, [navItemsBase]);
-
   // ui change selected
   const onNavClick = useCallback(
     (selectedNode: NavNodeType) => {

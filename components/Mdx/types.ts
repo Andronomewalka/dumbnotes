@@ -1,5 +1,8 @@
+import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+
 export interface MdxType {
-  getUrl: string;
+  url: string;
+  prefetchedData: MDXRemoteSerializeResult<Record<string, unknown>> | null;
 }
 
 export interface MdxLinkType {

@@ -1,4 +1,4 @@
-import { getDrivePathes } from 'fetch-cache';
+import { getDrivePathes } from 'backend';
 
 export const getDriveIdByPath = async (path: string) => {
   const items = await getDrivePathes();

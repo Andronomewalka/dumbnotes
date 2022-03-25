@@ -14,12 +14,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           <GlobalStyle />
           <SWRConfig
             value={{
-              fetcher: (url: string) => axios.get(url).then((response) => response.data),
+              fetcher: (url: string) =>
+                axios
+                  .get(url)
+                  .then((response) => response.data)
+                  .catch((e) => void console.log(e)),
             }}
           >
             <Nav />
+            <Component {...pageProps} />
           </SWRConfig>
-          <Component {...pageProps} />
         </Wrapper>
       </ThemeProvider>
     </MediaContextProvider>

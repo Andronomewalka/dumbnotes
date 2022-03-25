@@ -1,8 +1,13 @@
 {
-    "presets": ["next/babel"],
-    "plugins": [
-        ["styled-components", {
-            "ssr": true
-        }]
-    ]
+	"presets": ["next/babel"],
+	"env": {
+		"production": {
+			"plugins": ["transform-remove-console"]
+		}
+	},
+	"plugins": [
+		["styled-components", {
+			"ssr": true
+		}]
+	]
 }
