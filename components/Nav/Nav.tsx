@@ -18,22 +18,22 @@ const minNavWidth = 250;
 
 export const Nav: FC = () => {
   const router = useRouter();
-  const { data } = useSWR(`/api/getDriveItem?id=${process.env.NEXT_PUBLIC_NAV_ID}`);
+  const { data: response } = useSWR(`/api/navigation`);
   const [navItems, setNavItems] = useState<NavNodeType[]>([]);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   // get base navigation when it's changed from swr response
   const navItemsBase = useMemo(() => {
-    if (data?.data?.content) {
+    if (response?.data) {
       try {
-        const navItemsRaw = JSON.parse(data.data.content);
+        const navItemsRaw = response.data;
         return getNavNodesFromBase(navItemsRaw);
       } catch (e: any) {
         console.log(e);
       }
     }
     return [];
-  }, [data]);
+  }, [response]);
 
   // ui change selected
   const onNavClick = useCallback(

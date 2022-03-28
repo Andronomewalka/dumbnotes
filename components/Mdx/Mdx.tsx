@@ -1,8 +1,8 @@
 import React, { FC, useState, useEffect } from 'react';
 import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
 import useSWR from 'swr';
 import { MdxType } from './types';
-import { serializeMdx } from './utility';
 import { MdxLink } from './MdxLink';
 
 const components = {
@@ -15,7 +15,7 @@ export const Mdx: FC<MdxType> = ({ url, prefetchedData }) => {
 
   useEffect(() => {
     if (response?.data?.content) {
-      serializeMdx(response.data.content).then((newData) => {
+      serialize(response.data.content).then((newData) => {
         setSwrData(newData);
       });
     }

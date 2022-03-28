@@ -1,15 +1,9 @@
 import type { NextPage, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
+import { serialize } from 'next-mdx-remote/serialize';
 import styled from 'styled-components';
-import { getDriveItem } from 'blog-app-shared';
-import {
-  loadDrivePathes,
-  getDrivePathes,
-  getDriveIdByPath,
-  getRevalidateValue,
-} from 'backend';
+import { getPost, getPosts } from 'blog-app-shared';
 import { Mdx } from 'components/Mdx';
-import { serializeMdx } from 'components/Mdx';
 
 const DriveItemPath: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   name,
@@ -48,46 +42,38 @@ const Wrapper = styled.section`
 
 export async function getStaticProps(context: any) {
   try {
-    const driveItemId = await getDriveIdByPath(context.params.driveItemPath);
-    if (driveItemId) {
-      const postResponse = await getDriveItem(driveItemId);
-      const sourceRaw = postResponse.data.content;
-      const mdxSource = await serializeMdx(sourceRaw);
-      return {
-        props: {
-          name: postResponse.data.name,
-          fallback: {
-            [`/api/getDriveItem?id=${driveItemId}`]: mdxSource,
-          },
-          error: postResponse.error,
+    const path = context.params.slug;
+    const response = await getPost(path);
+    const sourceRaw = response.data.content;
+    const mdxSource = await serialize(sourceRaw);
+    return {
+      props: {
+        name: response.data.name,
+        fallback: {
+          [`/api/posts/${path}`]: mdxSource,
         },
-        revalidate: getRevalidateValue(),
-      };
-    }
-    throw 'no driveItemId found';
+        error: response.error,
+      },
+    };
   } catch (e: any) {
     return {
       props: {
         error: e + '',
       },
-      revalidate: getRevalidateValue(),
     };
   }
 }
 
 export async function getStaticPaths() {
-  await loadDrivePathes();
-  const cachedDrivePathes = await getDrivePathes();
+  const postPathes = await getPosts();
   return {
-    paths: cachedDrivePathes
-      .filter((cur) => cur.path !== '--nav--')
-      .map((cur) => {
-        return {
-          params: {
-            driveItemPath: cur.path,
-          },
-        };
-      }),
+    paths: postPathes.data.map((cur) => {
+      return {
+        params: {
+          slug: cur.path,
+        },
+      };
+    }),
     fallback: 'blocking',
   };
 }
