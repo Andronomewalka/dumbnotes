@@ -54,12 +54,14 @@ export async function getStaticProps(context: any) {
         },
         error: response.error,
       },
+      revalidate: 86400, // once a day, if something with on-demand revalidation fucked up
     };
   } catch (e: any) {
     return {
       props: {
         error: e + '',
       },
+      revalidate: 86400,
     };
   }
 }
