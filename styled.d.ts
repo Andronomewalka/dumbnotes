@@ -11,9 +11,15 @@ declare module 'styled-components' {
       backgroundHover: string;
       foreground: string;
       darkGray: string;
-      lightGray: string;
+      lightGray1: string;
+      lightGray2: string;
       whiteSemiTransparent: string;
       lightSplitter: string;
+      error: string;
+      primary: string;
+    };
+    shadow: {
+      focus: string;
     };
   }
 }

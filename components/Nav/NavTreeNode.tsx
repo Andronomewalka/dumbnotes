@@ -11,7 +11,7 @@ import {
 import Link from 'next/link';
 
 export const NavTreeNode: FC<NavNodeType> = (prop) => {
-  const { name, path, subItems, isOpen, isSelected, level, onClick } = prop;
+  const { name, path, bottom, subItems, isOpen, isSelected, level, onClick } = prop;
   const hasSubItems = (subItems && subItems.length > 0) ?? false;
 
   const onClickInternal = (e: any) => {
@@ -20,10 +20,10 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
   };
 
   return (
-    <NavLi>
+    <NavLi bottom={bottom || false}>
       {hasSubItems ? (
         <>
-          <NavItemExpandable level={level} isOpen={isOpen} onClick={onClickInternal}>
+          <NavItemExpandable level={level} onClick={onClickInternal}>
             <NavExpandItems isOpen={isOpen} />
             {name}
           </NavItemExpandable>

@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { NavItemExpandableStyleType, NavItemLinkStyleType } from './types';
 
 export const Wrapper = styled.div<{ minWidth: string }>`
   display: flex;
@@ -22,13 +21,24 @@ export const NavIndent = styled.div<{ level: number }>`
   transition: all ease 0.3s;
 `;
 
-export const NavUl = styled.ul<{ isOpen: boolean }>`
+const NavUlBase = css<{ isOpen: boolean }>`
   position: relative;
   margin: 0;
   padding: 0;
   list-style: none;
   overflow-y: hidden;
   height: ${(props) => (props.isOpen ? 'auto' : '0')};
+`;
+
+export const NavUl = styled.ul`
+  ${NavUlBase};
+`;
+
+export const NavUlExternal = styled.ul`
+  ${NavUlBase};
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 `;
 
 export const NavWrapper = styled.nav`
@@ -44,7 +54,8 @@ export const NavWrapper = styled.nav`
   }
 `;
 
-export const NavLi = styled.li`
+export const NavLi = styled.li<{ bottom: boolean }>`
+  margin-top: ${(props) => (props.bottom ? 'auto' : 0)};
   color: ${(props) => props.theme.palette.foreground};
 `;
 
@@ -54,7 +65,7 @@ const BaseNavItem = css`
   border-radius: 5px;
 `;
 
-export const NavItemExpandable = styled.div<NavItemExpandableStyleType>`
+export const NavItemExpandable = styled.div<{ level: number }>`
   ${BaseNavItem}
   padding-left: ${(props) => `${props.level * 10}px`};
   cursor: pointer;
@@ -64,7 +75,7 @@ export const NavItemExpandable = styled.div<NavItemExpandableStyleType>`
   }
 `;
 
-export const NavItemLink = styled.a<NavItemLinkStyleType>`
+export const NavItemLink = styled.a<{ isSelected: boolean; level: number }>`
   ${BaseNavItem}
   display: block;
   padding-left: ${(props) => `${props.level * 10}px`};

@@ -34,10 +34,9 @@ const DriveItemPath: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = 
 export default DriveItemPath;
 
 const Wrapper = styled.section`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  display: inline-block;
   width: 100%;
+  padding: 1rem;
 `;
 
 export async function getStaticProps(context: any) {

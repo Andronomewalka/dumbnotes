@@ -1,9 +1,4 @@
-export interface NavNodeBaseType {
-  id: string;
-  name: string;
-  path?: string;
-  subItems?: NavNodeBaseType[];
-}
+import { NavNodeBaseType } from 'blog-app-shared';
 
 export interface NavNodeType extends NavNodeBaseType {
   isOpen: boolean;
@@ -13,10 +8,6 @@ export interface NavNodeType extends NavNodeBaseType {
   onClick?(node: NavNodeType): void;
   subItems?: NavNodeType[];
 }
-
-export type NavItemExpandableStyleType = Pick<NavNodeType, 'isOpen' | 'level'>;
-
-export type NavItemLinkStyleType = Pick<NavNodeType, 'isSelected' | 'level'>;
 
 export interface NavContextType {
   selected: NavNodeBaseType;

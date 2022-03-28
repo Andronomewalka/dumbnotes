@@ -7,9 +7,15 @@ export const theme: DefaultTheme = {
     backgroundHover: '#DDDFF4',
     foreground: '#353638',
     darkGray: '#292929',
-    lightGray: '#FCFCFC',
+    lightGray1: '#F6F8FA',
+    lightGray2: '#FAFAFA',
     whiteSemiTransparent: '#D3D3D3',
     lightSplitter: '#D3D3D3',
+    error: 'rgb(248 113 113)',
+    primary: '#40A9FF',
+  },
+  shadow: {
+    focus: '0px 0px 20px rgba(0, 0, 0, 0.1)',
   },
 };
 

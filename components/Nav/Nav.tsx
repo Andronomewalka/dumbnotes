@@ -5,7 +5,7 @@ import { Splitter } from 'components/Splitter';
 import { NavTreeNode } from './NavTreeNode';
 import { NavStub } from './NavStub';
 import { NavNodeType } from './types';
-import { Wrapper, NavWrapper, NavUl } from './styles';
+import { Wrapper, NavWrapper, NavUlExternal } from './styles';
 import {
   iterateNavNode,
   getNavNodesFromBase,
@@ -95,11 +95,11 @@ export const Nav: FC = () => {
         {!navItems || !navItems.length ? (
           <NavStub />
         ) : (
-          <NavUl isOpen={true}>
+          <NavUlExternal isOpen={true}>
             {navItems.map((item) => (
               <NavTreeNode key={item.id} {...item} level={item.level} />
             ))}
-          </NavUl>
+          </NavUlExternal>
         )}
       </NavWrapper>
       <Splitter containerRef={wrapperRef} minContainerWidth={minNavWidth} />
