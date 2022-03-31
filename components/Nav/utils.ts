@@ -1,4 +1,5 @@
-import { NavNodeBaseType, NavNodeType } from './types';
+import { NavNodeBaseType } from 'blog-app-shared';
+import { NavNodeType } from './types';
 
 // return true in callback to break iteration
 export const iterateNavNode = (
@@ -53,7 +54,10 @@ export const getNavNodesFromBase = (navItems: NavNodeBaseType[]): NavNodeType[] 
   return res;
 };
 
-export const getNavNodeById = (navItems: NavNodeType[], path: string) => {
+export const getNavNodeByPath = (
+  navItems: NavNodeType[],
+  path: string
+): NavNodeType | null => {
   let resultNode = null;
   for (let i = 0; i < navItems.length; i++) {
     const node = navItems[i];
@@ -72,23 +76,57 @@ export const getNavNodeById = (navItems: NavNodeType[], path: string) => {
 
 export const setSelectedNavNode = (node: NavNodeType) => {
   node.isSelected = true;
-
-  let parent = node.parent;
-  while (parent) {
-    parent.isOpen = true;
-    parent = parent.parent;
+  if (node.parent) {
+    drillOpenUlNode(node.parent);
   }
-
-  // wait when a appeared after render
-  new Promise((resolve) => {
-    (function waitForAElement() {
-      const aElement = document.querySelector(`a[href$="${node.path}"]`);
-      if (aElement) {
-        return resolve(aElement);
-      }
-      setTimeout(waitForAElement, 50);
-    })();
-  }).then((selectedA: any) => {
+  const selectedA = document.querySelector(`a[href$="${node.path}"]`);
+  if (selectedA) {
     selectedA.scrollIntoView({ block: 'center', behavior: 'smooth' });
-  });
+  }
+};
+
+export const getUlelementByNode = (node: NavNodeType) => {
+  return document.querySelector(`[data-nav-sub-id="${node.id}"]`) as HTMLElement;
+};
+
+const drillOpenUlNode = (node: NavNodeType) => {
+  let curNode: NavNodeType | null = node;
+  while (curNode) {
+    if (curNode.parent) {
+      openUlNode(curNode, true);
+    } else {
+      openUlNode(curNode, false);
+    }
+    curNode = curNode.parent;
+  }
+};
+
+export const openUlNode = (node: NavNodeType, skipTransition: boolean = false) => {
+  const ulElement = getUlelementByNode(node);
+  if (!node.isOpen && ulElement) {
+    if (skipTransition) {
+      ulElement.style.height = 'auto';
+    } else {
+      ulElement.style.height = `${ulElement.scrollHeight}px`;
+
+      const onTransitioned = () => {
+        ulElement.style.height = 'auto';
+        ulElement.removeEventListener('transitionend', onTransitioned);
+      };
+
+      ulElement.addEventListener('transitionend', onTransitioned);
+    }
+  }
+  node.isOpen = true;
+};
+
+export const closeUlNode = (node: NavNodeType) => {
+  const ulElement = getUlelementByNode(node);
+  if (node.isOpen && ulElement) {
+    ulElement.style.height = `${ulElement.scrollHeight}px`;
+    new Promise((resolve) => setTimeout(resolve, 10)).then(() => {
+      ulElement.style.height = '0';
+    });
+  }
+  node.isOpen = false;
 };

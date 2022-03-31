@@ -9,8 +9,10 @@ import { Wrapper, NavWrapper, NavUlExternal } from './styles';
 import {
   iterateNavNode,
   getNavNodesFromBase,
-  getNavNodeById,
+  getNavNodeByPath,
   setSelectedNavNode,
+  closeUlNode,
+  openUlNode,
 } from './utils';
 
 const minNavWidth = 250;
@@ -21,6 +23,7 @@ export const Nav: FC = () => {
   const { data: response } = useSWR(`/api/navigation`);
   const [navItems, setNavItems] = useState<NavNodeType[]>([]);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const isFirstNavigation = useRef(true);
 
   // get base navigation when it's changed from swr response
   const navItemsBase = useMemo(() => {
@@ -46,7 +49,11 @@ export const Nav: FC = () => {
       newNavItems.forEach((node) => {
         iterateNavNode(node, (node) => {
           if (isSelectedNodeHasSubNodes && node.id === selectedNode.id) {
-            node.isOpen = !node.isOpen;
+            if (node.isOpen) {
+              closeUlNode(node);
+            } else {
+              openUlNode(node);
+            }
             changesOccured = true;
           } else if (!isSelectedNodeHasSubNodes) {
             if (node.isSelected && node.id !== selectedNode.id) {
@@ -71,9 +78,25 @@ export const Nav: FC = () => {
   useEffect(() => {
     const path = router.asPath.substring(router.asPath.indexOf('/') + 1);
     if (navItemsBase.length > 0 && path) {
-      const selectedNode = getNavNodeById(navItemsBase, path);
+      const selectedNode = getNavNodeByPath(navItemsBase, path);
       if (selectedNode) {
-        onNavClick(selectedNode);
+        if (isFirstNavigation.current) {
+          // wait for dom to fully load before first navigation
+          new Promise((resolve) => {
+            (function waitForAElement() {
+              const aElement = document.querySelector(`a[href$="${selectedNode.path}"]`);
+              if (aElement) {
+                return resolve(aElement);
+              }
+              setTimeout(waitForAElement, 50);
+            })();
+          }).then(() => {
+            isFirstNavigation.current = false;
+            onNavClick(selectedNode);
+          });
+        } else {
+          onNavClick(selectedNode);
+        }
       }
     }
   }, [navItemsBase, onNavClick, router.asPath]);
@@ -95,7 +118,7 @@ export const Nav: FC = () => {
         {!navItems || !navItems.length ? (
           <NavStub />
         ) : (
-          <NavUlExternal isOpen={true}>
+          <NavUlExternal>
             {navItems.map((item) => (
               <NavTreeNode key={item.id} {...item} level={item.level} />
             ))}

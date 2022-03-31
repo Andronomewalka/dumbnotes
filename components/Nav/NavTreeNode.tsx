@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import Link from 'next/link';
 import { NavNodeType } from './types';
 import {
   NavUl,
@@ -8,10 +9,9 @@ import {
   NavItemLink,
   NavItemExpandable,
 } from './styles';
-import Link from 'next/link';
 
 export const NavTreeNode: FC<NavNodeType> = (prop) => {
-  const { name, path, bottom, subItems, isOpen, isSelected, level, onClick } = prop;
+  const { id, name, path, bottom, subItems, isOpen, isSelected, level, onClick } = prop;
   const hasSubItems = (subItems && subItems.length > 0) ?? false;
 
   const onClickInternal = (e: any) => {
@@ -28,7 +28,7 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
             {name}
           </NavItemExpandable>
           {hasSubItems && (
-            <NavUl isOpen={isOpen}>
+            <NavUl data-nav-sub-id={id}>
               <>
                 <NavIndent level={level + 1} />
                 {subItems?.map((item) => (

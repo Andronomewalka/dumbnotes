@@ -6,6 +6,10 @@ export interface MdxType {
   prefetchedData: MDXRemoteSerializeResult<Record<string, unknown>> | null;
 }
 
+export interface MdxStaggerContainerType {
+  stagger?: number;
+}
+
 export interface MdxPlainCardType {
   style?: CSSProperties;
   background: PlainCardBackgroundColor;
@@ -17,7 +21,7 @@ export enum PlainCardBackgroundColor {
 }
 
 export interface MdxLinkType {
-  external: boolean;
   url: string;
-  name: string;
+  external?: boolean;
+  plain?: boolean;
 }

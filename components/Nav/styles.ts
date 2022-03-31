@@ -21,17 +21,18 @@ export const NavIndent = styled.div<{ level: number }>`
   transition: all ease 0.3s;
 `;
 
-const NavUlBase = css<{ isOpen: boolean }>`
+const NavUlBase = css`
   position: relative;
   margin: 0;
   padding: 0;
   list-style: none;
   overflow-y: hidden;
-  height: ${(props) => (props.isOpen ? 'auto' : '0')};
 `;
 
 export const NavUl = styled.ul`
   ${NavUlBase};
+  height: 0;
+  transition: height ease 0.3s;
 `;
 
 export const NavUlExternal = styled.ul`
@@ -47,7 +48,7 @@ export const NavWrapper = styled.nav`
   padding: 10px 2px 10px 10px;
   overflow-y: auto;
 
-  > ${NavUl}:hover {
+  > ${NavUlExternal}:hover {
     ${NavIndent} {
       opacity: 1;
     }

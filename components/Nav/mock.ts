@@ -1,4 +1,4 @@
-import { NavNodeBaseType } from './types';
+import { NavNodeBaseType } from 'blog-app-shared';
 
 export const navMock: NavNodeBaseType[] = [
   {

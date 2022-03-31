@@ -1,20 +1,24 @@
 import type { NextPage, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { serialize } from 'next-mdx-remote/serialize';
+import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import { getPost, getPosts } from 'blog-app-shared';
 import { Mdx } from 'components/Mdx';
 
-const DriveItemPath: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   name,
   fallback,
   error,
 }) => {
-  let url = '';
-  let prefetchedData = null;
+  const router = useRouter();
+
+  let content = <span>{error}</span>;
   if (fallback) {
-    url = Object.keys(fallback)[0];
-    prefetchedData = fallback[Object.keys(fallback)[0]];
+    const url = Object.keys(fallback)[0];
+    const prefetchedData = fallback[url];
+    content = <Mdx url={url} prefetchedData={prefetchedData} />;
   }
 
   return (
@@ -24,14 +28,22 @@ const DriveItemPath: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = 
         <meta name='description' content={name} />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Wrapper>
-        {!!error ? error : <Mdx url={url} prefetchedData={prefetchedData} />}
-      </Wrapper>
+      <AnimatePresence exitBeforeEnter>
+        <Wrapper
+          as={motion.section}
+          initial='initial'
+          animate='animate'
+          exit={{ opacity: 0 }}
+          key={router.asPath}
+        >
+          {content}
+        </Wrapper>
+      </AnimatePresence>
     </>
   );
 };
 
-export default DriveItemPath;
+export default SlugPage;
 
 const Wrapper = styled.section`
   display: inline-block;

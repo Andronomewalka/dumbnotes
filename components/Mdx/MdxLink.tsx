@@ -1,17 +1,24 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
 import { MdxLinkType } from './types';
-import { LinkWrapper } from './styles';
+import { PlainLink } from './styles';
 
-export const MdxLink: FC<MdxLinkType> = ({ children, url, external }) => {
+//TODO:: rework this shitty code later
+export const MdxLink: FC<MdxLinkType> = ({ children, url, external, plain }) => {
   return (
     <>
       {external ? (
-        <LinkWrapper href={url}>{children}</LinkWrapper>
-      ) : (
+        plain ? (
+          <PlainLink>{children}</PlainLink>
+        ) : (
+          children
+        )
+      ) : plain ? (
         <Link href={`/${url}`} passHref>
-          <LinkWrapper>{children}</LinkWrapper>
+          <PlainLink>{children}</PlainLink>
         </Link>
+      ) : (
+        children
       )}
     </>
   );

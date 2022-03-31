@@ -1,19 +1,8 @@
-import styled, { css } from 'styled-components';
-import { MdxBoxBaseType, PlainCardBackgroundColor } from './types';
+import styled from 'styled-components';
+import { PlainCardBackgroundColor } from './types';
 
 export const MdxWrapper = styled.div`
   line-height: 1.7;
-`;
-
-const MdxBoxBase = styled.div<MdxBoxBaseType>`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  min-width: ${(props) => props.minWidth};
-  min-height: ${(props) => props.minHeight};
-  max-width: ${(props) => props.maxWidth};
-  max-height: ${(props) => props.maxHeight};
-  background: ${(props) => props.background};
-  border-radius: ${(props) => props.borderRadius};
 `;
 
 export const PlainCardWrapper = styled.div<{
@@ -25,7 +14,7 @@ export const PlainCardWrapper = styled.div<{
   background: ${(props) => props.theme.palette[props.background]};
 `;
 
-export const LinkWrapper = styled.a`
+export const PlainLink = styled.a`
   text-decoration: none;
 
   :hover {

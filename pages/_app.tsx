@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 const Wrapper = styled.main`
   display: flex;
   height: 100%;
-  background-color: ${(prop) => prop.theme.palette.lightGray};
+  background-color: ${(prop) => prop.theme.palette.lightGray1};
   color: ${(prop) => prop.theme.palette.foreground};
 
   > section {
