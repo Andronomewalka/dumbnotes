@@ -91,11 +91,15 @@ export const getUlelementByNode = (node: NavNodeType) => {
 const drillOpenUlNode = (node: NavNodeType) => {
   let curNode: NavNodeType | null = node;
   while (curNode) {
+    console.log('curNode', curNode);
     if (curNode.parent && !curNode.parent.isOpen) {
       openUlNode(curNode, true);
     } else {
       openUlNode(curNode, false);
     }
+    // if (!curNode.parent) {
+    //   openUlNode(curNode, false);
+    // }
     curNode = curNode.parent;
   }
 };
@@ -106,11 +110,13 @@ export const openUlNode = (node: NavNodeType, skipTransition: boolean = false) =
     if (skipTransition) {
       console.log('transition skipped', node);
       ulElement.style.height = 'auto';
+      ulElement.style.overflowY = `inherit`;
     } else {
       ulElement.style.height = `${ulElement.scrollHeight}px`;
 
       const onTransitioned = () => {
         ulElement.style.height = 'auto';
+        ulElement.style.overflowY = `inherit`;
         ulElement.removeEventListener('transitionend', onTransitioned);
       };
 
@@ -126,6 +132,7 @@ export const closeUlNode = (node: NavNodeType) => {
     ulElement.style.height = `${ulElement.scrollHeight}px`;
     new Promise((resolve) => setTimeout(resolve, 10)).then(() => {
       ulElement.style.height = '0';
+      ulElement.style.overflowY = `hidden`;
     });
   }
   node.isOpen = false;

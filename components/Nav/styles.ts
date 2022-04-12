@@ -5,7 +5,7 @@ export const Wrapper = styled.div<{ minWidth: string }>`
   justify-content: space-between;
   height: 100%;
   min-width: ${(props) => props.minWidth};
-  background: ${(props) => props.theme.palette.background};
+  padding: 10px 2px 10px 10px;
 `;
 
 export const NavIndent = styled.div<{ level: number }>`
@@ -17,7 +17,7 @@ export const NavIndent = styled.div<{ level: number }>`
   margin-left: -7px;
   z-index: 1;
   opacity: 0;
-  background: ${(props) => props.theme.palette.whiteSemiTransparent};
+  background: ${(props) => props.theme.palette.accent};
   transition: all ease 0.3s;
 `;
 
@@ -40,14 +40,12 @@ export const NavUlExternal = styled.ul`
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  overflow-y: visible;
 `;
 
 export const NavWrapper = styled.nav`
   width: 100%;
   height: 100%;
-  padding: 10px 2px 10px 10px;
-  overflow-y: auto;
-
   > ${NavUlExternal}:hover {
     ${NavIndent} {
       opacity: 1;
@@ -57,7 +55,7 @@ export const NavWrapper = styled.nav`
 
 export const NavLi = styled.li<{ bottom: boolean }>`
   margin-top: ${(props) => (props.bottom ? 'auto' : 0)};
-  color: ${(props) => props.theme.palette.foreground};
+  color: ${(props) => props.theme.palette.dark};
 `;
 
 const BaseNavItem = css`
@@ -72,20 +70,34 @@ export const NavItemExpandable = styled.div<{ level: number }>`
   cursor: pointer;
 
   :hover {
-    background: ${(props) => props.theme.palette.backgroundHover};
+    background: ${(props) => props.theme.palette.white};
   }
 `;
 
 export const NavItemLink = styled.a<{ isSelected: boolean; level: number }>`
   ${BaseNavItem}
+  position: relative;
   display: block;
   padding-left: ${(props) => `${props.level * 10}px`};
   cursor: pointer;
   background: ${(props) =>
-    props.isSelected ? props.theme.palette.backgroundHover : 'transparent'};
+    props.isSelected ? props.theme.palette.white : 'transparent'};
+
+  ::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    content: '';
+    box-shadow: ${(props) => (props.isSelected ? props.theme.shadow.focus : 'none')};
+    opacity: ${(props) => (props.isSelected ? 1 : 0)};
+    transition: opacity 0.3s ease;
+  }
 
   :hover {
-    background: ${(props) => props.theme.palette.backgroundHover};
+    background: ${(props) => props.theme.palette.white};
   }
 `;
 

@@ -28,9 +28,10 @@ export const Wrapper = styled.div`
 `;
 
 export const Divider = styled.hr`
+  position: relative;
   height: 100%;
   transform: scaleX(2);
-  border: 1px solid ${(props) => props.theme.palette.lightSplitter};
+  border: 1px solid ${(props) => props.theme.palette.accent};
   margin: 0;
   transition: 0.2s all ease;
 `;

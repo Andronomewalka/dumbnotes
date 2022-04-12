@@ -8,15 +8,13 @@ declare module 'styled-components' {
     borderRadius: string;
     palette: {
       background: string;
-      backgroundHover: string;
-      foreground: string;
-      darkGray: string;
-      lightGray1: string;
-      lightGray2: string;
-      whiteSemiTransparent: string;
-      lightSplitter: string;
-      error: string;
-      primary: string;
+      accent: string;
+      white: string;
+      black: string;
+      gray: string;
+      blue: string;
+      dark: string;
+      red: string;
     };
     shadow: {
       focus: string;

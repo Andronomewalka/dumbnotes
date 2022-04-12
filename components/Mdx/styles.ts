@@ -18,6 +18,6 @@ export const PlainLink = styled.a`
   text-decoration: none;
 
   :hover {
-    color: ${(props) => props.theme.palette.primary};
+    color: ${(props) => props.theme.palette.blue};
   }
 `;
