@@ -20,7 +20,7 @@ const minNavWidth = 250;
 
 export const Nav: FC = () => {
   const router = useRouter();
-  const { data: response } = useSWR(`/api/navigation`);
+  const { data: response } = useSWR(`/navigation`);
   const [navItems, setNavItems] = useState<NavNodeType[]>([]);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const isFirstNavigation = useRef(true);
@@ -29,7 +29,7 @@ export const Nav: FC = () => {
   const navItemsBase = useMemo(() => {
     if (response?.data) {
       try {
-        const navItemsRaw = response.data;
+        const navItemsRaw = JSON.parse(response.data);
         return getNavNodesFromBase(navItemsRaw);
       } catch (e: any) {
         console.log(e);

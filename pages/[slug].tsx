@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { serialize } from 'next-mdx-remote/serialize';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
-import { getPost, getPosts } from 'blog-app-shared';
 import { Mdx } from 'components/Mdx';
+import { client } from 'utils/client';
 
 const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   name,
@@ -51,19 +51,20 @@ const Wrapper = styled.section`
   padding: 1rem;
 `;
 
-export async function getStaticProps(context: any) {
+export async function getStaticProps(ctx: any) {
   try {
-    const path = context.params.slug;
-    const response = await getPost(path);
-    const sourceRaw = response.data.content;
+    const slug = ctx.params.slug;
+    const response = await client.get(`/posts/${slug}`);
+    const payload = response.data;
+    const sourceRaw = payload.data.content;
     const mdxSource = await serialize(sourceRaw);
     return {
       props: {
-        name: response.data.name,
+        name: payload.data.name,
         fallback: {
-          [`/api/posts/${path}`]: mdxSource,
+          [`/posts/${slug}`]: mdxSource,
         },
-        error: response.error,
+        error: payload.error,
       },
       revalidate: 86400, // once a day, if something with on-demand revalidation fucked up
     };
@@ -78,9 +79,10 @@ export async function getStaticProps(context: any) {
 }
 
 export async function getStaticPaths() {
-  const postPathes = await getPosts();
+  const response = await client.get('/posts?exclude=["name", "content"]');
+  const payload = response.data;
   return {
-    paths: postPathes.data.map((cur) => {
+    paths: payload.data.map((cur: { id: string; path: string }) => {
       return {
         params: {
           slug: cur.path,

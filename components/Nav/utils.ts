@@ -1,5 +1,4 @@
-import { NavNodeBaseType } from 'blog-app-shared';
-import { NavNodeType } from './types';
+import { NavNodeBaseType, NavNodeType } from './types';
 
 // return true in callback to break iteration
 export const iterateNavNode = (
@@ -92,7 +91,7 @@ export const getUlelementByNode = (node: NavNodeType) => {
 const drillOpenUlNode = (node: NavNodeType) => {
   let curNode: NavNodeType | null = node;
   while (curNode) {
-    if (curNode.parent) {
+    if (curNode.parent && !curNode.parent.isOpen) {
       openUlNode(curNode, true);
     } else {
       openUlNode(curNode, false);
@@ -105,6 +104,7 @@ export const openUlNode = (node: NavNodeType, skipTransition: boolean = false) =
   const ulElement = getUlelementByNode(node);
   if (!node.isOpen && ulElement) {
     if (skipTransition) {
+      console.log('transition skipped', node);
       ulElement.style.height = 'auto';
     } else {
       ulElement.style.height = `${ulElement.scrollHeight}px`;

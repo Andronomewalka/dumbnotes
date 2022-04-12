@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { MediaContextProvider } from 'components/Media';
 import { Nav } from 'components/Nav';
 import { SWRConfig } from 'swr';
-import axios from 'axios';
+import { client } from 'utils/client';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <SWRConfig
             value={{
               fetcher: (url: string) =>
-                axios
+                client
                   .get(url)
                   .then((response) => response.data)
                   .catch((e) => void console.log(e)),

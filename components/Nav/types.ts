@@ -1,4 +1,10 @@
-import { NavNodeBaseType } from 'blog-app-shared';
+export interface NavNodeBaseType {
+  id: string;
+  name: string;
+  path?: string;
+  bottom?: boolean;
+  subItems?: NavNodeBaseType[];
+}
 
 export interface NavNodeType extends NavNodeBaseType {
   isOpen: boolean;
