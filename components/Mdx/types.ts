@@ -6,13 +6,12 @@ export interface MdxType {
   prefetchedData: MDXRemoteSerializeResult<Record<string, unknown>> | null;
 }
 
-export interface MdxStaggerContainerType {
-  stagger?: number;
+export interface MdxStyleType {
+  style?: CSSProperties;
 }
 
-export interface MdxPlainCardType {
-  style?: CSSProperties;
-  background: PlainCardBackgroundColor;
+export interface MdxStaggerContainerType extends MdxStyleType {
+  stagger?: number;
 }
 
 export enum PlainCardBackgroundColor {

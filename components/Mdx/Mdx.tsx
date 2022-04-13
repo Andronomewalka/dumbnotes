@@ -2,15 +2,16 @@ import React, { FC, useState, useEffect } from 'react';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import useSWR from 'swr';
+import { MdxAbout, MdxAboutInfo, MdxAboutLinks } from 'components/MdxAbout';
 import { MdxStaggerContainer } from './MdxStaggerContainer';
-import { MdxPlainCard } from './MdxPlainCard';
 import { MdxLink } from './MdxLink';
 import { MdxType } from './types';
-import { MdxWrapper } from './styles';
 
 const components = {
   MdxStaggerContainer,
-  MdxPlainCard,
+  MdxAbout,
+  MdxAboutInfo,
+  MdxAboutLinks,
   MdxLink,
 };
 
@@ -29,9 +30,5 @@ export const Mdx: FC<MdxType> = ({ url, prefetchedData }) => {
     };
   }, [response]);
 
-  return (
-    <MdxWrapper>
-      <MDXRemote {...(swrData ? swrData : prefetchedData)} components={components} />
-    </MdxWrapper>
-  );
+  return <MDXRemote {...(swrData ? swrData : prefetchedData)} components={components} />;
 };

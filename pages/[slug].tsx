@@ -47,8 +47,10 @@ export default SlugPage;
 
 const Wrapper = styled.section`
   display: inline-block;
+  height: 100%;
   width: 100%;
   padding: 1rem;
+  line-height: 1.7;
 `;
 
 export async function getStaticProps(ctx: any) {

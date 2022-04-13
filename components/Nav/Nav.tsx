@@ -29,7 +29,7 @@ export const Nav: FC = () => {
   const navItemsBase = useMemo(() => {
     if (response?.data) {
       try {
-        const navItemsRaw = JSON.parse(response.data);
+        const navItemsRaw = response.data;
         return getNavNodesFromBase(navItemsRaw);
       } catch (e: any) {
         console.log(e);
