@@ -17,3 +17,8 @@ export const PlainLink = styled.a`
     color: ${(props) => props.theme.palette.blue};
   }
 `;
+
+export const MdxDisclaimerWrapper = styled.div`
+  font-size: 10pt;
+  color: ${(props) => props.theme.palette.gray};
+`;

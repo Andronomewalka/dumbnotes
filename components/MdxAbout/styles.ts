@@ -1,4 +1,4 @@
-import { MdxImage } from 'components/Mdx/MdxImage';
+import { MdxDisclaimerWrapper } from 'components/MdxShared';
 import styled from 'styled-components';
 
 export const MdxAboutWrapper = styled.div`
@@ -39,12 +39,10 @@ export const MdxAboutInfoImageContainer = styled.div`
   mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 70%);
 `;
 
-export const MdxAboutDisclaimerWrapper = styled.div`
+export const MdxAboutDisclaimerWrapper = styled(MdxDisclaimerWrapper)`
   width: 560px;
   margin: 0 10px;
-  font-size: 10pt;
   text-align: center;
-  color: ${(props) => props.theme.palette.gray};
 `;
 
 export const MdxAboutLinksWrapper = styled.ul`

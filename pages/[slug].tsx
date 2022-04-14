@@ -33,7 +33,7 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           as={motion.section}
           initial='initial'
           animate='animate'
-          exit={{ opacity: 0 }}
+          exit='exit'
           key={router.asPath}
         >
           {content}
