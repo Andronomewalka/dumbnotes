@@ -2,7 +2,12 @@ import React, { FC, useState, useEffect } from 'react';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import useSWR from 'swr';
-import { MdxAbout, MdxAboutInfo, MdxAboutLinks } from 'components/MdxAbout';
+import {
+  MdxAbout,
+  MdxAboutDisclaimer,
+  MdxAboutInfo,
+  MdxAboutLinks,
+} from 'components/MdxAbout';
 import { MdxStaggerContainer } from './MdxStaggerContainer';
 import { MdxLink } from './MdxLink';
 import { MdxType } from './types';
@@ -11,6 +16,7 @@ const components = {
   MdxStaggerContainer,
   MdxAbout,
   MdxAboutInfo,
+  MdxAboutDisclaimer,
   MdxAboutLinks,
   MdxLink,
 };

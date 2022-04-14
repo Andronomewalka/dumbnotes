@@ -35,6 +35,7 @@ const Wrapper = styled.main`
   height: 100%;
   background-color: ${(prop) => prop.theme.palette.background};
   color: ${(prop) => prop.theme.palette.dark};
+  overflow: auto;
 
   > section {
     flex: 1 0;

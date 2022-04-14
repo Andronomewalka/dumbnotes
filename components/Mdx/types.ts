@@ -14,13 +14,15 @@ export interface MdxStaggerContainerType extends MdxStyleType {
   stagger?: number;
 }
 
-export enum PlainCardBackgroundColor {
-  lightGray1 = 'lightGray1',
-  lightGray2 = 'lightGray2',
-}
-
 export interface MdxLinkType {
   url: string;
   external?: boolean;
   plain?: boolean;
+}
+
+export interface MdxImageType {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
 }
