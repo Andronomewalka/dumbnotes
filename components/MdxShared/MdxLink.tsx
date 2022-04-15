@@ -4,7 +4,12 @@ import { MdxLinkType } from './types';
 import { PlainLink } from './styles';
 
 //TODO:: rework this shitty code later
-export const MdxLink: FC<MdxLinkType> = ({ children, url, external, plain }) => {
+export const MdxLink: FC<MdxLinkType> = ({
+  children,
+  url,
+  external = false,
+  plain = true,
+}) => {
   return (
     <>
       {external ? (
@@ -14,7 +19,7 @@ export const MdxLink: FC<MdxLinkType> = ({ children, url, external, plain }) => 
           children
         )
       ) : plain ? (
-        <Link href={`/${url}`} passHref>
+        <Link href={url} passHref>
           <PlainLink>{children}</PlainLink>
         </Link>
       ) : (

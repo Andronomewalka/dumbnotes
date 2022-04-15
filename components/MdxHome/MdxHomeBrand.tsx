@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components';
 import { MdxHomeBrandType } from './types';
 import { dumbNotesDPathes } from './utils';
 
-export const MdxHomeBrand: FC<MdxHomeBrandType> = ({ animation }) => {
+export const MdxHomeBrand: FC<MdxHomeBrandType> = ({ animate }) => {
   const theme = useTheme();
 
   return (
@@ -25,7 +25,7 @@ export const MdxHomeBrand: FC<MdxHomeBrandType> = ({ animation }) => {
           strokeWidth='1'
           strokeLinecap='round'
           initial={{ fillOpacity: 0, pathLength: 0 }}
-          animate={animation}
+          animate={animate}
           d={cur.d}
         />
       ))}

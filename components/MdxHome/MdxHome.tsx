@@ -1,53 +1,64 @@
+import { MdxLink } from 'components/MdxShared';
 import { motion, useAnimation } from 'framer-motion';
 import React, { FC, useEffect } from 'react';
 import { MdxHomeBrand } from './MdxHomeBrand';
-import { MdxHomeDisclaimerWrapper, MdxHomeWrapper } from './styles';
+import { MdxHomeCenter, MdxHomeDisclaimerWrapper, MdxHomeWrapper } from './styles';
 import { MdxHomeType } from './types';
 
-const homeStaggerVariant = {
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
-
-const strokeTransition = {
-  duration: 3,
-  ease: 'easeInOut',
-};
-
-const fillTransition = {
-  duration: 1,
-  ease: 'easeInOut',
-};
-
-const disclaimerTransition = {
-  duration: 0.6,
-};
-
-export const MdxHome: FC<MdxHomeType> = ({ disclaimer }) => {
-  const animateControl = useAnimation();
+export const MdxHome: FC<MdxHomeType> = ({ disclaimer, linkText, linkUrl, style }) => {
+  const brandControls = useAnimation();
+  const disclaimerControls = useAnimation();
+  const aboutControls = useAnimation();
 
   useEffect(() => {
-    animateControl.start({ pathLength: 1, transition: strokeTransition }).then(() => {
-      animateControl.start({ fillOpacity: 1, transition: fillTransition }).then(() => {
-        animateControl.start({ y: 0, opacity: 1, transition: disclaimerTransition });
+    (async () => {
+      await brandControls.start({
+        pathLength: 1,
+        transition: {
+          duration: 2.8,
+          ease: 'easeInOut',
+        },
       });
-    });
-  }, [animateControl]);
+      await brandControls.start({
+        fillOpacity: 1,
+        transition: {
+          duration: 0.8,
+          ease: 'easeInOut',
+        },
+      });
+      await disclaimerControls.start({
+        y: 0,
+        opacity: 1,
+        transition: { duration: 0.5 },
+      });
+      await aboutControls.start({ opacity: 1, transition: { duration: 0.3 } });
+    })();
+  }, [aboutControls, brandControls, disclaimerControls]);
 
   return (
-    <MdxHomeWrapper as={motion.div} variants={homeStaggerVariant}>
-      <MdxHomeBrand animation={animateControl} />
-      <MdxHomeDisclaimerWrapper
-        as={motion.div}
-        initial={{ y: 15, opacity: 0 }}
-        animate={animateControl}
-      >
-        {disclaimer}
-      </MdxHomeDisclaimerWrapper>
+    <MdxHomeWrapper
+      as={motion.div}
+      exit={{
+        opacity: 0,
+        transition: {
+          duration: 0.6,
+        },
+      }}
+      style={style}
+    >
+      <MdxHomeCenter>
+        <MdxHomeBrand animate={brandControls} />
+        <MdxHomeDisclaimerWrapper
+          as={motion.div}
+          initial={{ y: 15, opacity: 0 }}
+          animate={disclaimerControls}
+        >
+          {disclaimer}
+        </MdxHomeDisclaimerWrapper>
+      </MdxHomeCenter>
+      <motion.div initial={{ opacity: 0 }} animate={aboutControls}>
+        <MdxLink url={linkUrl}>{linkText}</MdxLink>
+      </motion.div>
     </MdxHomeWrapper>
   );
 };

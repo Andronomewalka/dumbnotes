@@ -10,6 +10,10 @@ export const MdxHomeWrapper = styled.div`
   align-items: center;
 `;
 
+export const MdxHomeCenter = styled.div`
+  margin: auto;
+`;
+
 export const MdxHomeDisclaimerWrapper = styled(MdxDisclaimerWrapper)`
   font-size: 12pt;
   width: 500px;
