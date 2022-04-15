@@ -1,9 +1,9 @@
 import type { AppProps } from 'next/app';
 import { GlobalStyle, theme } from 'GlobalStyle';
 import styled, { ThemeProvider } from 'styled-components';
+import { SWRConfig } from 'swr';
 import { MediaContextProvider } from 'components/Media';
 import { Nav } from 'components/Nav';
-import { SWRConfig } from 'swr';
 import { client } from 'utils/client';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -37,8 +37,9 @@ const Wrapper = styled.main`
   color: ${(prop) => prop.theme.palette.dark};
   overflow: auto;
 
-  > section {
+  > :last-child {
     flex: 1 0;
+    padding: 1rem;
   }
 `;
 

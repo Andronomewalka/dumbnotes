@@ -22,14 +22,18 @@ export const MdxStaggerContainer: FC<MdxStaggerContainerType> = ({
 
   useIsomorphicLayoutEffect(() => {
     // hide scrollbar on animation
-    const mdxRoot = document.body.querySelector('section');
+    const mdxRoot = document.body.querySelector(
+      '[data-id=content-wrapper]'
+    ) as HTMLElement;
     if (mdxRoot) {
       mdxRoot.style.overflow = 'hidden';
     }
   }, []);
 
   const onAnimationComplete = () => {
-    const mdxRoot = document.body.querySelector('section');
+    const mdxRoot = document.body.querySelector(
+      '[data-id=content-wrapper]'
+    ) as HTMLElement;
     if (mdxRoot) {
       mdxRoot.style.overflow = 'inherit';
     }

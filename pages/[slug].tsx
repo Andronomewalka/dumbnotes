@@ -30,11 +30,12 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       </Head>
       <AnimatePresence exitBeforeEnter>
         <Wrapper
-          as={motion.section}
+          as={motion.div}
           initial='initial'
           animate='animate'
           exit='exit'
           key={router.asPath}
+          data-id='content-wrapper'
         >
           {content}
         </Wrapper>
@@ -45,11 +46,9 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
 export default SlugPage;
 
-const Wrapper = styled.section`
-  display: inline-block;
+const Wrapper = styled.div`
   height: 100%;
   width: 100%;
-  padding: 1rem;
   line-height: 1.7;
 `;
 
@@ -71,6 +70,14 @@ export async function getStaticProps(ctx: any) {
       revalidate: 86400, // once a day, if something with on-demand revalidation fucked up
     };
   } catch (e: any) {
+    if (e?.response?.status === 404) {
+      return {
+        redirect: {
+          destination: '/404',
+          permanent: false,
+        },
+      };
+    }
     return {
       props: {
         error: e + '',
