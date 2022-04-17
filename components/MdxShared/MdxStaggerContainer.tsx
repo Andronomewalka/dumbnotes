@@ -1,14 +1,17 @@
 import React, { FC, useMemo } from 'react';
+import { useRouter } from 'next/router';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { motion } from 'framer-motion';
 import { MdxStaggerContainerType } from './types';
 import { MdxStaggerWrapper } from './styles';
+import { hideContentScrollBar, showContentScrollBar } from './utils';
 
 export const MdxStaggerContainer: FC<MdxStaggerContainerType> = ({
   stagger = 0.1,
   style,
   children,
 }) => {
+  const router = useRouter();
   const staggerVariant = useMemo(
     () => ({
       animate: {
@@ -20,22 +23,21 @@ export const MdxStaggerContainer: FC<MdxStaggerContainerType> = ({
     [stagger]
   );
 
+  // useLayoutEffect for ssr
   useIsomorphicLayoutEffect(() => {
-    // hide scrollbar on animation
-    const mdxRoot = document.body.querySelector(
-      '[data-id=content-wrapper]'
-    ) as HTMLElement;
-    if (mdxRoot) {
-      mdxRoot.style.overflow = 'hidden';
-    }
+    const onRouteChangeStart = () => {
+      hideContentScrollBar();
+    };
+    router.events.on('routeChangeStart', onRouteChangeStart); // hide scrollBar on navigate from cur page
+    hideContentScrollBar(); // hide scrollBar on navigate to cur page
+    return () => {
+      void router.events.off('routeChangeStart', onRouteChangeStart);
+    };
   }, []);
 
-  const onAnimationComplete = () => {
-    const mdxRoot = document.body.querySelector(
-      '[data-id=content-wrapper]'
-    ) as HTMLElement;
-    if (mdxRoot) {
-      mdxRoot.style.overflow = 'inherit';
+  const onAnimationComplete = (definition: string) => {
+    if (definition === 'animate') {
+      showContentScrollBar();
     }
   };
 

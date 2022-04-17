@@ -41,7 +41,7 @@ export const MdxHome: FC<MdxHomeType> = ({ disclaimer, linkText, linkUrl, style 
       exit={{
         opacity: 0,
         transition: {
-          duration: 0.6,
+          duration: 0.3,
         },
       }}
       style={style}
