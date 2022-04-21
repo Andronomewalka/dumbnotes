@@ -39,7 +39,7 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
           )}
         </>
       ) : (
-        <Link href={`/${path}`} passHref>
+        <Link href={path || ''} passHref>
           <NavItemLink level={level} isSelected={isSelected}>
             {name}
           </NavItemLink>

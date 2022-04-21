@@ -6,6 +6,8 @@ export interface MdxStyleType {
 
 export interface MdxStaggerContainerType extends MdxStyleType {
   stagger?: number;
+  hideScrollBar?: boolean;
+  stretch?: boolean;
 }
 
 export interface MdxLinkType {

@@ -2,8 +2,9 @@ import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div<{ minWidth: string }>`
   display: flex;
-  justify-content: space-between;
   height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
   min-width: ${(props) => props.minWidth};
   padding: 10px 2px 10px 10px;
 `;

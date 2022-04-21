@@ -9,7 +9,7 @@ export const MdxAboutWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 30px;
+  padding: 30px 20px 0;
 `;
 
 export const MdxAboutInfoWrapper = styled.div`

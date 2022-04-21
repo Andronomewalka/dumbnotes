@@ -16,7 +16,7 @@ export const navMock: NavNodeBaseType[] = [
           {
             id: '111',
             name: '111',
-            path: 'link 111',
+            path: '/link111',
           },
           {
             id: '112',
@@ -25,7 +25,7 @@ export const navMock: NavNodeBaseType[] = [
               {
                 id: '1121',
                 name: '1121',
-                path: 'link 1121',
+                path: '/link1121',
               },
             ],
           },
@@ -34,13 +34,13 @@ export const navMock: NavNodeBaseType[] = [
       {
         id: '12',
         name: '12',
-        path: 'link 12',
+        path: '/link12',
       },
     ],
   },
   {
     id: '2',
     name: '2',
-    path: 'link 2',
+    path: '/link2',
   },
 ];

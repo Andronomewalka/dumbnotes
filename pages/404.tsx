@@ -9,7 +9,6 @@ const NotFoundPage: NextPage = () => {
       <Head>
         <title>404</title>
         <meta name='description' content='not found' />
-        <link rel='icon' href='/favicon.ico' />
       </Head>
       <Wrapper>
         <Image src='/wat_kitty.png' width={400} height={400} alt='wat kitty' />

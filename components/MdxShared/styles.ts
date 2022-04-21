@@ -5,9 +5,9 @@ export const MdxWrapper = styled.div`
   line-height: 1.7;
 `;
 
-export const MdxStaggerWrapper = styled.div`
-  height: 100%;
-  width: 100%;
+export const MdxStaggerWrapper = styled.div<{ stretch?: boolean }>`
+  height: ${(props) => (props.stretch ? '100%' : 'auto')};
+  width: ${(props) => (props.stretch ? '100%' : 'auto')};
 `;
 
 export const PlainLink = styled.a`

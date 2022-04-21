@@ -8,6 +8,7 @@ export const theme: DefaultTheme = {
     white: '#FFFFFF',
     black: '#010101',
     gray: '#AFAFAF',
+    gray2: '#F1F1F1',
     blue: '#115BFA',
     dark: '#4F4F4F',
     red: '#F4023C',
@@ -32,7 +33,7 @@ export const GlobalStyle = createGlobalStyle`
 
   html,
   body {
-	  overflow-x: hidden;
+	  overflow: hidden;
   }
 
   body {

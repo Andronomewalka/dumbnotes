@@ -1,8 +1,7 @@
 import type { NextPage, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { serialize } from 'next-mdx-remote/serialize';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Mdx } from 'components/Mdx';
 import { client } from 'utils/client';
@@ -12,8 +11,6 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   fallback,
   error,
 }) => {
-  const router = useRouter();
-
   let content = <span>{error}</span>;
   if (fallback) {
     const url = Object.keys(fallback)[0];
@@ -26,30 +23,19 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <Head>
         <title>{name}</title>
         <meta name='description' content={name} />
-        <link rel='icon' href='/favicon.ico' />
       </Head>
-      <AnimatePresence exitBeforeEnter>
-        <Wrapper
-          as={motion.div}
-          initial='initial'
-          animate='animate'
-          exit='exit'
-          key={router.asPath}
-          data-id='content-wrapper'
-        >
-          {content}
-        </Wrapper>
-      </AnimatePresence>
+      <Wrapper as={motion.article} initial='initial' animate='animate' exit='exit'>
+        {content}
+      </Wrapper>
     </>
   );
 };
 
 export default SlugPage;
 
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
+const Wrapper = styled.article`
   line-height: 1.7;
+  padding: 0 1.25rem 1.25rem;
 `;
 
 export async function getStaticProps(ctx: any) {

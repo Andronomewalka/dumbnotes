@@ -1,6 +1,5 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import React from 'react';
-import { mediaStyle } from 'components/Media';
 import { ServerStyleSheet } from 'styled-components';
 
 class MyDocument extends Document {
@@ -43,7 +42,7 @@ class MyDocument extends Document {
             href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap'
             rel='stylesheet'
           />
-          <style type='text/css' dangerouslySetInnerHTML={{ __html: mediaStyle }} />
+          <link rel='icon' href='/favicon.ico' />
         </Head>
         <body>
           <Main />

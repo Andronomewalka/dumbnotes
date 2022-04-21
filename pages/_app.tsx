@@ -1,32 +1,36 @@
 import type { AppProps } from 'next/app';
 import { GlobalStyle, theme } from 'GlobalStyle';
+import { AnimatePresence } from 'framer-motion';
 import styled, { ThemeProvider } from 'styled-components';
 import { SWRConfig } from 'swr';
-import { MediaContextProvider } from 'components/Media';
-import { Nav } from 'components/Nav';
 import { client } from 'utils/client';
+import { Nav } from 'components/Nav';
+import { SearchBar } from 'components/SearchBar';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
-    <MediaContextProvider>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <SWRConfig
+        value={{
+          fetcher: (url: string) =>
+            client
+              .get(url)
+              .then((response) => response.data)
+              .catch((e) => void console.log(e)),
+        }}
+      >
         <Wrapper>
-          <GlobalStyle />
-          <SWRConfig
-            value={{
-              fetcher: (url: string) =>
-                client
-                  .get(url)
-                  .then((response) => response.data)
-                  .catch((e) => void console.log(e)),
-            }}
-          >
-            <Nav />
-            <Component {...pageProps} />
-          </SWRConfig>
+          <Nav />
+          <ComponentWrapper data-id='content-wrapper'>
+            <SearchBar />
+            <AnimatePresence exitBeforeEnter>
+              <Component {...pageProps} key={router.asPath} />
+            </AnimatePresence>
+          </ComponentWrapper>
         </Wrapper>
-      </ThemeProvider>
-    </MediaContextProvider>
+      </SWRConfig>
+    </ThemeProvider>
   );
 }
 
@@ -35,12 +39,17 @@ const Wrapper = styled.main`
   height: 100%;
   background-color: ${(prop) => prop.theme.palette.background};
   color: ${(prop) => prop.theme.palette.dark};
-  overflow: auto;
+  overflow: hidden;
+`;
 
-  > :last-child {
-    flex: 1 0;
-    padding: 1rem;
-  }
+const ComponentWrapper = styled.div`
+  position: relative;
+  flex: 1 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export default MyApp;

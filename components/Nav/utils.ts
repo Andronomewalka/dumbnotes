@@ -84,14 +84,13 @@ export const setSelectedNavNode = (node: NavNodeType) => {
   }
 };
 
-export const getUlelementByNode = (node: NavNodeType) => {
+export const getElementByNode = (node: NavNodeType) => {
   return document.querySelector(`[data-nav-sub-id="${node.id}"]`) as HTMLElement;
 };
 
 const drillOpenUlNode = (node: NavNodeType) => {
   let curNode: NavNodeType | null = node;
   while (curNode) {
-    console.log('curNode', curNode);
     if (curNode.parent && !curNode.parent.isOpen) {
       openUlNode(curNode, true);
     } else {
@@ -105,10 +104,9 @@ const drillOpenUlNode = (node: NavNodeType) => {
 };
 
 export const openUlNode = (node: NavNodeType, skipTransition: boolean = false) => {
-  const ulElement = getUlelementByNode(node);
+  const ulElement = getElementByNode(node);
   if (!node.isOpen && ulElement) {
     if (skipTransition) {
-      console.log('transition skipped', node);
       ulElement.style.height = 'auto';
       ulElement.style.overflowY = `inherit`;
     } else {
@@ -127,7 +125,7 @@ export const openUlNode = (node: NavNodeType, skipTransition: boolean = false) =
 };
 
 export const closeUlNode = (node: NavNodeType) => {
-  const ulElement = getUlelementByNode(node);
+  const ulElement = getElementByNode(node);
   if (node.isOpen && ulElement) {
     ulElement.style.height = `${ulElement.scrollHeight}px`;
     new Promise((resolve) => setTimeout(resolve, 10)).then(() => {
