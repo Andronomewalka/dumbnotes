@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   position: relative;
   padding: 0 8px;
-  margin-right: -8px;
 
   ::after {
     position: absolute;

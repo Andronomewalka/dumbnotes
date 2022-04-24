@@ -64,6 +64,7 @@ export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
               animate='show'
               variants={itemVariants}
               onMouseEnter={() => setHovered(cur)}
+              onFocus={() => setHovered(cur)}
             >
               <Link href={cur.path}>
                 <a>{cur.name}</a>

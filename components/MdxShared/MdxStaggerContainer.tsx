@@ -65,7 +65,7 @@ export const MdxStaggerContainer: FC<MdxStaggerContainerType> = ({
       variants={staggerVariant}
       style={style}
       onAnimationComplete={onAnimationComplete}
-      stretch={stretch}
+      $stretch={stretch ?? false}
     >
       {children}
     </MdxStaggerWrapper>

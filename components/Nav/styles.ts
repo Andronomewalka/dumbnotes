@@ -70,8 +70,13 @@ export const NavItemExpandable = styled.div<{ level: number }>`
   padding-left: ${(props) => `${props.level * 10}px`};
   cursor: pointer;
 
-  :hover {
+  :hover,
+  :focus {
     background: ${(props) => props.theme.palette.white};
+  }
+
+  :focus {
+    outline: none;
   }
 `;
 
@@ -97,8 +102,13 @@ export const NavItemLink = styled.a<{ isSelected: boolean; level: number }>`
     transition: opacity 0.3s ease;
   }
 
-  :hover {
+  :hover,
+  :focus {
     background: ${(props) => props.theme.palette.white};
+  }
+
+  :focus {
+    outline: none;
   }
 `;
 

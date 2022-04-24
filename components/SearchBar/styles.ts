@@ -83,6 +83,10 @@ export const SearchBarResultsLi = styled.li`
     padding: 10px;
     cursor: pointer;
     z-index: 1;
+
+    :focus {
+      outline: none;
+    }
   }
 `;
 
