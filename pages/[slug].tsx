@@ -65,10 +65,10 @@ export async function getStaticProps(ctx: any) {
       };
     }
     return {
-      props: {
-        error: e + '',
+      redirect: {
+        destination: '/500',
+        permanent: false,
       },
-      revalidate: 86400,
     };
   }
 }
