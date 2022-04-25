@@ -10,6 +10,10 @@ export interface MdxStaggerContainerType extends MdxStyleType {
   stretch?: boolean;
 }
 
+export interface MdxSubtitleType extends MdxStyleType {
+  name: string;
+}
+
 export interface MdxLinkType {
   url: string;
   external?: boolean;

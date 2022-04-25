@@ -6,36 +6,33 @@ const getPxValue = (value: string) => {
   return parseInt(value, 10);
 };
 
-export const Splitter: React.FC<SplitterProp> = ({
-  containerRef,
-  minContainerWidth,
-}) => {
-  const onDividerMouseDown = (e: MouseEvent) => {
+export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWidth }) => {
+  const onDividerMouseDown = (mouseDownEvent: MouseEvent) => {
     if (!containerRef.current) {
       return;
     }
 
     // without it mouseUp not firing in 5% cases if drag hard;
-    e.preventDefault();
+    mouseDownEvent.preventDefault();
 
     const container = containerRef.current;
     const prevTransitionStyle = container.style.transition;
     container.style.transition = 'unset';
     container.style.width = window.getComputedStyle(container, null).width;
-    const initX = e.clientX;
+    const initX = mouseDownEvent.clientX;
     let lastX = initX;
 
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
 
-    function mouseMove(e: any) {
+    function mouseMove(mouseMoveEvent: any) {
       if (container) {
         const newContainerWidth =
-          getPxValue(container.style.width) + e.clientX - lastX;
+          getPxValue(container.style.width) + mouseMoveEvent.clientX - lastX;
 
         if (newContainerWidth > minContainerWidth) {
           container.style.width = `${newContainerWidth}px`;
-          lastX = e.clientX;
+          lastX = mouseMoveEvent.clientX;
         }
       } else {
         mouseUp();

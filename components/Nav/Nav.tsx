@@ -31,8 +31,8 @@ export const Nav: FC = () => {
       try {
         const navItemsRaw = response.data;
         return getNavNodesFromBase(navItemsRaw);
-      } catch (e: any) {
-        console.log(e);
+      } catch (error: any) {
+        console.log(error);
       }
     }
     return [];

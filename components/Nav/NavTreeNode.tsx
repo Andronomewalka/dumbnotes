@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import Link from 'next/link';
 import { NavNodeType } from './types';
 import {
@@ -14,8 +14,8 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
   const { id, name, path, bottom, subItems, isOpen, isSelected, level, onClick } = prop;
   const hasSubItems = (subItems && subItems.length > 0) ?? false;
 
-  const onClickInternal = (e: any) => {
-    e.stopPropagation(); // to prevent bubbling, and action for parent ul
+  const onClickInternal = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation(); // to prevent bubbling, and action for parent ul
     onClick?.(prop);
   };
 

@@ -12,7 +12,7 @@ const ServerErrorPage: NextPage = () => {
       </Head>
       <Wrapper>
         <Image src='/repair_kitty.png' width={400} height={400} alt='repair kitty' />
-        <span>Что-то пошло не так, чиним</span>
+        <span>Ох, что-то пошло не так, чиним</span>
       </Wrapper>
     </>
   );

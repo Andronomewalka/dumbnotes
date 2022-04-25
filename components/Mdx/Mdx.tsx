@@ -2,11 +2,14 @@ import React, { FC, useState, useEffect } from 'react';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import useSWR from 'swr';
+import rehypeHighlight from 'rehype-highlight';
 import {
   MdxImage,
+  MdxInfo,
   MdxLink,
   MdxStaggerBlock,
   MdxStaggerContainer,
+  MdxSubtitle,
 } from 'components/MdxShared';
 import {
   MdxAbout,
@@ -20,6 +23,8 @@ import { MdxHome } from 'components/MdxHome';
 const components = {
   MdxStaggerContainer,
   MdxStaggerBlock,
+  MdxSubtitle,
+  MdxInfo,
   MdxHome,
   MdxAbout,
   MdxAboutInfo,
@@ -35,7 +40,9 @@ export const Mdx: FC<MdxType> = ({ url, prefetchedData }) => {
 
   useEffect(() => {
     if (response?.data?.content) {
-      serialize(response.data.content).then((newData) => {
+      serialize(response.data.content, {
+        mdxOptions: { rehypePlugins: [rehypeHighlight] },
+      }).then((newData) => {
         setSwrData(newData);
       });
     }

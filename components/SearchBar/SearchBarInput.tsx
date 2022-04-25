@@ -22,8 +22,8 @@ export const SearchBarInput: FC<SearchBarInputType> = ({ onSubmit }) => {
     350
   );
 
-  const onFormSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onFormSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
     onSubmit(input);
   };
 

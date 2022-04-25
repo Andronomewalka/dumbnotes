@@ -23,8 +23,8 @@ export const SearchBar: FC = () => {
 
   useEffect(() => {
     let lastScrollTop = 0;
-    const onScroll = (e: any) => {
-      const curScrollTop = e.target.scrollTop;
+    const onScroll = (event: any) => {
+      const curScrollTop = event.target.scrollTop;
       if (curScrollTop > lastScrollTop && searchWrapperRef.current) {
         searchWrapperRef.current.style.top = '-65px';
       } else if (searchWrapperRef.current) {
