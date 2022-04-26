@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { AppProps } from 'next/app';
 import { GlobalStyle, theme } from 'GlobalStyle';
 import { AnimatePresence } from 'framer-motion';
