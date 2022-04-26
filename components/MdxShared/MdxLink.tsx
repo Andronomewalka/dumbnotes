@@ -14,7 +14,9 @@ export const MdxLink: FC<MdxLinkType> = ({
     <>
       {external ? (
         plain ? (
-          <PlainLink>{children}</PlainLink>
+          <PlainLink href={url} target='_blank'>
+            {children}
+          </PlainLink>
         ) : (
           children
         )

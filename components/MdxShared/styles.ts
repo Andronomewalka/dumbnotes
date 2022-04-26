@@ -67,3 +67,11 @@ export const MdxDisclaimerWrapper = styled.div`
   font-size: 10pt;
   color: ${(props) => props.theme.palette.gray};
 `;
+
+export const MdxSourcesWrapper = styled(MdxDisclaimerWrapper)`
+  font-size: 12pt;
+  ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+`;

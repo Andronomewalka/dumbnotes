@@ -4,13 +4,15 @@ import { MdxSubtitleWrapper } from './styles';
 
 export const MdxSubtitle: FC<MdxSubtitleType> = ({ name, style, children }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
-  const onAClick = (event: MouseEvent<HTMLElement>) => {
+  const onAClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (containerRef.current) {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
       });
     }
+
+    window.history.replaceState('', '', event.currentTarget.hash);
   };
 
   return (

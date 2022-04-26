@@ -7,6 +7,7 @@ import {
   MdxImage,
   MdxInfo,
   MdxLink,
+  MdxSources,
   MdxStaggerBlock,
   MdxStaggerContainer,
   MdxSubtitle,
@@ -32,6 +33,7 @@ const components = {
   MdxAboutLinks,
   MdxLink,
   MdxImage,
+  MdxSources,
 };
 
 export const Mdx: FC<MdxType> = ({ url, prefetchedData }) => {

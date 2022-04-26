@@ -1,6 +1,7 @@
 export * from './MdxImage';
 export * from './MdxInfo';
 export * from './MdxLink';
+export * from './MdxSources';
 export * from './MdxStaggerBlock';
 export * from './MdxStaggerContainer';
 export * from './MdxSubtitle';
