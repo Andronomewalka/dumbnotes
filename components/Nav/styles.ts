@@ -1,11 +1,10 @@
 import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.div<{ minWidth: string }>`
+export const Wrapper = styled.div`
   display: flex;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  min-width: ${(props) => props.minWidth};
   padding: 10px 2px 10px 10px;
 `;
 
@@ -27,30 +26,42 @@ const NavUlBase = css`
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow-y: hidden;
 `;
 
 export const NavUl = styled.ul`
   ${NavUlBase};
   height: 0;
+  overflow-y: hidden;
   transition: height ease 0.3s;
 `;
 
 export const NavUlExternal = styled.ul`
   ${NavUlBase};
+  height: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
   overflow-y: visible;
 `;
 
-export const NavWrapper = styled.nav`
+export const NavWrapper = styled.nav<{ minWidth: string }>`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  > ${NavUlExternal}:hover {
+  min-width: ${(props) => props.minWidth};
+  opacity: 1;
+  transition: 0.4s 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear;
+
+  ${NavUlExternal}:hover {
     ${NavIndent} {
       opacity: 1;
     }
+  }
+
+  &.is-hidden {
+    transition: 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear;
+    opacity: 0;
+    min-width: 0;
   }
 `;
 

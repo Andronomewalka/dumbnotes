@@ -112,8 +112,8 @@ export const Nav: FC = () => {
   }, [navItemsBase, onNavClick]);
 
   return (
-    <Wrapper minWidth={`${minNavWidth}px`} ref={wrapperRef}>
-      <NavWrapper>
+    <Wrapper>
+      <NavWrapper minWidth={`${minNavWidth}px`} ref={wrapperRef}>
         {!navItems || !navItems.length ? (
           <NavStub />
         ) : (

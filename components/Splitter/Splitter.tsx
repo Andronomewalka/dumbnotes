@@ -1,14 +1,18 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useRef, useState } from 'react';
 import { SplitterProp } from './types';
-import { Wrapper, Divider } from './styles';
+import { Wrapper, Divider, ExpandButton } from './styles';
+import { ExpandIcon } from './icons';
 
 const getPxValue = (value: string) => {
   return parseInt(value, 10);
 };
 
 export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWidth }) => {
+  const [isOpen, setIsOpen] = useState(true);
+  const prevContainerWidth = useRef('-1px');
+
   const onDividerMouseDown = (mouseDownEvent: MouseEvent) => {
-    if (!containerRef.current) {
+    if (!containerRef.current || !isOpen) {
       return;
     }
 
@@ -46,9 +50,30 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
     }
   };
 
+  const onExpandClick = () => {
+    const container = containerRef.current;
+    if (container) {
+      if (isOpen) {
+        // from open to close
+        prevContainerWidth.current = window.getComputedStyle(container, null).width;
+        container.classList.add('is-hidden');
+        container.style.width = '0';
+      } else {
+        // from close to open
+        container.classList.remove('is-hidden');
+        container.style.width = prevContainerWidth.current;
+      }
+
+      setIsOpen(!isOpen);
+    }
+  };
+
   return (
     <Wrapper onMouseDown={onDividerMouseDown}>
-      <Divider />
+      <Divider className={isOpen ? 'is-open' : ''} />
+      <ExpandButton onClick={onExpandClick} isOpen={isOpen}>
+        <ExpandIcon />
+      </ExpandButton>
     </Wrapper>
   );
 };
