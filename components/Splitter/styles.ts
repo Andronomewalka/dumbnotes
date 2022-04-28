@@ -1,31 +1,13 @@
 import styled from 'styled-components';
-
-export const ExpandButton = styled.button<{ isOpen: boolean }>`
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%) ${(props) => (props.isOpen ? '' : 'rotateZ(180deg)')};
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  border: 2px solid ${(props) => props.theme.palette.accent};
-  border-radius: 50%;
-  background: ${(props) => props.theme.palette.background};
-  transition: transform 0.3s linear;
-
-  svg {
-    fill: ${(props) => props.theme.palette.gray};
-    transition: all 0.3s ease;
-
-    :hover {
-      fill: ${(props) => props.theme.palette.dark};
-    }
-  }
-`;
+import { device } from 'utils/media';
 
 export const Wrapper = styled.div`
   position: relative;
   padding: 0 12px;
+
+  @media ${device.mobile} {
+    padding: 0;
+  }
 `;
 
 export const Divider = styled.hr`
@@ -57,5 +39,40 @@ export const Divider = styled.hr`
         transform: scaleX(0.2) translate(-50%, -50%);
       }
     }
+  }
+
+  @media ${device.mobile} {
+    display: none;
+  }
+`;
+
+export const ExpandButton = styled.button<{ isOpen: boolean }>`
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%) ${(props) => (props.isOpen ? '' : 'rotateZ(180deg)')};
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 2px solid ${(props) => props.theme.palette.accent};
+  border-radius: 50%;
+  background: ${(props) => props.theme.palette.background};
+  transition: transform 0.3s linear;
+
+  svg {
+    fill: ${(props) => props.theme.palette.gray};
+    transition: all 0.3s ease;
+
+    :hover {
+      fill: ${(props) => props.theme.palette.dark};
+    }
+  }
+
+  @media ${device.mobile} {
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    transform: ${(props) => (props.isOpen ? '' : 'rotateZ(180deg)')};
+    transition: transform 0.3s linear, top 0.1s linear, left 0.3s linear;
   }
 `;

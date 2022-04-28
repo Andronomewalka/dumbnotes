@@ -51,7 +51,7 @@ export const MdxStaggerContainer: FC<MdxStaggerContainerType> = ({
         article.style.width = '100%';
       }
     }
-  });
+  }, []);
 
   const onAnimationComplete = (definition: string) => {
     if (definition === 'animate') {

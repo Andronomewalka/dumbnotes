@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from 'utils/media';
 
 export const SearchBarWrapper = styled.div`
   position: sticky;
@@ -15,6 +16,10 @@ export const SearchBarFormWrapper = styled.form`
   margin: 0 auto;
   max-width: 500px;
   flex: 1 0;
+
+  @media ${device.mobile} {
+    margin-left: 30px;
+  }
 `;
 
 export const SearchBarInputIcon = styled.span`

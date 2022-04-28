@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { device } from 'utils/media';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -6,6 +7,14 @@ export const Wrapper = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px 2px 10px 10px;
+  background: ${(props) => props.theme.palette.background};
+
+  @media ${device.mobile} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+  }
 `;
 
 export const NavIndent = styled.div<{ level: number }>`
@@ -41,6 +50,11 @@ export const NavUlExternal = styled.ul`
   display: flex;
   flex-direction: column;
   overflow-y: visible;
+
+  @media ${device.mobile} {
+    width: 85%;
+    margin: 10px;
+  }
 `;
 
 export const NavWrapper = styled.nav<{ minWidth: string }>`

@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <>
       <Head>
-        <meta name='viewport' content='viewport-fit=cover' />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
@@ -41,6 +41,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 }
 
 const Wrapper = styled.main`
+  position: relative;
   display: flex;
   height: 100%;
   background-color: ${(prop) => prop.theme.palette.background};
