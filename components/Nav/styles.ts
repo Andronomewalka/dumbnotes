@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 10px 2px 10px 10px;
   background: ${(props) => props.theme.palette.background};
 
   @media ${device.mobile} {
@@ -52,8 +51,7 @@ export const NavUlExternal = styled.ul`
   overflow-y: visible;
 
   @media ${device.mobile} {
-    width: 85%;
-    margin: 10px;
+    width: 80%;
   }
 `;
 
@@ -61,10 +59,11 @@ export const NavWrapper = styled.nav<{ minWidth: string }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
   min-width: ${(props) => props.minWidth};
+  margin: 20px 6px 20px 20px;
   opacity: 1;
-  transition: 0.4s 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear;
+  transition: 0.4s 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear,
+    margin 0.3s linear;
 
   ${NavUlExternal}:hover {
     ${NavIndent} {
@@ -73,9 +72,12 @@ export const NavWrapper = styled.nav<{ minWidth: string }>`
   }
 
   &.is-hidden {
-    transition: 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear;
+    transition: 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear,
+      margin 0.3s linear;
     opacity: 0;
     min-width: 0;
+    margin: 20px 10px;
+    pointer-events: none;
   }
 `;
 

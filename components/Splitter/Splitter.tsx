@@ -1,11 +1,11 @@
 import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { SplitterProp } from './types';
-import { Wrapper, Divider, ExpandButton } from './styles';
+import { Wrapper, Divider, ExpandButton, HoverArea } from './styles';
 import { ExpandIcon } from './icons';
 import { device, mediaSize } from 'utils/media';
-import { getElemByDataId } from 'utils/getElemByDataId';
 import { useRouter } from 'next/router';
 import useMediaQuery from 'hooks/useMediaQuery';
+import { getRawIsMobile } from 'utils/getRawIsMobile';
 
 const getPxValue = (value: string) => {
   return parseInt(value, 10);
@@ -14,6 +14,7 @@ const getPxValue = (value: string) => {
 export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWidth }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
+  const isOpenRef = useRef(isOpen);
   const prevContainerWidth = useRef('-1px');
   const expandButtonRef = useRef<HTMLButtonElement>(null);
   const isMobile = useMediaQuery(device.mobile);
@@ -60,14 +61,14 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   const openContainer = useCallback(() => {
     const container = containerRef.current;
     const expandButton = expandButtonRef.current;
-    const mobile = window.screen.width <= mediaSize.laptopBreakpoint;
+    const mobile = getRawIsMobile();
     if (container && expandButton) {
       container.classList.remove('is-hidden');
-      console.log('isMobile', mobile);
       if (mobile) {
-        expandButton.style.left = '95%';
+        expandButton.style.left = '93%';
         container.style.width = '100vw';
       } else {
+        expandButton.style.left = '';
         container.style.width = prevContainerWidth.current;
       }
     }
@@ -76,7 +77,7 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   const closeContainer = useCallback(() => {
     const container = containerRef.current;
     const expandButton = expandButtonRef.current;
-    const mobile = window.screen.width < mediaSize.laptopBreakpoint;
+    const mobile = getRawIsMobile();
     if (container && expandButton) {
       prevContainerWidth.current = window.getComputedStyle(container, null).width;
       container.classList.add('is-hidden');
@@ -95,13 +96,22 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
     } else {
       closeContainer();
     }
+    isOpenRef.current = isOpen;
   }, [openContainer, closeContainer, isOpen]);
 
   // close container when isMobile changed
   useEffect(() => {
-    setIsOpen(false);
-    closeContainer();
-  }, [closeContainer, containerRef, isMobile]);
+    if (isMobile && !isOpenRef.current) {
+      closeContainer();
+    } else if (isMobile && isOpenRef.current) {
+      setIsOpen(false);
+    } else if (!isMobile && isOpenRef.current) {
+      prevContainerWidth.current = `${minContainerWidth}px`;
+      openContainer();
+    } else if (!isMobile && !isOpenRef.current) {
+      setIsOpen(true);
+    }
+  }, [openContainer, closeContainer, containerRef, isMobile, minContainerWidth]);
 
   const onExpandClick = () => {
     setIsOpen(!isOpen);
@@ -119,33 +129,10 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
     return () => router.events.off('routeChangeStart', onRouteChanged);
   }, [isMobile, router.events]);
 
-  // fake like expand button is a part of search block on mobile
-  useEffect(() => {
-    if (!isMobile) {
-      return;
-    }
-
-    let lastScrollTop = 0;
-    const onScroll = (event: any) => {
-      const curScrollTop = event.target.scrollTop;
-      if (curScrollTop > lastScrollTop && expandButtonRef.current) {
-        expandButtonRef.current.style.top = '-65px';
-      } else if (expandButtonRef.current) {
-        expandButtonRef.current.style.top = '20px';
-      }
-      lastScrollTop = curScrollTop;
-    };
-
-    const contentWrapper = getElemByDataId('content-wrapper');
-    if (contentWrapper && expandButtonRef.current) {
-      contentWrapper.addEventListener('scroll', onScroll, false);
-      return () => void contentWrapper.removeEventListener('scroll', onScroll);
-    }
-  }, [isMobile]);
-
   return (
     <Wrapper onMouseDown={onDividerMouseDown}>
-      <Divider className={isOpen ? 'is-open' : ''} />
+      <HoverArea isOpen={isOpen} />
+      <Divider />
       <ExpandButton ref={expandButtonRef} onClick={onExpandClick} isOpen={isOpen}>
         <ExpandIcon />
       </ExpandButton>

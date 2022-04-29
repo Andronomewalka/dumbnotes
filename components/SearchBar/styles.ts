@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { device } from 'utils/media';
+import { mediaSize, device } from 'utils/media';
 
 export const SearchBarWrapper = styled.div`
   position: sticky;
@@ -7,14 +7,13 @@ export const SearchBarWrapper = styled.div`
   left: 0;
   padding: 20px 20px 15px;
   background: ${(props) => props.theme.palette.background};
-  transition: top 0.1s linear;
   z-index: 10;
 `;
 
 export const SearchBarFormWrapper = styled.form`
   position: relative;
   margin: 0 auto;
-  max-width: 500px;
+  max-width: ${mediaSize.laptopBreakpoint}px;
   flex: 1 0;
 
   @media ${device.mobile} {
@@ -37,6 +36,7 @@ export const SearchBarInputWrapper = styled.input`
   border-radius: 20px;
   background: transparent;
   outline: none;
+  font-size: 12pt;
   box-shadow: ${(props) => props.theme.shadow.focus};
 
   + ${SearchBarInputIcon} {
@@ -65,6 +65,11 @@ export const SearchBarResultsContainer = styled.div`
   flex-direction: column;
   width: 400px;
   z-index: 10;
+
+  @media ${device.mobile} {
+    font-size: 12pt;
+    width: 325px;
+  }
 `;
 
 export const SearchBarResultsUl = styled.ul`
@@ -74,6 +79,10 @@ export const SearchBarResultsUl = styled.ul`
   padding: 20px;
   margin: 0;
   list-style: none;
+
+  @media ${device.mobile} {
+    padding: 10px;
+  }
 `;
 
 export const SearchBarResultsLi = styled.li`

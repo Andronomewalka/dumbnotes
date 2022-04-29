@@ -8,7 +8,7 @@ import { socialsData, sourcesData } from './utils';
 
 export const MdxAboutLinks: FC<MdxStyleType> = ({ style }) => {
   return (
-    <MdxAboutLinksWrapper as={motion.div} variants={staggerVariant} style={style}>
+    <MdxAboutLinksWrapper as={motion.ul} variants={staggerVariant} style={style}>
       {socialsData.map((cur) => (
         <MdxAboutLinkItem key={cur.id} {...cur} />
       ))}

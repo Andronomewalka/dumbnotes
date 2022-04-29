@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const MdxStaggerWrapper = styled.div<{ $stretch: boolean }>`
   height: ${(props) => (props.$stretch ? '100%' : 'auto')};
   width: ${(props) => (props.$stretch ? '100%' : 'auto')};
-  max-width: ${(props) => (props.$stretch ? 'auto' : '800px')};
-  margin: ${(props) => (props.$stretch ? 'none' : '0 auto')};
+  max-width: ${(props) => (props.$stretch ? 'none' : '800px')};
+  margin: ${(props) => (props.$stretch ? '0' : '0 auto')};
 `;
 
 export const PlainLink = styled.a`

@@ -1,12 +1,34 @@
 import styled from 'styled-components';
 import { device } from 'utils/media';
 
-export const Wrapper = styled.div`
-  position: relative;
-  padding: 0 12px;
+export const ExpandButton = styled.button<{ isOpen: boolean }>`
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) ${(props) => (props.isOpen ? '' : 'rotateZ(180deg)')};
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 2px solid ${(props) => props.theme.palette.accent};
+  border-radius: 50%;
+  background: ${(props) => props.theme.palette.background};
+  transition: transform 0.3s linear;
+  z-index: 2;
+
+  svg {
+    fill: ${(props) => props.theme.palette.gray};
+    transition: all 0.3s ease;
+
+    :hover {
+      fill: ${(props) => props.theme.palette.dark};
+    }
+  }
 
   @media ${device.mobile} {
-    padding: 0;
+    position: fixed;
+    left: 10px;
+    transform: ${(props) => (props.isOpen ? '' : 'rotateZ(180deg)')};
+    transition: transform 0.3s linear, left 0.3s linear;
   }
 `;
 
@@ -31,48 +53,38 @@ export const Divider = styled.hr`
     transition: 0.2s all ease;
   }
 
-  :hover {
-    &.is-open {
-      transform: scaleX(6);
-      cursor: col-resize;
-      ::after {
-        transform: scaleX(0.2) translate(-50%, -50%);
-      }
-    }
-  }
-
   @media ${device.mobile} {
     display: none;
   }
 `;
 
-export const ExpandButton = styled.button<{ isOpen: boolean }>`
-  position: absolute;
-  top: 11px;
-  left: 50%;
-  transform: translateX(-50%) ${(props) => (props.isOpen ? '' : 'rotateZ(180deg)')};
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  border: 2px solid ${(props) => props.theme.palette.accent};
-  border-radius: 50%;
-  background: ${(props) => props.theme.palette.background};
-  transition: transform 0.3s linear;
-
-  svg {
-    fill: ${(props) => props.theme.palette.gray};
-    transition: all 0.3s ease;
-
-    :hover {
-      fill: ${(props) => props.theme.palette.dark};
-    }
-  }
+export const Wrapper = styled.div`
+  position: relative;
+  padding: 10px 14px;
 
   @media ${device.mobile} {
-    position: fixed;
-    top: 20px;
-    left: 10px;
-    transform: ${(props) => (props.isOpen ? '' : 'rotateZ(180deg)')};
-    transition: transform 0.3s linear, top 0.1s linear, left 0.3s linear;
+    padding: 0;
+  }
+`;
+
+export const HoverArea = styled.div<{ isOpen: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  :hover {
+    cursor: col-resize;
+    ${(props) =>
+      props.isOpen &&
+      ` & + ${Divider} {
+      transform: scaleX(6);
+      ::after {
+        transform: scaleX(0.2) translate(-50%, -50%);
+      }
+    }
+  `}
   }
 `;

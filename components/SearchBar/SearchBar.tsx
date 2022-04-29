@@ -22,25 +22,6 @@ export const SearchBar: FC = () => {
   };
 
   useEffect(() => {
-    let lastScrollTop = 0;
-    const onScroll = (event: any) => {
-      const curScrollTop = event.target.scrollTop;
-      if (curScrollTop > lastScrollTop && searchWrapperRef.current) {
-        searchWrapperRef.current.style.top = '-65px';
-      } else if (searchWrapperRef.current) {
-        searchWrapperRef.current.style.top = '0';
-      }
-      lastScrollTop = curScrollTop;
-    };
-
-    const contentWrapper = getElemByDataId('content-wrapper');
-    if (contentWrapper && searchWrapperRef.current) {
-      contentWrapper.addEventListener('scroll', onScroll, false);
-      return () => void contentWrapper.removeEventListener('scroll', onScroll);
-    }
-  }, []);
-
-  useEffect(() => {
     setIsResultsOpen(false);
   }, [router.asPath]);
 

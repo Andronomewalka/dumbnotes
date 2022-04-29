@@ -109,7 +109,7 @@ export const SlugContentWrapper = styled.article`
   }
 
   ul {
-    list-style-type: disc;
+    list-style: disc;
   }
 
   pre {
