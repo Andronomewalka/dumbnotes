@@ -12,7 +12,7 @@ export const MdxLink: FC<MdxLinkType> = ({
 }) => {
   const router = useRouter();
   const onRouteClick = () => {
-    // use reference in useStaggerAnimation to define should stagger animations apply to page or not
+    // use reference in ApplyVariants to define should stagger animations apply to page or not
     // (mobile routing from Nav occurs flickering for some reasons)
     router.push(`${url}?reference=true`, url);
   };
