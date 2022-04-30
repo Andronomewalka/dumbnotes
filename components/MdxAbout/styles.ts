@@ -74,6 +74,7 @@ export const MdxAboutLinksWrapper = styled.ul`
     align-items: center;
     justify-content: center;
     padding: 13px 40px;
+    margin: 0;
     border-radius: 10px;
     gap: 40px;
     background: #ebf1facc;

@@ -125,8 +125,8 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
       }
     };
 
-    router.events.on('routeChangeStart', onRouteChanged);
-    return () => router.events.off('routeChangeStart', onRouteChanged);
+    router.events.on('routeChangeComplete', onRouteChanged);
+    return () => router.events.off('routeChangeComplete', onRouteChanged);
   }, [isMobile, router.events]);
 
   return (

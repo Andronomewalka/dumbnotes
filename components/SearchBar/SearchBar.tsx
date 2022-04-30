@@ -5,7 +5,6 @@ import useSWR from 'swr';
 import { SearchBarInput } from './SearchBarInput';
 import { SearchBarResults } from './SearchBarResults';
 import { SearchBarWrapper } from './styles';
-import { getElemByDataId } from 'utils/getElemByDataId';
 
 export const SearchBar: FC = () => {
   const router = useRouter();
@@ -13,7 +12,7 @@ export const SearchBar: FC = () => {
   const [filter, setFilter] = useState('');
   const [isResultsOpen, setIsResultsOpen] = useState(false);
   const { data: payload } = useSWR(
-    filter && filter.length > 1 ? `/posts?filter=${filter}` : null
+    filter && filter.length > 1 ? `/posts?filter=${filter}&exclude=["content"]` : null
   );
 
   const onSubmit = (input: string) => {

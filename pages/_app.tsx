@@ -7,6 +7,7 @@ import { SWRConfig } from 'swr';
 import { client } from 'utils/client';
 import { Nav } from 'components/Nav';
 import { SearchBar } from 'components/SearchBar';
+import { SystemNavigationProvider } from 'components/SystemNavigation';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
@@ -25,15 +26,17 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 .catch((e) => void console.log(e)),
           }}
         >
-          <Wrapper>
-            <Nav />
-            <ComponentWrapper data-id='content-wrapper'>
-              <SearchBar />
-              <AnimatePresence exitBeforeEnter>
-                <Component {...pageProps} key={router.asPath} />
-              </AnimatePresence>
-            </ComponentWrapper>
-          </Wrapper>
+          <SystemNavigationProvider>
+            <Wrapper>
+              <Nav />
+              <ComponentWrapper data-id='content-wrapper'>
+                <SearchBar />
+                <AnimatePresence exitBeforeEnter>
+                  <Component {...pageProps} key={router.asPath} />
+                </AnimatePresence>
+              </ComponentWrapper>
+            </Wrapper>
+          </SystemNavigationProvider>
         </SWRConfig>
       </ThemeProvider>
     </>

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import rehypeHighlight from 'rehype-highlight';
 import { Mdx } from 'components/Mdx';
+import { useStaggerAnimation } from 'hooks/useStaggerAnimation';
 import { client } from 'utils/client';
 
 const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
@@ -19,6 +20,8 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     content = <Mdx url={url} prefetchedData={prefetchedData} />;
   }
 
+  const applyAnimations = useStaggerAnimation();
+
   return (
     <>
       <Head>
@@ -27,9 +30,9 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       </Head>
       <SlugContentWrapper
         as={motion.article}
-        initial='initial'
+        initial={applyAnimations ? 'initial' : 'animate'}
         animate='animate'
-        exit='exit'
+        exit={applyAnimations ? 'exit' : ''}
       >
         {content}
       </SlugContentWrapper>

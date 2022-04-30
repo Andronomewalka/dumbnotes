@@ -1,14 +1,13 @@
 import React, { FC, useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
   SearchBarResultsContainer,
   SearchBarResultsLi,
   SearchBarResultsLiHover,
-  SearchBarResultsNoItems,
   SearchBarResultsUl,
 } from './styles';
 import { PostType, SearchBarResultsType } from './types';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const containerVariants = {
   hide: {
@@ -43,7 +42,14 @@ const itemVariants = {
 };
 
 export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
+  const router = useRouter();
   const [hovered, setHovered] = useState<PostType>();
+
+  const onRouteClick = (url: string) => {
+    // use reference in useStaggerAnimation to define should stagger animations apply to page or not
+    // (mobile routing from Nav occurs flickering for some reasons)
+    router.push(`${url}?reference=true`, url);
+  };
 
   return (
     <SearchBarResultsContainer
@@ -66,9 +72,7 @@ export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
               onMouseEnter={() => setHovered(cur)}
               onFocus={() => setHovered(cur)}
             >
-              <Link href={cur.path}>
-                <a>{cur.name}</a>
-              </Link>
+              <a onClick={() => onRouteClick(cur.path)}>{cur.name}</a>
               {cur === hovered && (
                 <SearchBarResultsLiHover
                   as={motion.div}

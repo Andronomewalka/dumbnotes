@@ -76,10 +76,10 @@ export const HoverArea = styled.div<{ isOpen: boolean }>`
   z-index: 1;
 
   :hover {
-    cursor: col-resize;
     ${(props) =>
       props.isOpen &&
-      ` & + ${Divider} {
+      `cursor: col-resize; 
+      & + ${Divider} {
       transform: scaleX(6);
       ::after {
         transform: scaleX(0.2) translate(-50%, -50%);

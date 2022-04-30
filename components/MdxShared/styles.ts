@@ -9,8 +9,9 @@ export const MdxStaggerWrapper = styled.div<{ $stretch: boolean }>`
 
 export const PlainLink = styled.a`
   position: relative;
-  text-decoration: none;
   color: ${(props) => props.theme.palette.blue};
+  text-decoration: none;
+  cursor: pointer;
 
   ::after {
     position: absolute;

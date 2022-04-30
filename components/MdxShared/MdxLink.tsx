@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import { MdxLinkType } from './types';
 import { PlainLink } from './styles';
@@ -10,6 +10,13 @@ export const MdxLink: FC<MdxLinkType> = ({
   external = false,
   plain = true,
 }) => {
+  const router = useRouter();
+  const onRouteClick = () => {
+    // use reference in useStaggerAnimation to define should stagger animations apply to page or not
+    // (mobile routing from Nav occurs flickering for some reasons)
+    router.push(`${url}?reference=true`, url);
+  };
+
   return (
     <>
       {external ? (
@@ -21,9 +28,7 @@ export const MdxLink: FC<MdxLinkType> = ({
           children
         )
       ) : plain ? (
-        <Link href={url} passHref>
-          <PlainLink>{children}</PlainLink>
-        </Link>
+        <PlainLink onClick={onRouteClick}>{children}</PlainLink>
       ) : (
         children
       )}
