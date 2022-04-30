@@ -5,7 +5,7 @@ import { staggerVariant } from 'utils/staggerVariant';
 
 export const MdxStaggerBlock: FC<MdxStyleType> = ({ style, children }) => {
   return (
-    <motion.div variants={staggerVariant} style={style}>
+    <motion.div variants={{}} style={style}>
       {children}
     </motion.div>
   );
