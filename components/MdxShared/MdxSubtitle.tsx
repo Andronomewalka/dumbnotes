@@ -9,6 +9,7 @@ export const MdxSubtitle: FC<MdxSubtitleType> = ({ name, style, children }) => {
     if (containerRef.current) {
       containerRef.current.scrollIntoView({
         behavior: 'smooth',
+        block: 'start',
       });
     }
 

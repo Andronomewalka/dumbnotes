@@ -13,5 +13,5 @@ export interface SearchBarInputType {
 }
 
 export interface SearchBarResultsType {
-  itemsRaw: PostType[];
+  itemsRaw: Partial<PostType>[];
 }

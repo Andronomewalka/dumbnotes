@@ -73,15 +73,18 @@ export const SearchBarResultsContainer = styled.div`
 `;
 
 export const SearchBarResultsUl = styled.ul`
+  max-height: 600px;
   background: ${(props) => props.theme.palette.white};
   border-radius: ${(props) => props.theme.borderRadius};
   box-shadow: ${(props) => props.theme.shadow.focus};
   padding: 20px;
   margin: 0;
   list-style: none;
+  overflow: auto;
 
   @media ${device.mobile} {
     padding: 10px;
+    max-height: 350px;
   }
 `;
 

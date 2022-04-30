@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import Head from 'next/head';
 import styled from 'styled-components';
+import { device } from 'utils/media';
 
 const ServerErrorPage: NextPage = () => {
   return (
@@ -11,7 +12,14 @@ const ServerErrorPage: NextPage = () => {
         <meta name='description' content='internal server error' />
       </Head>
       <Wrapper>
-        <Image src='/repair_kitty.png' width={400} height={400} alt='repair kitty' />
+        <ImageContainer>
+          <Image
+            src='/repair_kitty.png'
+            layout='fill'
+            objectFit='contain'
+            alt='repair kitty'
+          />
+        </ImageContainer>
         <span>Ох, что-то пошло не так, чиним</span>
       </Wrapper>
     </>
@@ -26,8 +34,24 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  width: 100%;
   max-width: 500px;
   margin: auto;
+  padding: 0 1.25rem 1.25rem;
   font-size: 12pt;
   line-height: 1.7;
+
+  @media ${device.mobile} {
+    max-width: none;
+  }
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 400px;
+
+  @media ${device.mobile} {
+    height: 300px;
+  }
 `;

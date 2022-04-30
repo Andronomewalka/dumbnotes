@@ -36,6 +36,7 @@ export const MdxSubtitleWrapper = styled.h3`
   position: relative;
   margin-block-start: 1.5em;
   margin-block-end: 0.5em;
+  scroll-margin-top: 90px;
 
   ::before {
     position: absolute;

@@ -43,7 +43,7 @@ const itemVariants = {
 
 export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
   const router = useRouter();
-  const [hovered, setHovered] = useState<PostType>();
+  const [hovered, setHovered] = useState<Partial<PostType>>();
 
   const onRouteClick = (url: string) => {
     // use reference in useStaggerAnimation to define should stagger animations apply to page or not
@@ -72,7 +72,17 @@ export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
               onMouseEnter={() => setHovered(cur)}
               onFocus={() => setHovered(cur)}
             >
-              <a onClick={() => onRouteClick(cur.path)}>{cur.name}</a>
+              <a
+                tabIndex={0}
+                onClick={() => onRouteClick(cur.path!)}
+                onKeyPress={(event) => {
+                  if (event.code === 'Enter') {
+                    onRouteClick(cur.path!);
+                  }
+                }}
+              >
+                {cur.name}
+              </a>
               {cur === hovered && (
                 <SearchBarResultsLiHover
                   as={motion.div}
