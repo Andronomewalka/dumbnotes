@@ -7,7 +7,7 @@ import { SWRConfig } from 'swr';
 import { client } from 'utils/client';
 import { Nav } from 'components/Nav';
 import { SearchBar } from 'components/SearchBar';
-import { ApplyVariantsProvider } from 'components/ApplyVariants';
+import { VariantsProvider } from 'components/VariantsContext';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 .catch((e) => void console.log(e)),
           }}
         >
-          <ApplyVariantsProvider>
+          <VariantsProvider>
             <Wrapper>
               <Nav />
               <ComponentWrapper data-id='content-wrapper'>
@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 </AnimatePresence>
               </ComponentWrapper>
             </Wrapper>
-          </ApplyVariantsProvider>
+          </VariantsProvider>
         </SWRConfig>
       </ThemeProvider>
     </>

@@ -1,5 +1,4 @@
 import React, { FC, MouseEvent } from 'react';
-import Link from 'next/link';
 import { NavNodeType } from './types';
 import {
   NavUl,
@@ -9,14 +8,32 @@ import {
   NavItemLink,
   NavItemExpandable,
 } from './styles';
+import { useVariants } from 'components/VariantsContext';
+import { useRouter } from 'next/router';
+import useMediaQuery from 'hooks/useMediaQuery';
+import { device } from 'utils/media';
+import { staggerVariant } from 'utils/staggerVariant';
 
 export const NavTreeNode: FC<NavNodeType> = (prop) => {
+  const router = useRouter();
+  const { setVariants } = useVariants();
+  const isMobile = useMediaQuery(device.mobile);
   const { id, name, path, bottom, subItems, isOpen, isSelected, level, onClick } = prop;
   const hasSubItems = (subItems && subItems.length > 0) ?? false;
 
   const onClickInternal = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation(); // to prevent bubbling, and action for parent ul
     onClick?.(prop);
+  };
+
+  const onNavItemLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    if (path && router.asPath !== path) {
+      // mobile routing from Nav occurs flickering for some reasons,
+      // disable variants before navigating
+      setVariants(isMobile ? {} : staggerVariant);
+      router.push(path);
+    }
   };
 
   return (
@@ -39,11 +56,14 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
           )}
         </>
       ) : (
-        <Link href={path || ''} passHref>
-          <NavItemLink level={level} isSelected={isSelected}>
-            {name}
-          </NavItemLink>
-        </Link>
+        <NavItemLink
+          href={path}
+          onClick={onNavItemLinkClick}
+          level={level}
+          isSelected={isSelected}
+        >
+          {name}
+        </NavItemLink>
       )}
     </NavLi>
   );

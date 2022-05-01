@@ -1,9 +1,10 @@
+import React, { FC, MouseEvent } from 'react';
 import { useRouter } from 'next/router';
-import React, { FC } from 'react';
 import { MdxLinkType } from './types';
 import { PlainLink } from './styles';
+import { useVariants } from 'components/VariantsContext';
+import { staggerVariant } from 'utils/staggerVariant';
 
-//TODO:: rework this shitty code later
 export const MdxLink: FC<MdxLinkType> = ({
   children,
   url,
@@ -11,10 +12,11 @@ export const MdxLink: FC<MdxLinkType> = ({
   plain = true,
 }) => {
   const router = useRouter();
-  const onRouteClick = () => {
-    // use reference in ApplyVariants to define should stagger animations apply to page or not
-    // (mobile routing from Nav occurs flickering for some reasons)
-    router.push(`${url}?reference=true`, url);
+  const { setVariants } = useVariants();
+  const onRouteClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    setVariants(staggerVariant);
+    router.push(url);
   };
 
   return (
@@ -28,7 +30,9 @@ export const MdxLink: FC<MdxLinkType> = ({
           children
         )
       ) : plain ? (
-        <PlainLink onClick={onRouteClick}>{children}</PlainLink>
+        <PlainLink href={url} onClick={onRouteClick}>
+          {children}
+        </PlainLink>
       ) : (
         children
       )}
