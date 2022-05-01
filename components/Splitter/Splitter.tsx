@@ -1,8 +1,8 @@
-import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SplitterProp } from './types';
 import { Wrapper, Divider, ExpandButton, HoverArea } from './styles';
 import { ExpandIcon } from './icons';
-import { device, mediaSize } from 'utils/media';
+import { device } from 'utils/media';
 import { useRouter } from 'next/router';
 import useMediaQuery from 'hooks/useMediaQuery';
 import { getRawIsMobile } from 'utils/getRawIsMobile';
@@ -11,40 +11,69 @@ const getPxValue = (value: string) => {
   return parseInt(value, 10);
 };
 
+const getClientX = (args: any) => {
+  return IS_TOUCH ? args.touches?.[0].clientX : args.clientX;
+};
+
+let IS_TOUCH = false;
+
 export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWidth }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const isOpenRef = useRef(isOpen);
+  const hoverRef = useRef<HTMLDivElement>(null);
   const prevContainerWidth = useRef('-1px');
   const expandButtonRef = useRef<HTMLButtonElement>(null);
   const isMobile = useMediaQuery(device.mobile);
 
-  const onDividerMouseDown = (mouseDownEvent: MouseEvent) => {
+  useEffect(() => {
+    IS_TOUCH = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }, []);
+
+  const onDividerMouseDown = (downEvent: any) => {
     if (!containerRef.current || !isOpen) {
       return;
     }
 
+    // if touch on expand button
+    if (expandButtonRef.current?.contains(downEvent.target)) {
+      return;
+    }
+
     // without it mouseUp not firing in 5% cases if drag hard;
-    mouseDownEvent.preventDefault();
+    if (typeof downEvent.clientX === 'number') {
+      downEvent.preventDefault();
+    }
 
     const container = containerRef.current;
     const prevTransitionStyle = container.style.transition;
     container.style.transition = 'unset';
     container.style.width = window.getComputedStyle(container, null).width;
-    const initX = mouseDownEvent.clientX;
+    const initX = getClientX(downEvent);
     let lastX = initX;
 
-    document.addEventListener('mousemove', mouseMove);
-    document.addEventListener('mouseup', mouseUp);
+    if (IS_TOUCH) {
+      document.addEventListener('touchmove', mouseMove);
+      document.addEventListener('touchend', mouseUp);
+      document.addEventListener('touchendoutside', mouseUp);
+      document.addEventListener('touchcancel', mouseUp);
+    } else {
+      document.addEventListener('mousemove', mouseMove);
+      document.addEventListener('mouseup', mouseUp);
+    }
 
-    function mouseMove(mouseMoveEvent: any) {
+    if (IS_TOUCH && hoverRef.current) {
+      hoverRef.current.classList.add('hover-from-touch');
+    }
+
+    function mouseMove(moveEvent: any) {
+      const moveX = getClientX(moveEvent);
       if (container) {
-        const newContainerWidth =
-          getPxValue(container.style.width) + mouseMoveEvent.clientX - lastX;
+        const newContainerWidth = getPxValue(container.style.width) + moveX - lastX;
 
         if (newContainerWidth > minContainerWidth) {
           container.style.width = `${newContainerWidth}px`;
-          lastX = mouseMoveEvent.clientX;
+          lastX = moveX;
         }
       } else {
         mouseUp();
@@ -52,8 +81,20 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
     }
 
     function mouseUp() {
-      document.removeEventListener('mousemove', mouseMove);
-      document.removeEventListener('mouseup', mouseUp);
+      if (IS_TOUCH) {
+        document.removeEventListener('touchmove', mouseMove);
+        document.removeEventListener('touchend', mouseUp);
+        document.removeEventListener('touchendoutside', mouseUp);
+        document.removeEventListener('touchcancel', mouseUp);
+      } else {
+        document.removeEventListener('mousemove', mouseMove);
+        document.removeEventListener('mouseup', mouseUp);
+      }
+
+      if (IS_TOUCH && hoverRef.current) {
+        hoverRef.current.classList.remove('hover-from-touch');
+      }
+
       container.style.transition = prevTransitionStyle;
     }
   };
@@ -130,8 +171,8 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   }, [isMobile, router.events]);
 
   return (
-    <Wrapper onMouseDown={onDividerMouseDown}>
-      <HoverArea isOpen={isOpen} />
+    <Wrapper onTouchStart={onDividerMouseDown} onMouseDown={onDividerMouseDown}>
+      <HoverArea ref={hoverRef} isOpen={isOpen} />
       <Divider />
       <ExpandButton ref={expandButtonRef} onClick={onExpandClick} isOpen={isOpen}>
         <ExpandIcon />
