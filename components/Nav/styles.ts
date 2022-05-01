@@ -56,8 +56,6 @@ export const NavUlExternal = styled.ul`
 `;
 
 export const NavWrapper = styled.nav<{ minWidth: string }>`
-  display: flex;
-  flex-direction: column;
   width: 100%;
   min-width: ${(props) => props.minWidth};
   margin: 20px 6px 20px 20px;
@@ -78,6 +76,11 @@ export const NavWrapper = styled.nav<{ minWidth: string }>`
     min-width: 0;
     margin: 20px 10px;
     pointer-events: none;
+  }
+
+  /* hide navigation before transitions on first load on mobile */
+  @media ${device.mobile} {
+    display: none;
   }
 `;
 

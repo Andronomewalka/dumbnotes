@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
+import useMediaQuery from 'hooks/useMediaQuery';
+import { device } from 'utils/media';
 import { SplitterProp } from './types';
 import { Wrapper, Divider, ExpandButton, HoverArea } from './styles';
 import { ExpandIcon } from './icons';
-import { device } from 'utils/media';
-import { useRouter } from 'next/router';
-import useMediaQuery from 'hooks/useMediaQuery';
 import { getRawIsMobile } from 'utils/getRawIsMobile';
 
 const getPxValue = (value: string) => {
@@ -25,6 +26,7 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   const prevContainerWidth = useRef('-1px');
   const expandButtonRef = useRef<HTMLButtonElement>(null);
   const isMobile = useMediaQuery(device.mobile);
+  const isFirstRenderRef = useRef(true);
 
   useEffect(() => {
     IS_TOUCH = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -141,8 +143,10 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   }, [openContainer, closeContainer, isOpen]);
 
   // close container when isMobile changed
-  useEffect(() => {
-    if (isMobile && !isOpenRef.current) {
+  useIsomorphicLayoutEffect(() => {
+    if (isFirstRenderRef.current) {
+      return;
+    } else if (isMobile && !isOpenRef.current) {
       closeContainer();
     } else if (isMobile && isOpenRef.current) {
       setIsOpen(false);
@@ -150,9 +154,28 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
       prevContainerWidth.current = `${minContainerWidth}px`;
       openContainer();
     } else if (!isMobile && !isOpenRef.current) {
+      prevContainerWidth.current = `${minContainerWidth}px`;
       setIsOpen(true);
     }
   }, [openContainer, closeContainer, containerRef, isMobile, minContainerWidth]);
+
+  // prevent upper useEffect on page load to remove transition artifacts
+
+  useIsomorphicLayoutEffect(() => {
+    if (isFirstRenderRef.current) {
+      isFirstRenderRef.current = false;
+    }
+  }, [isMobile]);
+
+  // hide navigation before transitions on first load on mobile
+  useIsomorphicLayoutEffect(() => {
+    if (isMobile)
+      setTimeout(() => {
+        if (containerRef.current) {
+          containerRef.current.style.display = 'block';
+        }
+      }, 500);
+  }, [isMobile]);
 
   const onExpandClick = () => {
     setIsOpen(!isOpen);
