@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 import { MdxStyleType } from 'components/MdxShared';
-import { staggerVariant } from 'utils/staggerVariant';
+import { useVariants } from 'components/VariantsContext';
 import { MdxAboutDisclaimerWrapper } from './styles';
 
 export const MdxAboutDisclaimer: FC<MdxStyleType> = ({ children }) => {
+  const { variants } = useVariants();
   return (
-    <MdxAboutDisclaimerWrapper as={motion.div} variants={staggerVariant}>
+    <MdxAboutDisclaimerWrapper as={motion.div} variants={variants}>
       {children}
     </MdxAboutDisclaimerWrapper>
   );

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { device } from 'utils/media';
 
 export const ExpandButton = styled.button<{ isOpen: boolean }>`
@@ -67,6 +67,16 @@ export const Wrapper = styled.div`
   }
 `;
 
+const hoverCss = css`
+  cursor: col-resize;
+  & + ${Divider} {
+    transform: scaleX(6);
+    ::after {
+      transform: scaleX(0.2) translate(-50%, -50%);
+    }
+  }
+`;
+
 export const HoverArea = styled.div<{ isOpen: boolean }>`
   position: absolute;
   top: 0;
@@ -76,15 +86,10 @@ export const HoverArea = styled.div<{ isOpen: boolean }>`
   z-index: 1;
 
   :hover {
-    ${(props) =>
-      props.isOpen &&
-      `cursor: col-resize; 
-      & + ${Divider} {
-      transform: scaleX(6);
-      ::after {
-        transform: scaleX(0.2) translate(-50%, -50%);
-      }
-    }
-  `}
+    ${(props) => props.isOpen && hoverCss}
+  }
+
+  &.hover-from-touch {
+    ${(props) => props.isOpen && hoverCss}
   }
 `;

@@ -8,6 +8,8 @@ import {
 } from './styles';
 import { PostType, SearchBarResultsType } from './types';
 import { motion } from 'framer-motion';
+import { useVariants } from 'components/VariantsContext';
+import { staggerVariant } from 'utils/staggerVariant';
 
 const containerVariants = {
   hide: {
@@ -43,12 +45,12 @@ const itemVariants = {
 
 export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
   const router = useRouter();
+  const { setVariants } = useVariants();
   const [hovered, setHovered] = useState<Partial<PostType>>();
 
   const onRouteClick = (url: string) => {
-    // use reference in useStaggerAnimation to define should stagger animations apply to page or not
-    // (mobile routing from Nav occurs flickering for some reasons)
-    router.push(`${url}?reference=true`, url);
+    setVariants(staggerVariant);
+    router.push(url);
   };
 
   return (
