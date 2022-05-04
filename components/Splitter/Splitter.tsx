@@ -174,7 +174,7 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
         if (containerRef.current) {
           containerRef.current.style.display = 'block';
         }
-      }, 500);
+      }, 50);
   }, [isMobile]);
 
   const onExpandClick = () => {

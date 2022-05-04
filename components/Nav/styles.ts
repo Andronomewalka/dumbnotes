@@ -94,6 +94,11 @@ const BaseNavItem = css`
   min-height: 30px;
   padding: 5px 10px;
   border-radius: 5px;
+
+  @media ${device.mobile} {
+    font-size: 13pt;
+    padding: 7px 10px;
+  }
 `;
 
 export const NavItemExpandable = styled.div<{ level: number }>`
@@ -108,6 +113,10 @@ export const NavItemExpandable = styled.div<{ level: number }>`
 
   :focus {
     outline: none;
+  }
+
+  @media ${device.mobile} {
+    padding-left: ${(props) => `${props.level * 10}px`};
   }
 `;
 
@@ -140,6 +149,10 @@ export const NavItemLink = styled.a<{ isSelected: boolean; level: number }>`
 
   :focus {
     outline: none;
+  }
+
+  @media ${device.mobile} {
+    padding-left: ${(props) => `${props.level * 10}px`};
   }
 `;
 

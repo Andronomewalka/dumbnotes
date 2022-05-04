@@ -28,10 +28,12 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
 
   const onNavItemLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    if (path && router.asPath !== path) {
+    if (path) {
       // mobile routing from Nav occurs flickering for some reasons,
       // disable variants before navigating
-      setVariants(isMobile ? {} : staggerVariant);
+      if (router.asPath !== path) {
+        setVariants(isMobile ? {} : staggerVariant);
+      }
       router.push(path);
     }
   };
