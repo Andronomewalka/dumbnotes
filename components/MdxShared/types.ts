@@ -17,7 +17,6 @@ export interface MdxSubtitleType extends MdxStyleType {
 export interface MdxLinkType {
   url: string;
   external?: boolean;
-  plain?: boolean;
 }
 
 export interface MdxImageType {

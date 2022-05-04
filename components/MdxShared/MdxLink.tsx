@@ -5,37 +5,20 @@ import { PlainLink } from './styles';
 import { useVariants } from 'components/VariantsContext';
 import { staggerVariant } from 'utils/staggerVariant';
 
-export const MdxLink: FC<MdxLinkType> = ({
-  children,
-  url,
-  external = false,
-  plain = true,
-}) => {
+export const MdxLink: FC<MdxLinkType> = ({ children, url, external = false }) => {
   const router = useRouter();
   const { setVariants } = useVariants();
   const onRouteClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    setVariants(staggerVariant);
-    router.push(url);
+    if (!external) {
+      event.preventDefault();
+      setVariants(staggerVariant);
+      router.push(url);
+    }
   };
 
   return (
-    <>
-      {external ? (
-        plain ? (
-          <PlainLink href={url} target='_blank'>
-            {children}
-          </PlainLink>
-        ) : (
-          children
-        )
-      ) : plain ? (
-        <PlainLink href={url} onClick={onRouteClick}>
-          {children}
-        </PlainLink>
-      ) : (
-        children
-      )}
-    </>
+    <PlainLink onClick={onRouteClick} href={url} target='_blank'>
+      {children}
+    </PlainLink>
   );
 };

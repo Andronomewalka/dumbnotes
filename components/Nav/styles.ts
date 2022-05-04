@@ -19,13 +19,13 @@ export const Wrapper = styled.div`
 export const NavIndent = styled.div<{ level: number }>`
   position: absolute;
   height: 100%;
-  width: 2px;
+  width: 1px;
   top: 0;
   left: ${(props) => `${props.level * 10}px`};
   margin-left: -7px;
   z-index: 1;
   opacity: 0;
-  background: ${(props) => props.theme.palette.accent};
+  background: ${(props) => props.theme.palette.gray};
   transition: all ease 0.3s;
 `;
 
