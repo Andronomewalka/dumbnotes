@@ -7,7 +7,7 @@ export const MdxImage: FC<MdxImageType> = ({ src, width, height, stretch, alt })
   return (
     <>
       {stretch ? (
-        <MdxImageWrapper height={height ?? 350}>
+        <MdxImageWrapper>
           <Image src={src} layout='fill' objectFit='contain' alt={alt} />
         </MdxImageWrapper>
       ) : (

@@ -78,8 +78,13 @@ export const MdxSourcesWrapper = styled(MdxDisclaimerWrapper)`
   }
 `;
 
-export const MdxImageWrapper = styled.div<{ height: number }>`
-  position: relative;
-  width: 100%;
-  height: ${(props) => props.height}px;
+export const MdxImageWrapper = styled.div`
+  span {
+    position: unset !important;
+  }
+
+  img {
+    position: unset !important;
+    height: unset !important;
+  }
 `;
