@@ -75,6 +75,7 @@ export const NavWrapper = styled.nav<{ minWidth: string }>`
     opacity: 0;
     min-width: 0;
     margin: 20px 10px;
+    white-space: nowrap;
     pointer-events: none;
   }
 

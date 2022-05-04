@@ -15,6 +15,10 @@ export const MdxAboutWrapper = styled.div`
   @media ${device.mobile} {
     padding: 15px 0 0;
   }
+
+  @media (max-height: 730px) {
+    height: auto;
+  }
 `;
 
 export const MdxAboutInfoWrapper = styled.div`
@@ -82,8 +86,11 @@ export const MdxAboutLinksWrapper = styled.ul`
 
     @media ${device.mobile} {
       padding: 10px 20px;
-      margin-bottom: 10px;
       gap: 15px;
+    }
+
+    @media (max-height: 730px) {
+      margin-bottom: 20px;
     }
   }
 `;
