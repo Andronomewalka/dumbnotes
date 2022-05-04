@@ -77,3 +77,9 @@ export const MdxSourcesWrapper = styled(MdxDisclaimerWrapper)`
     margin-bottom: 0;
   }
 `;
+
+export const MdxImageWrapper = styled.div<{ height: number }>`
+  position: relative;
+  width: 100%;
+  height: ${(props) => props.height}px;
+`;

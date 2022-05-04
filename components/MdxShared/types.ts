@@ -21,7 +21,8 @@ export interface MdxLinkType {
 
 export interface MdxImageType {
   src: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
+  stretch?: boolean;
   alt: string;
 }
