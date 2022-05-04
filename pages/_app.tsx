@@ -29,12 +29,12 @@ function MyApp({ Component, pageProps, router }: AppProps) {
           <VariantsProvider>
             <Wrapper>
               <Nav />
-              <ComponentWrapper data-id='content-wrapper'>
+              <ContentWrapper data-id='content-wrapper'>
                 <SearchBar />
                 <AnimatePresence exitBeforeEnter>
                   <Component {...pageProps} key={router.asPath} />
                 </AnimatePresence>
-              </ComponentWrapper>
+              </ContentWrapper>
             </Wrapper>
           </VariantsProvider>
         </SWRConfig>
@@ -52,7 +52,7 @@ const Wrapper = styled.main`
   overflow: hidden;
 `;
 
-const ComponentWrapper = styled.div`
+const ContentWrapper = styled.div`
   position: relative;
   flex: 1 0;
   display: flex;

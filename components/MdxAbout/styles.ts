@@ -82,6 +82,7 @@ export const MdxAboutLinksWrapper = styled.ul`
 
     @media ${device.mobile} {
       padding: 10px 20px;
+      margin-bottom: 10px;
       gap: 15px;
     }
   }

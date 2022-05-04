@@ -6,18 +6,30 @@ import styled from 'styled-components';
 import rehypeHighlight from 'rehype-highlight';
 import { Mdx } from 'components/Mdx';
 import { client } from 'utils/client';
+import { getElemByDataId } from 'utils/getElemByDataId';
+import { useRouter } from 'next/router';
 
 const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   name,
   fallback,
   error,
 }) => {
+  const router = useRouter();
   let content = <span>{error}</span>;
   if (fallback) {
     const url = Object.keys(fallback)[0];
     const prefetchedData = fallback[url];
     content = <Mdx url={url} prefetchedData={prefetchedData} />;
   }
+
+  const onAnimationStart = (event: any) => {
+    if (event === 'animate') {
+      const contentWrapper = getElemByDataId('content-wrapper');
+      if (contentWrapper && !router.asPath.includes('#')) {
+        contentWrapper.scrollTop = 0;
+      }
+    }
+  };
 
   return (
     <>
@@ -30,6 +42,7 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         initial='initial'
         animate='animate'
         exit='exit'
+        onAnimationStart={onAnimationStart}
       >
         {content}
       </SlugContentWrapper>

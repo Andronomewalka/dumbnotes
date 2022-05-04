@@ -77,7 +77,10 @@ export const Nav: FC = () => {
   // define selected on route
   useEffect(() => {
     if (navItemsBase.length > 0) {
-      const selectedNode = getNavNodeByPath(navItemsBase, router.asPath);
+      const route = router.asPath.includes('#')
+        ? router.asPath.slice(0, router.asPath.indexOf('#'))
+        : router.asPath;
+      const selectedNode = getNavNodeByPath(navItemsBase, route);
       if (selectedNode) {
         if (isFirstNavigation.current) {
           // wait for dom to fully load before first navigation
