@@ -5,6 +5,8 @@ import useSWR from 'swr';
 import { SearchBarInput } from './SearchBarInput';
 import { SearchBarResults } from './SearchBarResults';
 import { SearchBarWrapper } from './styles';
+import { PostType } from './types';
+import { removePostIfExist } from './utils';
 
 export const SearchBar: FC = () => {
   const router = useRouter();
@@ -24,6 +26,14 @@ export const SearchBar: FC = () => {
     setIsResultsOpen(false);
   }, [router.asPath]);
 
+  let itemsResult: Array<Partial<PostType>> = [];
+
+  if (Array.isArray(payload?.data)) {
+    itemsResult = [...payload.data];
+    removePostIfExist(itemsResult, 'home');
+    removePostIfExist(itemsResult, 'about');
+  }
+
   return (
     <SearchBarWrapper
       ref={searchWrapperRef}
@@ -34,7 +44,7 @@ export const SearchBar: FC = () => {
       <SearchBarInput onSubmit={onSubmit} />
       <AnimatePresence>
         {isResultsOpen && (
-          <SearchBarResults key='search-bar-results' itemsRaw={payload?.data || []} />
+          <SearchBarResults key='search-bar-results' itemsRaw={itemsResult} />
         )}
       </AnimatePresence>
     </SearchBarWrapper>
