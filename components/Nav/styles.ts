@@ -56,7 +56,7 @@ export const NavUlExternal = styled.ul`
 `;
 
 export const NavWrapper = styled.nav<{ minWidth: string }>`
-  width: 100%;
+  width: ${(props) => props.minWidth};
   min-width: ${(props) => props.minWidth};
   margin: 20px 6px 20px 20px;
   opacity: 1;
