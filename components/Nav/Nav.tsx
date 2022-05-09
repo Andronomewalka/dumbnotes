@@ -22,7 +22,7 @@ export const Nav: FC = () => {
   const router = useRouter();
   const { data: response } = useSWR(`/navigation`);
   const [navItems, setNavItems] = useState<NavNodeType[]>([]);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLUListElement | null>(null);
   const isFirstNavigation = useRef(true);
 
   // get base navigation when it's changed from swr response
@@ -115,19 +115,17 @@ export const Nav: FC = () => {
   }, [navItemsBase, onNavClick]);
 
   return (
-    <Wrapper>
-      <NavWrapper minWidth={`${minNavWidth}px`} ref={wrapperRef}>
+    <NavWrapper>
+      <NavUlExternal minWidth={`${minNavWidth}px`} ref={wrapperRef}>
         {!navItems || !navItems.length ? (
           <NavStub />
         ) : (
-          <NavUlExternal>
-            {navItems.map((item) => (
-              <NavTreeNode key={item.id} {...item} level={item.level} />
-            ))}
-          </NavUlExternal>
+          navItems.map((item) => (
+            <NavTreeNode key={item.id} {...item} level={item.level} />
+          ))
         )}
-      </NavWrapper>
+      </NavUlExternal>
       <Splitter containerRef={wrapperRef} minContainerWidth={minNavWidth} />
-    </Wrapper>
+    </NavWrapper>
   );
 };

@@ -1,12 +1,13 @@
 import React, { FC, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { motion } from 'framer-motion';
-import { MdxStaggerContainerType } from './types';
-import { MdxStaggerWrapper } from './styles';
+import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
+import { getElemByDataId } from 'utils/getElemByDataId';
+import { MdxArticleType } from './types';
+import { MdxArticleWrapper } from './styles';
 import { hideContentScrollBar, showContentScrollBar } from './utils';
 
-export const MdxStaggerContainer: FC<MdxStaggerContainerType> = ({
+export const MdxArticle: FC<MdxArticleType> = ({
   stagger = 0.1,
   hideScrollBar,
   stretch,
@@ -43,15 +44,14 @@ export const MdxStaggerContainer: FC<MdxStaggerContainerType> = ({
     }
   }, []);
 
-  useIsomorphicLayoutEffect(() => {
-    if (stretch) {
-      const article = document.querySelector('article');
-      if (article) {
-        article.style.height = '100%';
-        article.style.width = '100%';
+  const onAnimationStart = (event: any) => {
+    if (event === 'animate') {
+      const contentWrapper = getElemByDataId('content-wrapper');
+      if (contentWrapper && !router.asPath.includes('#')) {
+        contentWrapper.scrollTop = 0;
       }
     }
-  }, []);
+  };
 
   const onAnimationComplete = (definition: string) => {
     if (definition === 'animate') {
@@ -60,14 +60,18 @@ export const MdxStaggerContainer: FC<MdxStaggerContainerType> = ({
   };
 
   return (
-    <MdxStaggerWrapper
-      as={motion.div}
+    <MdxArticleWrapper
+      as={motion.article}
+      initial='initial'
+      animate='animate'
+      exit='exit'
       variants={staggerVariant}
       style={style}
+      onAnimationStart={onAnimationStart}
       onAnimationComplete={onAnimationComplete}
       $stretch={stretch ?? false}
     >
       {children}
-    </MdxStaggerWrapper>
+    </MdxArticleWrapper>
   );
 };

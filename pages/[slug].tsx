@@ -1,20 +1,15 @@
 import type { NextPage, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { serialize } from 'next-mdx-remote/serialize';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
 import rehypeHighlight from 'rehype-highlight';
 import { Mdx } from 'components/Mdx';
 import { client } from 'utils/client';
-import { getElemByDataId } from 'utils/getElemByDataId';
-import { useRouter } from 'next/router';
 
 const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   name,
   fallback,
   error,
 }) => {
-  const router = useRouter();
   let content = <span>{error}</span>;
   if (fallback) {
     const url = Object.keys(fallback)[0];
@@ -22,30 +17,13 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     content = <Mdx url={url} prefetchedData={prefetchedData} />;
   }
 
-  const onAnimationStart = (event: any) => {
-    if (event === 'animate') {
-      const contentWrapper = getElemByDataId('content-wrapper');
-      if (contentWrapper && !router.asPath.includes('#')) {
-        contentWrapper.scrollTop = 0;
-      }
-    }
-  };
-
   return (
     <>
       <Head>
         <title>{name}</title>
         <meta name='description' content={name} />
       </Head>
-      <SlugContentWrapper
-        as={motion.article}
-        initial='initial'
-        animate='animate'
-        exit='exit'
-        onAnimationStart={onAnimationStart}
-      >
-        {content}
-      </SlugContentWrapper>
+      {content}
     </>
   );
 };
@@ -103,42 +81,3 @@ export async function getStaticPaths() {
     fallback: 'blocking',
   };
 }
-
-// customize md components
-export const SlugContentWrapper = styled.article`
-  line-height: 1.7;
-  padding: 0 1.25rem 1.25rem;
-
-  ul,
-  ol {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  ul li::marker {
-    color: ${(props) => props.theme.palette.accent};
-    font-size: 1.5em;
-  }
-
-  ul {
-    list-style: disc;
-  }
-
-  pre {
-    margin: 1.35rem 0;
-  }
-
-  /* select only inline code (multiline is styled by rehype-highlight)*/
-  *:not(pre) > code {
-    padding: 0.2rem 0.35rem;
-    border-radius: ${(props) => props.theme.borderRadius};
-    background: ${(props) => props.theme.palette.gray2};
-    font-family: Consolas, monospace;
-  }
-
-  /* multiline code container */
-  .hljs {
-    border-radius: ${(props) => props.theme.borderRadius};
-  }
-`;

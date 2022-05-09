@@ -4,13 +4,15 @@ import { serialize } from 'next-mdx-remote/serialize';
 import useSWR from 'swr';
 import rehypeHighlight from 'rehype-highlight';
 import {
+  MdxArticle,
   MdxImage,
   MdxInfo,
   MdxLink,
+  MdxSourceLink,
   MdxSources,
   MdxStaggerBlock,
-  MdxStaggerContainer,
   MdxSubtitle,
+  MdxTitle,
 } from 'components/MdxShared';
 import {
   MdxAbout,
@@ -22,9 +24,10 @@ import { MdxType } from './types';
 import { MdxHome } from 'components/MdxHome';
 
 const components = {
-  MdxStaggerContainer,
+  MdxArticle,
   MdxStaggerBlock,
   MdxSubtitle,
+  MdxTitle,
   MdxInfo,
   MdxHome,
   MdxAbout,
@@ -33,6 +36,7 @@ const components = {
   MdxAboutLinks,
   MdxLink,
   MdxImage,
+  MdxSourceLink,
   MdxSources,
 };
 

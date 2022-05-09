@@ -37,7 +37,7 @@ export const SearchBar: FC = () => {
   return (
     <SearchBarWrapper
       ref={searchWrapperRef}
-      as={motion.div}
+      as={motion.header}
       onBlur={() => setIsResultsOpen(false)}
       onFocus={() => setIsResultsOpen(!!filter)}
     >

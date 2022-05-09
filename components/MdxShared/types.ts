@@ -4,7 +4,7 @@ export interface MdxStyleType {
   style?: CSSProperties;
 }
 
-export interface MdxStaggerContainerType extends MdxStyleType {
+export interface MdxArticleType extends MdxStyleType {
   stagger?: number;
   hideScrollBar?: boolean;
   stretch?: boolean;

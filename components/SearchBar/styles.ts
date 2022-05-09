@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mediaSize, device } from 'utils/media';
 
-export const SearchBarWrapper = styled.div`
+export const SearchBarWrapper = styled.header`
   position: sticky;
   top: 0;
   left: 0;

@@ -1,10 +1,46 @@
 import styled from 'styled-components';
 
-export const MdxStaggerWrapper = styled.div<{ $stretch: boolean }>`
+// customize md components
+export const MdxArticleWrapper = styled.div<{ $stretch: boolean }>`
+  width: 100%;
   height: ${(props) => (props.$stretch ? '100%' : 'auto')};
-  width: ${(props) => (props.$stretch ? '100%' : 'auto')};
   max-width: ${(props) => (props.$stretch ? 'none' : '800px')};
   margin: ${(props) => (props.$stretch ? '0' : '0 auto')};
+  line-height: 1.7;
+  padding: 0 1.25rem 1.25rem;
+
+  ul,
+  ol {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  ul li::marker {
+    color: ${(props) => props.theme.palette.accent};
+    font-size: 1.5em;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  pre {
+    margin: 1.35rem 0;
+  }
+
+  /* select only inline code (multiline is styled by rehype-highlight)*/
+  *:not(pre) > code {
+    padding: 0.2rem 0.35rem;
+    border-radius: ${(props) => props.theme.borderRadius};
+    background: ${(props) => props.theme.palette.gray2};
+    font-family: Consolas, monospace;
+  }
+
+  /* multiline code container */
+  .hljs {
+    border-radius: ${(props) => props.theme.borderRadius};
+  }
 `;
 
 export const PlainLink = styled.a`
@@ -32,11 +68,12 @@ export const PlainLink = styled.a`
   }
 `;
 
-export const MdxSubtitleWrapper = styled.h3`
+export const MdxSubtitleWrapper = styled.h2`
   position: relative;
   margin-block-start: 1.5em;
   margin-block-end: 0.5em;
   scroll-margin-top: 90px;
+  font-size: 1.17em;
 
   ::before {
     position: absolute;
@@ -70,12 +107,11 @@ export const MdxDisclaimerWrapper = styled.div`
   color: ${(props) => props.theme.palette.gray};
 `;
 
-export const MdxSourcesWrapper = styled(MdxDisclaimerWrapper)`
+export const MdxSourcesWrapper = styled.ul`
   font-size: 12pt;
-  ul {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+  color: ${(props) => props.theme.palette.gray};
+  margin-top: 0;
+  margin-bottom: 0;
 `;
 
 export const MdxImageWrapper = styled.div`

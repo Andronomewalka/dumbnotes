@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 import { device } from 'utils/media';
 
-export const ExpandButton = styled.button<{ isOpen: boolean }>`
+export const ExpandButton = styled.button.attrs({
+  'aria-label': 'exapnd-button',
+})<{ isOpen: boolean }>`
   position: absolute;
   top: 20px;
   left: 50%;

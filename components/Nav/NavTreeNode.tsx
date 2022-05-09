@@ -1,13 +1,6 @@
 import React, { FC, MouseEvent } from 'react';
 import { NavNodeType } from './types';
-import {
-  NavUl,
-  NavLi,
-  NavIndent,
-  NavExpandItems,
-  NavItemLink,
-  NavItemExpandable,
-} from './styles';
+import { NavUl, NavLi, NavExpandItems, NavItemLink, NavItemExpandable } from './styles';
 import { useVariants } from 'components/VariantsContext';
 import { useRouter } from 'next/router';
 import useMediaQuery from 'hooks/useMediaQuery';
@@ -39,7 +32,7 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
   };
 
   return (
-    <NavLi bottom={bottom || false}>
+    <NavLi level={level} bottom={bottom || false}>
       {hasSubItems ? (
         <>
           <NavItemExpandable level={level} onClick={onClickInternal}>
@@ -48,12 +41,9 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
           </NavItemExpandable>
           {hasSubItems && (
             <NavUl data-nav-sub-id={id}>
-              <>
-                <NavIndent level={level + 1} />
-                {subItems?.map((item) => (
-                  <NavTreeNode key={item.id} {...item} level={level + 1} />
-                ))}
-              </>
+              {subItems?.map((item) => (
+                <NavTreeNode key={item.id} {...item} level={level + 1} />
+              ))}
             </NavUl>
           )}
         </>

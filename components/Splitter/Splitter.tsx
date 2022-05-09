@@ -160,7 +160,6 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   }, [openContainer, closeContainer, containerRef, isMobile, minContainerWidth]);
 
   // prevent upper useEffect on page load to remove transition artifacts
-
   useIsomorphicLayoutEffect(() => {
     if (isFirstRenderRef.current) {
       isFirstRenderRef.current = false;
@@ -172,7 +171,7 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
     if (isMobile)
       setTimeout(() => {
         if (containerRef.current) {
-          containerRef.current.style.display = 'block';
+          containerRef.current.style.display = `flex`;
         }
       }, 50);
   }, [isMobile]);

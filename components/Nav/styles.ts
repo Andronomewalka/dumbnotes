@@ -16,19 +16,6 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const NavIndent = styled.div<{ level: number }>`
-  position: absolute;
-  height: 100%;
-  width: 1px;
-  top: 0;
-  left: ${(props) => `${props.level * 10}px`};
-  margin-left: -7px;
-  z-index: 1;
-  opacity: 0;
-  background: ${(props) => props.theme.palette.gray};
-  transition: all ease 0.3s;
-`;
-
 const NavUlBase = css`
   position: relative;
   margin: 0;
@@ -43,37 +30,27 @@ export const NavUl = styled.ul`
   transition: height ease 0.3s;
 `;
 
-export const NavUlExternal = styled.ul`
+export const NavUlExternal = styled.ul<{ minWidth: string }>`
   ${NavUlBase};
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: visible;
-
-  @media ${device.mobile} {
-    width: 80%;
-  }
-`;
-
-export const NavWrapper = styled.nav<{ minWidth: string }>`
   width: ${(props) => props.minWidth};
   min-width: ${(props) => props.minWidth};
+  display: flex;
+  flex-direction: column;
   margin: 20px 6px 20px 20px;
-  opacity: 1;
+  overflow-y: visible;
   transition: 0.4s 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear,
-    margin 0.3s linear;
+    margin 0.3s linear, padding 0.3s linear;
 
-  ${NavUlExternal}:hover {
-    ${NavIndent} {
-      opacity: 1;
-    }
+  @media ${device.mobile} {
+    padding-right: 80px;
   }
 
   &.is-hidden {
     transition: 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear,
-      margin 0.3s linear;
+      margin 0.3s linear, padding 0.3s linear;
     opacity: 0;
     min-width: 0;
+    padding-right: 0;
     margin: 20px 10px;
     white-space: nowrap;
     pointer-events: none;
@@ -85,9 +62,46 @@ export const NavWrapper = styled.nav<{ minWidth: string }>`
   }
 `;
 
-export const NavLi = styled.li<{ bottom: boolean }>`
+export const NavLi = styled.li<{ level: number; bottom: boolean }>`
+  position: relative;
   margin-top: ${(props) => (props.bottom ? 'auto' : 0)};
   color: ${(props) => props.theme.palette.dark};
+
+  ::before {
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 1px;
+    top: 0;
+    left: ${(props) => `${props.level * 10}px`};
+    margin-left: -7px;
+    z-index: 1;
+    opacity: 0;
+    background: ${(props) => props.theme.palette.gray};
+    transition: all ease 0.3s;
+  }
+`;
+
+export const NavWrapper = styled.nav`
+  display: flex;
+  height: 100%;
+  opacity: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: ${(props) => props.theme.palette.background};
+
+  @media ${device.mobile} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+  }
+
+  ${NavUlExternal}:hover {
+    ${NavUl} ${NavLi}::before {
+      opacity: 1;
+    }
+  }
 `;
 
 const BaseNavItem = css`
@@ -171,7 +185,7 @@ export const NavExpandItems = styled.div<{ isOpen: boolean }>`
   }
 `;
 
-export const NavStubItem = styled.div<{ number: number }>`
+export const NavStubItem = styled.li<{ number: number }>`
   ${BaseNavItem}
   margin-bottom: 5px;
   background: linear-gradient(
