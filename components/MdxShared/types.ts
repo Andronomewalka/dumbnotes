@@ -5,7 +5,6 @@ export interface MdxStyleType {
 }
 
 export interface MdxArticleType extends MdxStyleType {
-  stagger?: number;
   hideScrollBar?: boolean;
   stretch?: boolean;
 }

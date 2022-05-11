@@ -1,30 +1,20 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { getElemByDataId } from 'utils/getElemByDataId';
+import { staggerContainerVariants } from 'utils/staggerContainerVariants';
 import { MdxArticleType } from './types';
 import { MdxArticleWrapper } from './styles';
 import { hideContentScrollBar, showContentScrollBar } from './utils';
 
 export const MdxArticle: FC<MdxArticleType> = ({
-  stagger = 0.1,
   hideScrollBar,
   stretch,
   style,
   children,
 }) => {
   const router = useRouter();
-  const staggerVariant = useMemo(
-    () => ({
-      animate: {
-        transition: {
-          staggerChildren: stagger,
-        },
-      },
-    }),
-    [stagger]
-  );
 
   // useLayoutEffect for ssr
   useIsomorphicLayoutEffect(() => {
@@ -65,7 +55,7 @@ export const MdxArticle: FC<MdxArticleType> = ({
       initial='initial'
       animate='animate'
       exit='exit'
-      variants={staggerVariant}
+      variants={staggerContainerVariants}
       style={style}
       onAnimationStart={onAnimationStart}
       onAnimationComplete={onAnimationComplete}

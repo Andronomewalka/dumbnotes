@@ -1,21 +1,6 @@
 import styled, { css } from 'styled-components';
 import { device } from 'utils/media';
 
-export const Wrapper = styled.div`
-  display: flex;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: ${(props) => props.theme.palette.background};
-
-  @media ${device.mobile} {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 20;
-  }
-`;
-
 const NavUlBase = css`
   position: relative;
   margin: 0;
@@ -26,7 +11,7 @@ const NavUlBase = css`
 export const NavUl = styled.ul`
   ${NavUlBase};
   height: 0;
-  overflow-y: hidden;
+  overflow: hidden;
   transition: height ease 0.3s;
 `;
 

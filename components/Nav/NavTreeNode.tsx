@@ -1,11 +1,12 @@
 import React, { FC, MouseEvent } from 'react';
-import { NavNodeType } from './types';
-import { NavUl, NavLi, NavExpandItems, NavItemLink, NavItemExpandable } from './styles';
+import { motion } from 'framer-motion';
 import { useVariants } from 'components/VariantsContext';
 import { useRouter } from 'next/router';
 import useMediaQuery from 'hooks/useMediaQuery';
 import { device } from 'utils/media';
-import { staggerVariant } from 'utils/staggerVariant';
+import { staggerVariants } from 'utils/staggerVariants';
+import { NavNodeType } from './types';
+import { NavUl, NavLi, NavExpandItems, NavItemLink, NavItemExpandable } from './styles';
 
 export const NavTreeNode: FC<NavNodeType> = (prop) => {
   const router = useRouter();
@@ -25,14 +26,20 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
       // mobile routing from Nav occurs flickering for some reasons,
       // disable variants before navigating
       if (router.asPath !== path) {
-        setVariants(isMobile ? {} : staggerVariant);
+        setVariants(isMobile ? {} : staggerVariants);
       }
       router.push(path);
     }
   };
 
   return (
-    <NavLi level={level} bottom={bottom || false}>
+    <NavLi
+      level={level}
+      bottom={bottom || false}
+      as={motion.li}
+      initial={{ opacity: 0, x: 60 }}
+      animate={{ opacity: 1, x: 0 }}
+    >
       {hasSubItems ? (
         <>
           <NavItemExpandable level={level} onClick={onClickInternal}>

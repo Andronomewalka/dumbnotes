@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { MdxLinkType } from './types';
 import { PlainLink } from './styles';
 import { useVariants } from 'components/VariantsContext';
-import { staggerVariant } from 'utils/staggerVariant';
+import { staggerVariants } from 'utils/staggerVariants';
 
 export const MdxLink: FC<MdxLinkType> = ({ children, url, external = false }) => {
   const router = useRouter();
@@ -11,7 +11,7 @@ export const MdxLink: FC<MdxLinkType> = ({ children, url, external = false }) =>
   const onRouteClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (!external) {
       event.preventDefault();
-      setVariants(staggerVariant);
+      setVariants(staggerVariants);
       router.push(url);
     }
   };

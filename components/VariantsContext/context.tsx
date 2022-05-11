@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { AnimationProps } from 'framer-motion';
 import { VairantsContextType } from './types';
-import { staggerVariant } from 'utils/staggerVariant';
+import { staggerVariants } from 'utils/staggerVariants';
 import { getRawIsMobile } from 'utils/getRawIsMobile';
 
 const initValue: VairantsContextType = {
-  variants: staggerVariant,
+  variants: staggerVariants,
   setVariants: () => {},
 };
 
@@ -29,7 +29,7 @@ export const VariantsProvider: FC = ({ children }) => {
       // routing by history.back and history.forward history.back also
       // occurs flickering for some reasons, disable variants before navigating
       const mobile = getRawIsMobile();
-      setVariants(mobile ? {} : staggerVariant);
+      setVariants(mobile ? {} : staggerVariants);
       return true;
     });
   }, []);

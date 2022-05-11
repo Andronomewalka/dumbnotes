@@ -1,11 +1,12 @@
 import React, { FC, useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import { AnimatePresence } from 'framer-motion';
 import { Splitter } from 'components/Splitter';
 import { NavTreeNode } from './NavTreeNode';
 import { NavStub } from './NavStub';
 import { NavNodeType } from './types';
-import { Wrapper, NavWrapper, NavUlExternal } from './styles';
+import { NavWrapper, NavUlExternal } from './styles';
 import {
   iterateNavNode,
   getNavNodesFromBase,
@@ -117,13 +118,15 @@ export const Nav: FC = () => {
   return (
     <NavWrapper>
       <NavUlExternal minWidth={`${minNavWidth}px`} ref={wrapperRef}>
-        {!navItems || !navItems.length ? (
-          <NavStub />
-        ) : (
-          navItems.map((item) => (
-            <NavTreeNode key={item.id} {...item} level={item.level} />
-          ))
-        )}
+        <AnimatePresence exitBeforeEnter>
+          {!navItems || !navItems.length ? (
+            <NavStub key='nav-stub' />
+          ) : (
+            navItems.map((item) => (
+              <NavTreeNode key={item.id} {...item} level={item.level} />
+            ))
+          )}
+        </AnimatePresence>
       </NavUlExternal>
       <Splitter containerRef={wrapperRef} minContainerWidth={minNavWidth} />
     </NavWrapper>

@@ -1,4 +1,4 @@
-export const staggerVariant = {
+export const staggerVariants = {
   initial: {
     y: 30,
     opacity: 0,
