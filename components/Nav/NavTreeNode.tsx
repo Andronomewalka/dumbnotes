@@ -1,5 +1,4 @@
 import React, { FC, MouseEvent } from 'react';
-import { motion } from 'framer-motion';
 import { useVariants } from 'components/VariantsContext';
 import { useRouter } from 'next/router';
 import useMediaQuery from 'hooks/useMediaQuery';
@@ -33,13 +32,7 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
   };
 
   return (
-    <NavLi
-      level={level}
-      bottom={bottom || false}
-      as={motion.li}
-      initial={{ opacity: 0, x: 60 }}
-      animate={{ opacity: 1, x: 0 }}
-    >
+    <NavLi level={level} bottom={bottom || false}>
       {hasSubItems ? (
         <>
           <NavItemExpandable level={level} onClick={onClickInternal}>

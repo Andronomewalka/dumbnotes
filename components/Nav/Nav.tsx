@@ -1,12 +1,12 @@
 import React, { FC, useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Splitter } from 'components/Splitter';
 import { NavTreeNode } from './NavTreeNode';
 import { NavStub } from './NavStub';
 import { NavNodeType } from './types';
-import { NavWrapper, NavUlExternal } from './styles';
+import { NavWrapper, NavUlExternal, NavSplitterArea } from './styles';
 import {
   iterateNavNode,
   getNavNodesFromBase,
@@ -14,6 +14,8 @@ import {
   setSelectedNavNode,
   closeUlNode,
   openUlNode,
+  navStubVariants,
+  navItemsVariants,
 } from './utils';
 
 const minNavWidth = 250;
@@ -23,7 +25,7 @@ export const Nav: FC = () => {
   const router = useRouter();
   const { data: response } = useSWR(`/navigation`);
   const [navItems, setNavItems] = useState<NavNodeType[]>([]);
-  const wrapperRef = useRef<HTMLUListElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const isFirstNavigation = useRef(true);
 
   // get base navigation when it's changed from swr response
@@ -91,7 +93,7 @@ export const Nav: FC = () => {
               if (aElement) {
                 return resolve(aElement);
               }
-              setTimeout(waitForAElement, 50);
+              setTimeout(waitForAElement, 200);
             })();
           }).then(() => {
             isFirstNavigation.current = false;
@@ -115,20 +117,41 @@ export const Nav: FC = () => {
     setNavItems(newNavItems);
   }, [navItemsBase, onNavClick]);
 
+  // for dev usage, manually trigger stub
+  const [stub, setStub] = useState(true);
+
+  // for prod
+  const isNavLoading = !navItems || !navItems.length;
+
   return (
     <NavWrapper>
-      <NavUlExternal minWidth={`${minNavWidth}px`} ref={wrapperRef}>
+      <NavSplitterArea minWidth={`${minNavWidth}px`} ref={wrapperRef}>
         <AnimatePresence exitBeforeEnter>
-          {!navItems || !navItems.length ? (
-            <NavStub key='nav-stub' />
-          ) : (
-            navItems.map((item) => (
-              <NavTreeNode key={item.id} {...item} level={item.level} />
-            ))
-          )}
+          <NavUlExternal
+            as={motion.ul}
+            initial='initial'
+            animate='animate'
+            exit='exit'
+            variants={isNavLoading ? navStubVariants : navItemsVariants}
+            key={`nav-${isNavLoading}`}
+          >
+            {isNavLoading ? (
+              <NavStub />
+            ) : (
+              navItems.map((item) => (
+                <NavTreeNode key={item.id} {...item} level={item.level} />
+              ))
+            )}
+          </NavUlExternal>
         </AnimatePresence>
-      </NavUlExternal>
+      </NavSplitterArea>
+
       <Splitter containerRef={wrapperRef} minContainerWidth={minNavWidth} />
+      {process.env.NODE_ENV === 'development' && (
+        <button style={{ position: 'fixed', opacity: 0 }} onClick={() => setStub(!stub)}>
+          stub
+        </button>
+      )}
     </NavWrapper>
   );
 };

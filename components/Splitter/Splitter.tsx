@@ -168,13 +168,14 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
 
   // hide navigation before transitions on first load on mobile
   useIsomorphicLayoutEffect(() => {
-    if (isMobile)
+    if (isMobile) {
       setTimeout(() => {
         if (containerRef.current) {
-          containerRef.current.style.display = `flex`;
+          containerRef.current.classList.add('is-mobile-loaded');
         }
       }, 50);
-  }, [isMobile]);
+    }
+  }, [containerRef.current, isMobile]);
 
   const onExpandClick = () => {
     setIsOpen(!isOpen);

@@ -135,3 +135,22 @@ export const closeUlNode = (node: NavNodeType) => {
   }
   node.isOpen = false;
 };
+
+export const navStubVariants = {
+  initial: {
+    opacity: 0,
+    x: 60,
+    transition: {
+      ease: 'easeInOut',
+      duration: 0.3,
+      delay: 0.3,
+    },
+  },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -60 },
+};
+
+export const navItemsVariants = {
+  initial: { opacity: 0, x: 60 },
+  animate: { opacity: 1, x: 0 },
+};

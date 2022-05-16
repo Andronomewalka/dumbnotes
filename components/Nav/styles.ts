@@ -8,27 +8,13 @@ const NavUlBase = css`
   list-style: none;
 `;
 
-export const NavUl = styled.ul`
-  ${NavUlBase};
-  height: 0;
-  overflow: hidden;
-  transition: height ease 0.3s;
-`;
-
-export const NavUlExternal = styled.ul<{ minWidth: string }>`
-  ${NavUlBase};
+export const NavSplitterArea = styled.div<{ minWidth: string }>`
   width: ${(props) => props.minWidth};
   min-width: ${(props) => props.minWidth};
-  display: flex;
-  flex-direction: column;
-  margin: 20px 6px 20px 20px;
-  overflow-y: visible;
+  padding: 20px 6px 20px 20px;
+
   transition: 0.4s 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear,
     margin 0.3s linear, padding 0.3s linear;
-
-  @media ${device.mobile} {
-    padding-right: 80px;
-  }
 
   &.is-hidden {
     transition: 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear,
@@ -36,7 +22,7 @@ export const NavUlExternal = styled.ul<{ minWidth: string }>`
     opacity: 0;
     min-width: 0;
     padding-right: 0;
-    margin: 20px 10px;
+    padding: 20px 10px;
     white-space: nowrap;
     pointer-events: none;
   }
@@ -44,6 +30,31 @@ export const NavUlExternal = styled.ul<{ minWidth: string }>`
   /* hide navigation before transitions on first load on mobile */
   @media ${device.mobile} {
     display: none;
+
+    &.is-mobile-loaded {
+      display: flex;
+    }
+  }
+`;
+
+export const NavUl = styled.ul`
+  ${NavUlBase};
+  height: 0;
+  overflow: hidden;
+  transition: height ease 0.3s;
+`;
+
+export const NavUlExternal = styled.ul`
+  ${NavUlBase};
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: visible;
+
+  /* hide navigation before transitions on first load on mobile */
+  @media ${device.mobile} {
+    width: 100%;
+    padding-right: 80px;
   }
 `;
 
