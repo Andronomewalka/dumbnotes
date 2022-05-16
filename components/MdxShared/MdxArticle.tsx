@@ -34,29 +34,31 @@ export const MdxArticle: FC<MdxArticleType> = ({
     }
   }, []);
 
+  const onAnimationStart = (stage: string) => {
+    if (stage === 'animate') {
+      const hasAnchor = router.asPath.includes('#');
+      const contentWrapper = getElemByDataId('content-wrapper');
+      if (contentWrapper && !hasAnchor) {
+        contentWrapper.scrollTop = 0;
+      } else if (hasAnchor) {
+        const anchor = router.asPath.substring(router.asPath.indexOf('#') + 1);
+        if (anchor) {
+          const anchorElem = document.querySelector(`a[href$="${anchor}"]`);
+          anchorElem?.parentElement?.scrollIntoView({
+            behavior: 'auto',
+            block: 'start',
+          });
+          contentWrapper.scrollTop -= 30; // scrollIntoView respects translateY, which is -30 on animation start
+        }
+      }
+    }
+  };
+
   const onAnimationComplete = (stage: string) => {
     if (stage === 'animate') {
       showContentScrollBar();
     }
   };
-
-  useIsomorphicLayoutEffect(() => {
-    const hasAnchor = router.asPath.includes('#');
-    const contentWrapper = getElemByDataId('content-wrapper');
-    if (contentWrapper && !hasAnchor) {
-      contentWrapper.scrollTop = 0;
-    } else if (hasAnchor) {
-      const anchor = router.asPath.substring(router.asPath.indexOf('#') + 1);
-      if (anchor) {
-        const anchorElem = document.querySelector(`a[href$="${anchor}"]`);
-        anchorElem?.parentElement?.scrollIntoView({
-          behavior: 'auto',
-          block: 'start',
-        });
-        contentWrapper.scrollTop -= 30; // scrollIntoView respects translateY, which is -30 on animation start
-      }
-    }
-  }, [router.asPath]);
 
   return (
     <MdxArticleWrapper
@@ -66,6 +68,7 @@ export const MdxArticle: FC<MdxArticleType> = ({
       exit='exit'
       variants={staggerContainerVariants}
       style={style}
+      onAnimationStart={onAnimationStart}
       onAnimationComplete={onAnimationComplete}
       $stretch={stretch ?? false}
     >
