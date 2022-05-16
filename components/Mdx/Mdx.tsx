@@ -10,7 +10,6 @@ import {
   MdxLink,
   MdxSourceLink,
   MdxSources,
-  MdxStaggerBlock,
   MdxSubtitle,
   MdxTitle,
 } from 'components/MdxShared';
@@ -22,10 +21,11 @@ import {
 } from 'components/MdxAbout';
 import { MdxType } from './types';
 import { MdxHome } from 'components/MdxHome';
+import { MdxSection } from 'components/MdxSection';
 
 const components = {
   MdxArticle,
-  MdxStaggerBlock,
+  MdxSection,
   MdxSubtitle,
   MdxTitle,
   MdxInfo,

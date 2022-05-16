@@ -72,7 +72,7 @@ export const MdxSubtitleWrapper = styled.h2`
   position: relative;
   margin-block-start: 1.5em;
   margin-block-end: 0.5em;
-  scroll-margin-top: 90px;
+  scroll-margin-top: 65px;
   font-size: 1.17em;
 
   ::before {

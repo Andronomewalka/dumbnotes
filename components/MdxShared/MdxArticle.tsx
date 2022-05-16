@@ -34,8 +34,8 @@ export const MdxArticle: FC<MdxArticleType> = ({
     }
   }, []);
 
-  const onAnimationStart = (event: any) => {
-    if (event === 'animate') {
+  const onAnimationStart = (stage: string) => {
+    if (stage === 'animate') {
       const contentWrapper = getElemByDataId('content-wrapper');
       if (contentWrapper && !router.asPath.includes('#')) {
         contentWrapper.scrollTop = 0;
@@ -43,8 +43,8 @@ export const MdxArticle: FC<MdxArticleType> = ({
     }
   };
 
-  const onAnimationComplete = (definition: string) => {
-    if (definition === 'animate') {
+  const onAnimationComplete = (stage: string) => {
+    if (stage === 'animate') {
       showContentScrollBar();
     }
   };
