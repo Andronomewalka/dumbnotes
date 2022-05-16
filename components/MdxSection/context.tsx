@@ -15,8 +15,6 @@ export const useIsSectionReady = () => {
 export const SectionReadyProvider: FC = ({ children }) => {
   const [isReady, setIsReady] = useState(false);
 
-  console.log('SectionReadyProvider isReady', isReady);
-
   return (
     <SectionReadyContext.Provider
       value={{

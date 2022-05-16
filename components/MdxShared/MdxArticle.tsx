@@ -37,7 +37,7 @@ export const MdxArticle: FC<MdxArticleType> = ({
   const onAnimationStart = (stage: string) => {
     if (stage === 'animate') {
       const contentWrapper = getElemByDataId('content-wrapper');
-      if (contentWrapper && !router.asPath.includes('#')) {
+      if (contentWrapper) {
         contentWrapper.scrollTop = 0;
       }
     }
