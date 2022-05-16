@@ -8,6 +8,7 @@ import {
   MdxImage,
   MdxInfo,
   MdxLink,
+  MdxSection,
   MdxSourceLink,
   MdxSources,
   MdxSubtitle,
@@ -21,7 +22,6 @@ import {
 } from 'components/MdxAbout';
 import { MdxType } from './types';
 import { MdxHome } from 'components/MdxHome';
-import { MdxSection } from 'components/MdxSection';
 
 const components = {
   MdxArticle,

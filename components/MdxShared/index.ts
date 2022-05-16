@@ -2,6 +2,7 @@ export * from './MdxArticle';
 export * from './MdxImage';
 export * from './MdxInfo';
 export * from './MdxLink';
+export * from './MdxSection';
 export * from './MdxSourceLink';
 export * from './MdxSources';
 export * from './MdxSubtitle';

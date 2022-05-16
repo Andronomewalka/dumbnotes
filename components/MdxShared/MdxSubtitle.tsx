@@ -1,12 +1,8 @@
-import React, { FC, MouseEvent, useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
+import React, { FC, MouseEvent, useRef } from 'react';
 import { MdxSubtitleType } from 'components/MdxShared';
-import { useIsSectionReady } from 'components/MdxSection';
 import { MdxSubtitleWrapper } from './styles';
 
 export const MdxSubtitle: FC<MdxSubtitleType> = ({ name, style, children }) => {
-  const router = useRouter();
-  const { isReady } = useIsSectionReady();
   const containerRef = useRef<HTMLHeadingElement>(null);
 
   const onAClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -18,20 +14,9 @@ export const MdxSubtitle: FC<MdxSubtitleType> = ({ name, style, children }) => {
     window.history.replaceState('', '', event.currentTarget.hash);
   };
 
-  useEffect(() => {
-    if (isReady) {
-      const anchor = router.asPath.substring(router.asPath.indexOf('#') + 1);
-      if (anchor === name) {
-        containerRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      }
-    }
-  }, [isReady, name, router.asPath]);
-
+  // own-{name} in id to prevent default scroll to anchor (for some reason, it doesn't respect scroll-margin)
   return (
-    <MdxSubtitleWrapper id={name} style={style} ref={containerRef}>
+    <MdxSubtitleWrapper id={`own-${name}`} style={style} ref={containerRef}>
       <a href={`#${name}`} onClick={onAClick}>
         {children}
       </a>
