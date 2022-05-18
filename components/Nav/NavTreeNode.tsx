@@ -10,7 +10,7 @@ import { NavUl, NavLi, NavExpandItems, NavItemLink, NavItemExpandable } from './
 export const NavTreeNode: FC<NavNodeType> = (prop) => {
   const router = useRouter();
   const { setVariants } = useVariants();
-  const isMobile = useMediaQuery(device.mobile);
+  const isTablet = useMediaQuery(device.tablet);
   const { id, name, path, bottom, subItems, isOpen, isSelected, level, onClick } = prop;
   const hasSubItems = (subItems && subItems.length > 0) ?? false;
 
@@ -22,10 +22,10 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
   const onNavItemLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (path) {
-      // mobile routing from Nav occurs flickering for some reasons,
+      // tablet routing from Nav occurs flickering for some reasons,
       // disable variants before navigating
       if (router.asPath !== path) {
-        setVariants(isMobile ? {} : staggerVariants);
+        setVariants(isTablet ? {} : staggerVariants);
       }
       router.push(path);
     }

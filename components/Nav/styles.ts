@@ -27,11 +27,11 @@ export const NavSplitterArea = styled.div<{ minWidth: string }>`
     pointer-events: none;
   }
 
-  /* hide navigation before transitions on first load on mobile */
-  @media ${device.mobile} {
+  /* hide navigation before transitions on first load on tablet */
+  @media ${device.tablet} {
     display: none;
 
-    &.is-mobile-loaded {
+    &.is-tablet-loaded {
       display: flex;
     }
   }
@@ -51,8 +51,8 @@ export const NavUlExternal = styled.ul`
   flex-direction: column;
   overflow-y: visible;
 
-  /* hide navigation before transitions on first load on mobile */
-  @media ${device.mobile} {
+  /* hide navigation before transitions on first load on tablet */
+  @media ${device.tablet} {
     width: 100%;
     padding-right: 80px;
   }
@@ -86,7 +86,7 @@ export const NavWrapper = styled.nav`
   overflow-x: hidden;
   background: ${(props) => props.theme.palette.background};
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     position: absolute;
     top: 0;
     left: 0;
@@ -105,7 +105,7 @@ const BaseNavItem = css`
   padding: 5px 10px;
   border-radius: 5px;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     font-size: 13pt;
     padding: 7px 10px;
   }
@@ -125,7 +125,7 @@ export const NavItemExpandable = styled.div<{ level: number }>`
     outline: none;
   }
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     padding-left: ${(props) => `${props.level * 10}px`};
   }
 `;
@@ -161,7 +161,7 @@ export const NavItemLink = styled.a<{ isSelected: boolean; level: number }>`
     outline: none;
   }
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     padding-left: ${(props) => `${props.level * 10}px`};
   }
 `;

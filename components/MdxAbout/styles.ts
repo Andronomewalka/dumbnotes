@@ -12,7 +12,7 @@ export const MdxAboutWrapper = styled.div`
   height: 100%;
   padding: 30px 20px 0;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     padding: 15px 0 0;
   }
 
@@ -38,7 +38,7 @@ export const MdxAboutInfoWrapper = styled.div`
     margin-top: 0;
   }
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     font-size: 12pt;
     padding: 0 20px;
 
@@ -66,7 +66,7 @@ export const MdxAboutDisclaimerWrapper = styled(MdxDisclaimerWrapper)`
   margin: 0 10px;
   text-align: center;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     width: auto;
   }
 `;
@@ -84,15 +84,29 @@ export const MdxAboutLinksWrapper = styled.ul`
     background: #ebf1facc;
     list-style: none;
 
-    @media ${device.mobile} {
+    @media ${device.tablet} {
       padding: 10px;
-      gap: 10px;
+      gap: 15px;
     }
 
-    @media (max-width: 375px) {
-      padding: 10px 8px;
-      gap: 8px;
-      font-size: 7pt;
+    @media ${device.mobile} {
+      display: grid;
+      grid-auto-flow: unset;
+      grid-template-columns: repeat(2, 1fr);
+      width: 100%;
+      height: 100%;
+      padding: 15px;
+      background: none;
+
+      li:nth-of-type(5) {
+        grid-row: 1;
+        grid-column: 2;
+      }
+
+      li:nth-of-type(3) {
+        grid-row: 3;
+        grid-column: 1;
+      }
     }
 
     @media (max-height: 730px) {
@@ -126,9 +140,27 @@ export const MdxAboutLinkItemWrapper = styled.li`
     transform: translateX(-50%) scaleX(1);
   }
 
-  @media ${device.mobile} {
-    width: 25px;
+  @media ${device.tablet} {
+    width: 30px;
     font-size: 8pt;
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+    color: ${(props) => props.theme.palette.black};
+    font-size: 9pt;
+
+    ::after {
+      display: none;
+    }
+
+    a {
+      width: 100%;
+    }
+
+    svg {
+      width: 35px;
+    }
   }
 `;
 
@@ -137,10 +169,20 @@ export const MdxAboutLinkA = styled.a`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media ${device.mobile} {
+    flex-direction: column;
+    justify-content: start;
+    gap: 5px;
+  }
 `;
 
 export const MdxAboutLinkDivider = styled.li`
   width: 2px;
   align-self: stretch;
   background: ${(props) => props.theme.palette.gray};
+
+  @media ${device.mobile} {
+    display: none;
+  }
 `;

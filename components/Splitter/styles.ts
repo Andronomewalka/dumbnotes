@@ -26,7 +26,7 @@ export const ExpandButton = styled.button.attrs({
     }
   }
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     position: fixed;
     left: 10px;
     transform: ${(props) => (props.isOpen ? '' : 'rotateZ(180deg)')};
@@ -55,7 +55,7 @@ export const Divider = styled.hr`
     transition: 0.2s all ease;
   }
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     display: none;
   }
 `;
@@ -64,7 +64,7 @@ export const Wrapper = styled.div`
   position: relative;
   padding: 10px 14px;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     padding: 0;
   }
 `;

@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   font-size: 12pt;
   line-height: 1.7;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     max-width: none;
   }
 `;
@@ -51,7 +51,7 @@ const ImageContainer = styled.div`
   width: 100%;
   height: 400px;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     height: 300px;
   }
 `;

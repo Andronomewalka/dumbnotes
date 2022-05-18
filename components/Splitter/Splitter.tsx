@@ -6,7 +6,7 @@ import { device } from 'utils/media';
 import { SplitterProp } from './types';
 import { Wrapper, Divider, ExpandButton, HoverArea } from './styles';
 import { ExpandIcon } from './icons';
-import { getRawIsMobile } from 'utils/getRawIsMobile';
+import { getRawIsTablet } from 'utils/getRawIsTablet';
 
 const getPxValue = (value: string) => {
   return parseInt(value, 10);
@@ -25,7 +25,7 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   const hoverRef = useRef<HTMLDivElement>(null);
   const prevContainerWidth = useRef('-1px');
   const expandButtonRef = useRef<HTMLButtonElement>(null);
-  const isMobile = useMediaQuery(device.mobile);
+  const isTablet = useMediaQuery(device.tablet);
   const isFirstRenderRef = useRef(true);
 
   useEffect(() => {
@@ -104,10 +104,10 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   const openContainer = useCallback(() => {
     const container = containerRef.current;
     const expandButton = expandButtonRef.current;
-    const mobile = getRawIsMobile();
+    const tablet = getRawIsTablet();
     if (container && expandButton) {
       container.classList.remove('is-hidden');
-      if (mobile) {
+      if (tablet) {
         expandButton.style.left = '93%';
         container.style.width = '100vw';
       } else {
@@ -120,12 +120,12 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
   const closeContainer = useCallback(() => {
     const container = containerRef.current;
     const expandButton = expandButtonRef.current;
-    const mobile = getRawIsMobile();
+    const tablet = getRawIsTablet();
     if (container && expandButton) {
       prevContainerWidth.current = window.getComputedStyle(container, null).width;
       container.classList.add('is-hidden');
       container.style.width = '0';
-      if (mobile) {
+      if (tablet) {
         expandButton.style.left = '10px';
       } else {
         expandButton.style.left = '';
@@ -142,56 +142,56 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
     isOpenRef.current = isOpen;
   }, [openContainer, closeContainer, isOpen]);
 
-  // close container when isMobile changed
+  // close container when isTablet changed
   useIsomorphicLayoutEffect(() => {
     if (isFirstRenderRef.current) {
       return;
-    } else if (isMobile && !isOpenRef.current) {
+    } else if (isTablet && !isOpenRef.current) {
       closeContainer();
-    } else if (isMobile && isOpenRef.current) {
+    } else if (isTablet && isOpenRef.current) {
       setIsOpen(false);
-    } else if (!isMobile && isOpenRef.current) {
+    } else if (!isTablet && isOpenRef.current) {
       prevContainerWidth.current = `${minContainerWidth}px`;
       openContainer();
-    } else if (!isMobile && !isOpenRef.current) {
+    } else if (!isTablet && !isOpenRef.current) {
       prevContainerWidth.current = `${minContainerWidth}px`;
       setIsOpen(true);
     }
-  }, [openContainer, closeContainer, containerRef, isMobile, minContainerWidth]);
+  }, [openContainer, closeContainer, containerRef, isTablet, minContainerWidth]);
 
   // prevent upper useEffect on page load to remove transition artifacts
   useIsomorphicLayoutEffect(() => {
     if (isFirstRenderRef.current) {
       isFirstRenderRef.current = false;
     }
-  }, [isMobile]);
+  }, [isTablet]);
 
-  // hide navigation before transitions on first load on mobile
+  // hide navigation before transitions on first load on tablet
   useIsomorphicLayoutEffect(() => {
-    if (isMobile) {
+    if (isTablet) {
       setTimeout(() => {
         if (containerRef.current) {
-          containerRef.current.classList.add('is-mobile-loaded');
+          containerRef.current.classList.add('is-tablet-loaded');
         }
       }, 50);
     }
-  }, [containerRef.current, isMobile]);
+  }, [containerRef.current, isTablet]);
 
   const onExpandClick = () => {
     setIsOpen(!isOpen);
   };
 
-  // close container on mobile when route changed
+  // close container on tablet when route changed
   useEffect(() => {
     const onRouteChanged = () => {
-      if (isMobile) {
+      if (isTablet) {
         setIsOpen(false);
       }
     };
 
     router.events.on('routeChangeComplete', onRouteChanged);
     return () => router.events.off('routeChangeComplete', onRouteChanged);
-  }, [isMobile, router.events]);
+  }, [isTablet, router.events]);
 
   return (
     <Wrapper onTouchStart={onDividerMouseDown} onMouseDown={onDividerMouseDown}>

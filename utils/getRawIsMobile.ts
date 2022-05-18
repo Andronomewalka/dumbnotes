@@ -4,6 +4,6 @@ import { mediaSize } from './media';
 export const getRawIsMobile = () => {
   const main = document.querySelector('main');
   if (main) {
-    return main.clientWidth <= mediaSize.laptopBreakpoint;
+    return main.clientWidth <= mediaSize.tabletBreakpoint;
   }
 };

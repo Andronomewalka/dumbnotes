@@ -16,7 +16,7 @@ export const SearchBarFormWrapper = styled.form`
   max-width: ${mediaSize.laptopBreakpoint}px;
   flex: 1 0;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     margin-left: 30px;
   }
 `;
@@ -66,7 +66,7 @@ export const SearchBarResultsContainer = styled.div`
   width: 400px;
   z-index: 10;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     font-size: 12pt;
     width: 325px;
   }
@@ -82,7 +82,7 @@ export const SearchBarResultsUl = styled.ul`
   list-style: none;
   overflow: auto;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     padding: 10px;
     max-height: 350px;
   }

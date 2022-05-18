@@ -4,7 +4,7 @@ import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { AnimationProps } from 'framer-motion';
 import { VairantsContextType } from './types';
 import { staggerVariants } from 'utils/staggerVariants';
-import { getRawIsMobile } from 'utils/getRawIsMobile';
+import { getRawIsTablet } from 'utils/getRawIsTablet';
 
 const initValue: VairantsContextType = {
   variants: staggerVariants,
@@ -28,8 +28,8 @@ export const VariantsProvider: FC = ({ children }) => {
     router.beforePopState(() => {
       // routing by history.back and history.forward history.back also
       // occurs flickering for some reasons, disable variants before navigating
-      const mobile = getRawIsMobile();
-      setVariants(mobile ? {} : staggerVariants);
+      const tablet = getRawIsTablet();
+      setVariants(tablet ? {} : staggerVariants);
       return true;
     });
   }, []);
