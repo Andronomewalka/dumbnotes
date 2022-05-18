@@ -85,8 +85,14 @@ export const MdxAboutLinksWrapper = styled.ul`
     list-style: none;
 
     @media ${device.mobile} {
-      padding: 10px 20px;
-      gap: 15px;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    @media (max-width: 375px) {
+      padding: 10px 8px;
+      gap: 8px;
+      font-size: 7pt;
     }
 
     @media (max-height: 730px) {

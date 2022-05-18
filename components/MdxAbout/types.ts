@@ -3,4 +3,5 @@ export interface MdxAboutLinkItemType {
   name: string;
   icon: JSX.Element;
   link: string;
+  download?: boolean;
 }
