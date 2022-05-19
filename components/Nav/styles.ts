@@ -34,13 +34,17 @@ export const NavSplitterArea = styled.div<{ minWidth: string }>`
     &.is-tablet-loaded {
       display: flex;
     }
+
+    &.is-hidden {
+      padding: 0;
+    }
   }
 `;
 
 export const NavUl = styled.ul`
   ${NavUlBase};
   height: 0;
-  overflow: hidden;
+  overflow-y: hidden;
   transition: height ease 0.3s;
 `;
 

@@ -16,7 +16,7 @@ export const MdxAboutWrapper = styled.div`
     padding: 15px 0 0;
   }
 
-  @media (max-height: 730px) {
+  @media (max-height: 830px) {
     height: auto;
   }
 `;
@@ -52,64 +52,31 @@ export const MdxAboutInfoWrapper = styled.div`
   }
 `;
 
-export const MdxAboutInfoImageContainer = styled.div`
-  position: absolute;
-  bottom: 5px;
-  right: 30px;
-  opacity: 0.7;
-  font-size: 0;
-  mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 70%);
-`;
-
 export const MdxAboutDisclaimerWrapper = styled(MdxDisclaimerWrapper)`
-  width: 560px;
+  max-width: 560px;
   margin: 0 10px;
   text-align: center;
-
-  @media ${device.tablet} {
-    width: auto;
-  }
 `;
 
 export const MdxAboutLinksWrapper = styled.ul`
   &&& {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(25px, 1fr)) auto repeat(3, minmax(25px, 1fr));
     justify-content: center;
-    padding: 13px 40px;
+    padding: 13px 30px;
     margin: 0;
     border-radius: 10px;
-    gap: 40px;
+    gap: 30px;
     background: #ebf1facc;
     list-style: none;
 
     @media ${device.tablet} {
       padding: 10px;
-      gap: 15px;
+      gap: 20px;
     }
 
-    @media ${device.mobile} {
-      display: grid;
-      grid-auto-flow: unset;
-      grid-template-columns: repeat(2, 1fr);
-      width: 100%;
-      height: 100%;
-      padding: 15px;
-      background: none;
-
-      li:nth-of-type(5) {
-        grid-row: 1;
-        grid-column: 2;
-      }
-
-      li:nth-of-type(3) {
-        grid-row: 3;
-        grid-column: 1;
-      }
-    }
-
-    @media (max-height: 730px) {
+    @media (max-height: 830px) {
       margin-bottom: 20px;
     }
   }
@@ -119,8 +86,6 @@ export const MdxAboutLinkItemWrapper = styled.li`
   position: relative;
   font-size: 9pt;
   color: ${(props) => props.theme.palette.gray};
-  width: 40px;
-  margin: 0 8px;
 
   ::after {
     position: absolute;
@@ -141,26 +106,11 @@ export const MdxAboutLinkItemWrapper = styled.li`
   }
 
   @media ${device.tablet} {
-    width: 30px;
     font-size: 8pt;
   }
 
   @media ${device.mobile} {
-    width: 100%;
-    color: ${(props) => props.theme.palette.black};
-    font-size: 9pt;
-
-    ::after {
-      display: none;
-    }
-
-    a {
-      width: 100%;
-    }
-
-    svg {
-      width: 35px;
-    }
+    font-size: 7pt;
   }
 `;
 
@@ -169,20 +119,10 @@ export const MdxAboutLinkA = styled.a`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  @media ${device.mobile} {
-    flex-direction: column;
-    justify-content: start;
-    gap: 5px;
-  }
 `;
 
 export const MdxAboutLinkDivider = styled.li`
   width: 2px;
   align-self: stretch;
   background: ${(props) => props.theme.palette.gray};
-
-  @media ${device.mobile} {
-    display: none;
-  }
 `;

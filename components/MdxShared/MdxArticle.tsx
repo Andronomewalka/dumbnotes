@@ -7,6 +7,7 @@ import { staggerContainerVariants } from 'utils/staggerContainerVariants';
 import { MdxArticleType } from './types';
 import { MdxArticleWrapper } from './styles';
 import { hideContentScrollBar, showContentScrollBar } from './utils';
+import { staggerVariants } from 'utils/staggerVariants';
 
 export const MdxArticle: FC<MdxArticleType> = ({
   hideScrollBar,
@@ -48,7 +49,7 @@ export const MdxArticle: FC<MdxArticleType> = ({
             behavior: 'auto',
             block: 'start',
           });
-          contentWrapper.scrollTop -= 30; // scrollIntoView respects translateY, which is -30 on animation start
+          contentWrapper.scrollTop -= staggerVariants.initial.y; // scrollIntoView respects translateY, which is 'y' on animation start
         }
       }
     }
