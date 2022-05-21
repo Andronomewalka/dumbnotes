@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 import { MdxStyleType } from 'components/MdxShared';
-import { useVariants } from 'components/VariantsContext';
+import { useVariants } from 'contexts/VariantsContext';
 import { MdxAboutInfoWrapper } from './styles';
 
 export const MdxAboutInfo: FC<MdxStyleType> = ({ style, children }) => {

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 import { MdxSubtitleType } from 'components/MdxShared';
-import { useVariants } from 'components/VariantsContext';
+import { useVariants } from 'contexts/VariantsContext';
 
 export const MdxTitle: FC<MdxSubtitleType> = ({ style, children }) => {
   const { variants } = useVariants();

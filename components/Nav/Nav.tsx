@@ -85,6 +85,11 @@ export const Nav: FC = () => {
         : router.asPath;
       const selectedNode = getNavNodeByPath(navItemsBase, route);
       if (selectedNode) {
+        //in case of popstate clear exist focus
+        const focusedElem = document.querySelector<HTMLElement>('li a:focus');
+        if (focusedElem) {
+          focusedElem.blur();
+        }
         if (isFirstNavigation.current) {
           // wait for dom to fully load before first navigation
           new Promise((resolve) => {

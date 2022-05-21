@@ -2,7 +2,7 @@ import React, { FC, MouseEvent } from 'react';
 import { useRouter } from 'next/router';
 import { MdxLinkType } from './types';
 import { PlainLink } from './styles';
-import { useVariants } from 'components/VariantsContext';
+import { useVariants } from 'contexts/VariantsContext';
 import { staggerVariants } from 'utils/staggerVariants';
 
 export const MdxLink: FC<MdxLinkType> = ({ children, url, external = false }) => {

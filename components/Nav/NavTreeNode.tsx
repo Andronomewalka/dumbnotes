@@ -1,9 +1,9 @@
 import React, { FC, MouseEvent } from 'react';
-import { useVariants } from 'components/VariantsContext';
+import { useVariants } from 'contexts/VariantsContext';
 import { useRouter } from 'next/router';
 import useMediaQuery from 'hooks/useMediaQuery';
 import { device } from 'utils/media';
-import { staggerVariants } from 'utils/staggerVariants';
+import { noVariants, staggerVariants } from 'utils/staggerVariants';
 import { NavNodeType } from './types';
 import { NavUl, NavLi, NavExpandItems, NavItemLink, NavItemExpandable } from './styles';
 
@@ -25,7 +25,7 @@ export const NavTreeNode: FC<NavNodeType> = (prop) => {
       // tablet routing from Nav occurs flickering for some reasons,
       // disable variants before navigating
       if (router.asPath !== path) {
-        setVariants(isTablet ? {} : staggerVariants);
+        setVariants(isTablet ? noVariants : staggerVariants);
       }
       router.push(path);
     }

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 import { MdxStyleType } from 'components/MdxShared';
-import { useVariants } from 'components/VariantsContext';
+import { useVariants } from 'contexts/VariantsContext';
 import { MdxAboutLinkItem } from './MdxAboutLinkItem';
 import { MdxAboutLinkDivider, MdxAboutLinksWrapper } from './styles';
 import { socialsData, sourcesData } from './utils';

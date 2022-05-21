@@ -7,7 +7,8 @@ import { SWRConfig } from 'swr';
 import { client } from 'utils/client';
 import { Nav } from 'components/Nav';
 import { SearchBar } from 'components/SearchBar';
-import { VariantsProvider } from 'components/VariantsContext';
+import { VariantsProvider } from 'contexts/VariantsContext';
+import { PopStateScrollProvider } from 'contexts/PopStateScrollContext';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
@@ -27,15 +28,17 @@ function MyApp({ Component, pageProps, router }: AppProps) {
           }}
         >
           <VariantsProvider>
-            <Wrapper>
-              <Nav />
-              <ContentWrapper data-id='content-wrapper'>
-                <SearchBar />
-                <AnimatePresence exitBeforeEnter>
-                  <Component {...pageProps} key={router.asPath} />
-                </AnimatePresence>
-              </ContentWrapper>
-            </Wrapper>
+            <PopStateScrollProvider>
+              <Wrapper>
+                <Nav />
+                <ContentWrapper data-id='content-wrapper'>
+                  <SearchBar />
+                  <AnimatePresence exitBeforeEnter>
+                    <Component {...pageProps} key={router.asPath} />
+                  </AnimatePresence>
+                </ContentWrapper>
+              </Wrapper>
+            </PopStateScrollProvider>
           </VariantsProvider>
         </SWRConfig>
       </ThemeProvider>

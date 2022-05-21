@@ -8,6 +8,8 @@ import { MdxArticleType } from './types';
 import { MdxArticleWrapper } from './styles';
 import { hideContentScrollBar, showContentScrollBar } from './utils';
 import { staggerVariants } from 'utils/staggerVariants';
+import { useVariants } from 'contexts/VariantsContext';
+import { usePopStateScroll } from 'contexts/PopStateScrollContext';
 
 export const MdxArticle: FC<MdxArticleType> = ({
   hideScrollBar,
@@ -16,6 +18,8 @@ export const MdxArticle: FC<MdxArticleType> = ({
   children,
 }) => {
   const router = useRouter();
+  const { variants } = useVariants();
+  const { popStateOccured, contentScrollTop } = usePopStateScroll();
 
   // useLayoutEffect for ssr
   useIsomorphicLayoutEffect(() => {
@@ -37,19 +41,25 @@ export const MdxArticle: FC<MdxArticleType> = ({
 
   const onAnimationStart = (stage: string) => {
     if (stage === 'animate') {
-      const hasAnchor = router.asPath.includes('#');
       const contentWrapper = getElemByDataId('content-wrapper');
-      if (contentWrapper && !hasAnchor) {
-        contentWrapper.scrollTop = 0;
-      } else if (hasAnchor) {
-        const anchor = router.asPath.substring(router.asPath.indexOf('#') + 1);
-        if (anchor) {
-          const anchorElem = document.querySelector(`a[href$="${anchor}"]`);
-          anchorElem?.parentElement?.scrollIntoView({
-            behavior: 'auto',
-            block: 'start',
-          });
-          contentWrapper.scrollTop -= staggerVariants.initial.y; // scrollIntoView respects translateY, which is 'y' on animation start
+      if (popStateOccured) {
+        contentWrapper.scrollTop = contentScrollTop;
+      } else {
+        const hasAnchor = router.asPath.includes('#');
+        if (contentWrapper && !hasAnchor) {
+          contentWrapper.scrollTop = 0;
+        } else if (hasAnchor) {
+          const anchor = router.asPath.substring(router.asPath.indexOf('#') + 1);
+          if (anchor) {
+            const anchorElem = document.querySelector(`a[href$="${anchor}"]`);
+            anchorElem?.parentElement?.scrollIntoView({
+              behavior: 'auto',
+              block: 'start',
+            });
+            if (variants === staggerVariants) {
+              contentWrapper.scrollTop -= staggerVariants.initial.y; // scrollIntoView respects translateY, which is 'y' on animation start
+            }
+          }
         }
       }
     }

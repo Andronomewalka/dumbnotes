@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from 'utils/media';
 
 // customize md components
 export const MdxArticleWrapper = styled.div<{ $stretch: boolean }>`
@@ -89,6 +90,12 @@ export const MdxSubtitleWrapper = styled.h2`
   :hover {
     ::before {
       opacity: 1;
+    }
+  }
+
+  @media ${device.mobile} {
+    ::before {
+      content: '';
     }
   }
 `;

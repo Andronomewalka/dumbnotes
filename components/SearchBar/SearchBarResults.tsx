@@ -8,7 +8,7 @@ import {
 } from './styles';
 import { PostType, SearchBarResultsType } from './types';
 import { motion } from 'framer-motion';
-import { useVariants } from 'components/VariantsContext';
+import { useVariants } from 'contexts/VariantsContext';
 import { staggerVariants } from 'utils/staggerVariants';
 
 const containerVariants = {
