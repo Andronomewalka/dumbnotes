@@ -11,10 +11,10 @@ export const MdxSubtitle: FC<MdxSubtitleType> = ({ name, style, children }) => {
       behavior: 'smooth',
       block: 'start',
     });
-    window.history.replaceState('', '', event.currentTarget.hash);
+    window.history.replaceState(history.state, '', event.currentTarget.hash);
   };
 
-  // own-{name} in id to prevent default scroll to anchor (for some reason, it doesn't respect scroll-margin)
+  // own-{name} in id to prevent default scroll to anchor
   return (
     <MdxSubtitleWrapper id={`own-${name}`} style={style} ref={containerRef}>
       <a href={`#${name}`} onClick={onAClick}>

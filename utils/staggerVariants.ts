@@ -27,5 +27,4 @@ export const staggerVariants = {
 export const noVariants = {
   initial: visible,
   animate: visible,
-  exit: visible,
 };

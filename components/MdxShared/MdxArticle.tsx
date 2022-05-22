@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
@@ -19,7 +19,8 @@ export const MdxArticle: FC<MdxArticleType> = ({
 }) => {
   const router = useRouter();
   const { variants } = useVariants();
-  const { popStateOccured, contentScrollTop } = usePopStateScroll();
+  const { popStateOccured, contentScrollTop, isReady } = usePopStateScroll();
+  const isScrollSet = useRef(false);
 
   // useLayoutEffect for ssr
   useIsomorphicLayoutEffect(() => {
@@ -39,14 +40,17 @@ export const MdxArticle: FC<MdxArticleType> = ({
     }
   }, []);
 
-  const onAnimationStart = (stage: string) => {
-    if (stage === 'animate') {
+  useIsomorphicLayoutEffect(() => {
+    // console.log('MdxArticle isScrollSet', isScrollSet.current);
+    if (!isScrollSet.current && isReady) {
       const contentWrapper = getElemByDataId('content-wrapper');
+      //  console.log('MdxArticle popStateOccured', popStateOccured);
       if (popStateOccured) {
         contentWrapper.scrollTop = contentScrollTop;
       } else {
         const hasAnchor = router.asPath.includes('#');
         if (contentWrapper && !hasAnchor) {
+          // console.log('MdxArticle scrollTop to zero');
           contentWrapper.scrollTop = 0;
         } else if (hasAnchor) {
           const anchor = router.asPath.substring(router.asPath.indexOf('#') + 1);
@@ -62,8 +66,9 @@ export const MdxArticle: FC<MdxArticleType> = ({
           }
         }
       }
+      isScrollSet.current = true;
     }
-  };
+  }, [contentScrollTop, isReady, popStateOccured, router.asPath, variants]);
 
   const onAnimationComplete = (stage: string) => {
     if (stage === 'animate') {
@@ -79,7 +84,6 @@ export const MdxArticle: FC<MdxArticleType> = ({
       exit='exit'
       variants={staggerContainerVariants}
       style={style}
-      onAnimationStart={onAnimationStart}
       onAnimationComplete={onAnimationComplete}
       $stretch={stretch ?? false}
     >

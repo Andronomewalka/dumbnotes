@@ -1,9 +1,9 @@
 import React, { FC, useState, useContext } from 'react';
-import { useRouter } from 'next/router';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { AnimationProps } from 'framer-motion';
 import { VairantsContextType } from './types';
 import { noVariants, staggerVariants } from 'utils/staggerVariants';
+import { offBeforePopState, onBeforePopState } from 'utils/beforePopStateChain';
 
 const initValue: VairantsContextType = {
   variants: staggerVariants,
@@ -18,7 +18,6 @@ export const useVariants = () => {
 
 // MdxSection (and some others) variants value
 export const VariantsProvider: FC = ({ children }) => {
-  const router = useRouter();
   const [variants, setVariants] = useState<AnimationProps['variants']>(
     initValue.variants
   );
@@ -26,11 +25,14 @@ export const VariantsProvider: FC = ({ children }) => {
   useIsomorphicLayoutEffect(() => {
     // routing by history.back and history.forward also occurs flickering
     // for some reasons, disable variants before navigating
-    router.beforePopState(() => {
+    const onPopState = () => {
       setVariants(noVariants);
       return true;
-    });
-  }, [router]);
+    };
+
+    onBeforePopState(onPopState);
+    return () => offBeforePopState(onPopState);
+  }, []);
 
   return (
     <VariantsContext.Provider

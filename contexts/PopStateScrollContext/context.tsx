@@ -1,12 +1,14 @@
 import React, { FC, useState, useContext, useRef } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { PopStateScrollContextType } from './types';
 import { getElemByDataId } from 'utils/getElemByDataId';
+import { offBeforePopState, onBeforePopState } from 'utils/beforePopStateChain';
 
 const initValue: PopStateScrollContextType = {
   popStateOccured: false,
   contentScrollTop: 0,
+  isReady: false,
 };
 
 const PopStateScrollContext = React.createContext<PopStateScrollContextType>(initValue);
@@ -20,10 +22,12 @@ export const PopStateScrollProvider: FC = ({ children }) => {
   const router = useRouter();
   const [popStateOccured, setPopStateOccured] = useState(initValue.popStateOccured);
   const [contentScrollTop, setContentScrollTop] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
   const scrollPositions = useRef<Array<number>>([]);
-  const curIdx = useRef(0);
   const lastIdx = useRef(0);
+  const popStateOccuredRef = useRef(popStateOccured);
+  const resetPopStateOccuredRef = useRef(popStateOccured);
 
   useIsomorphicLayoutEffect(() => {
     const regPageScroll = (idx: number) => {
@@ -37,43 +41,58 @@ export const PopStateScrollProvider: FC = ({ children }) => {
           scrollPositions.current[idx] = contentWrapper.scrollTop;
         }
       }
+      // console.log('scrollPositions', scrollPositions.current);
     };
 
     // callback order on popstate event:
-    // 1. onRouteChangeStart
-    // 2. onPopState
+    // 1. onPopState
+    // 2. onRouteChangeStart
     // 3. onRouteChangeComplete
-    // set isPopStateOccured to true, then on the next onRouteChangeStart set it back to false
+    // set popStateOccuredRef to true, then on the next nopopstate onRouteChangeStart set it back to false
 
     const onRouteChangeStart = () => {
       // reset on next route change start
-      if (popStateOccured) {
+      // console.log('onRouteChangeStart lastIdx', lastIdx.current);
+
+      if (!popStateOccuredRef.current && resetPopStateOccuredRef.current) {
+        resetPopStateOccuredRef.current = false;
         setPopStateOccured(false);
       }
+
+      // change on next nopopstate route
+      if (popStateOccuredRef.current) {
+        popStateOccuredRef.current = false;
+        resetPopStateOccuredRef.current = true;
+      }
+
+      setIsReady(false);
       regPageScroll(lastIdx.current);
     };
 
+    const onPopState = () => {
+      // console.log('onPopState idx', history.state.idx);
+      setPopStateOccured(true);
+      setContentScrollTop(scrollPositions.current[history.state.idx]);
+      popStateOccuredRef.current = true;
+      return true;
+    };
+
     const onRouteChangeComplete = () => {
-      curIdx.current = history.state.idx;
-      setContentScrollTop(scrollPositions.current[curIdx.current]);
-      lastIdx.current = curIdx.current;
+      // console.log('onRouteChangeComplete');
+      lastIdx.current = history.state.idx;
+      setIsReady(true);
     };
 
     history.scrollRestoration = 'manual';
-    router.events.on('routeChangeStart', onRouteChangeStart);
-    router.events.on('routeChangeComplete', onRouteChangeComplete);
+    onRouteChangeComplete();
+    onBeforePopState(onPopState);
+    Router.events.on('routeChangeStart', onRouteChangeStart);
+    Router.events.on('routeChangeComplete', onRouteChangeComplete);
     return () => {
-      router.events.off('routeChangeStart', onRouteChangeStart);
-      router.events.off('routeChangeComplete', onRouteChangeComplete);
+      offBeforePopState(onPopState);
+      Router.events.off('routeChangeStart', onRouteChangeStart);
+      Router.events.off('routeChangeComplete', onRouteChangeComplete);
     };
-  }, [popStateOccured, router.events]);
-
-  useIsomorphicLayoutEffect(() => {
-    const onPopState = () => {
-      setPopStateOccured(true);
-    };
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
   return (
@@ -81,6 +100,7 @@ export const PopStateScrollProvider: FC = ({ children }) => {
       value={{
         popStateOccured,
         contentScrollTop,
+        isReady,
       }}
     >
       {children}

@@ -33,6 +33,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 <Nav />
                 <ContentWrapper data-id='content-wrapper'>
                   <SearchBar />
+                  {/* sometimes works weird on mobile on popstate*/}
                   <AnimatePresence exitBeforeEnter>
                     <Component {...pageProps} key={router.asPath} />
                   </AnimatePresence>
