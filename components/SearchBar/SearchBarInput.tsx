@@ -1,4 +1,13 @@
-import React, { FC, useState, useRef, useCallback, SyntheticEvent } from 'react';
+import React, {
+  FC,
+  useState,
+  useRef,
+  useCallback,
+  SyntheticEvent,
+  useEffect,
+} from 'react';
+import { useRouter } from 'next/router';
+import { useDebounce } from 'hooks/useDebounce';
 import {
   SearchBarFormWrapper,
   SearchBarInputIcon,
@@ -6,9 +15,9 @@ import {
 } from './styles';
 import { SearchBarInputType } from './types';
 import { SearchIcon } from './SearchIcon';
-import { useDebounce } from 'hooks/useDebounce';
 
 export const SearchBarInput: FC<SearchBarInputType> = ({ onSubmit }) => {
+  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [input, setInput] = useState('');
 
@@ -26,6 +35,15 @@ export const SearchBarInput: FC<SearchBarInputType> = ({ onSubmit }) => {
     event.preventDefault();
     onSubmit(input);
   };
+
+  useEffect(() => {
+    const onRouteChangeComplete = () => {
+      setInput('');
+    };
+
+    router.events.on('routeChangeComplete', onRouteChangeComplete);
+    return () => router.events.off('routeChangeComplete', onRouteChangeComplete);
+  }, [router.events]);
 
   return (
     <SearchBarFormWrapper ref={formRef} onSubmit={onFormSubmit}>

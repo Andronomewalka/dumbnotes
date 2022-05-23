@@ -50,16 +50,24 @@ export const PopStateScrollProvider: FC = ({ children }) => {
     // 3. onRouteChangeComplete
     // set popStateOccuredRef to true, then on the next nopopstate onRouteChangeStart set it back to false
 
+    const onPopState = () => {
+      // console.log('onPopState idx', history.state.idx);
+      setPopStateOccured(true);
+      setContentScrollTop(scrollPositions.current[history.state.idx]);
+      popStateOccuredRef.current = true;
+      return true;
+    };
+
     const onRouteChangeStart = () => {
-      // reset on next route change start
       // console.log('onRouteChangeStart lastIdx', lastIdx.current);
 
+      // no popstate occured, reset
       if (!popStateOccuredRef.current && resetPopStateOccuredRef.current) {
         resetPopStateOccuredRef.current = false;
         setPopStateOccured(false);
       }
 
-      // change on next nopopstate route
+      // change on next no popstate route
       if (popStateOccuredRef.current) {
         popStateOccuredRef.current = false;
         resetPopStateOccuredRef.current = true;
@@ -67,14 +75,6 @@ export const PopStateScrollProvider: FC = ({ children }) => {
 
       setIsReady(false);
       regPageScroll(lastIdx.current);
-    };
-
-    const onPopState = () => {
-      // console.log('onPopState idx', history.state.idx);
-      setPopStateOccured(true);
-      setContentScrollTop(scrollPositions.current[history.state.idx]);
-      popStateOccuredRef.current = true;
-      return true;
     };
 
     const onRouteChangeComplete = () => {
