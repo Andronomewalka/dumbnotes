@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
+import { variantsState } from 'state';
 import { MdxStyleType } from 'components/MdxShared';
-import { useVariants } from 'contexts/VariantsContext';
 import { MdxAboutInfoWrapper } from './styles';
 
 export const MdxAboutInfo: FC<MdxStyleType> = ({ style, children }) => {
-  const { variants } = useVariants();
+  const variants = useRecoilValue(variantsState);
   return (
     <MdxAboutInfoWrapper as={motion.div} variants={variants} style={style}>
       {children}

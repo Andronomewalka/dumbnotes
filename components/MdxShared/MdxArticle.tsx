@@ -2,14 +2,14 @@ import React, { FC, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
+import { useRecoilValue } from 'recoil';
+import { popStateScrollState, variantsState } from 'state';
+import { staggerVariants } from 'utils/staggerVariants';
 import { getElemByDataId } from 'utils/getElemByDataId';
 import { staggerContainerVariants } from 'utils/staggerContainerVariants';
 import { MdxArticleType } from './types';
 import { MdxArticleWrapper } from './styles';
 import { hideContentScrollBar, showContentScrollBar } from './utils';
-import { staggerVariants } from 'utils/staggerVariants';
-import { useVariants } from 'contexts/VariantsContext';
-import { usePopStateScroll } from 'contexts/PopStateScrollContext';
 
 export const MdxArticle: FC<MdxArticleType> = ({
   hideScrollBar,
@@ -18,8 +18,9 @@ export const MdxArticle: FC<MdxArticleType> = ({
   children,
 }) => {
   const router = useRouter();
-  const { variants } = useVariants();
-  const { popStateOccured, contentScrollTop, isReady } = usePopStateScroll();
+  const variants = useRecoilValue(variantsState);
+  const { popStateOccured, contentScrollTop, isReady } =
+    useRecoilValue(popStateScrollState);
   const isScrollSet = useRef(false);
 
   // useLayoutEffect for ssr

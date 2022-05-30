@@ -4,11 +4,10 @@ import { GlobalStyle, theme } from 'GlobalStyle';
 import { AnimatePresence } from 'framer-motion';
 import styled, { ThemeProvider } from 'styled-components';
 import { SWRConfig } from 'swr';
-import { client } from 'utils/client';
+import { RecoilRoot } from 'recoil';
 import { Nav } from 'components/Nav';
 import { SearchBar } from 'components/SearchBar';
-import { VariantsProvider } from 'contexts/VariantsContext';
-import { PopStateScrollProvider } from 'contexts/PopStateScrollContext';
+import { client } from 'utils/client';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
@@ -27,20 +26,18 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 .catch((e) => void console.log(e)),
           }}
         >
-          <VariantsProvider>
-            <PopStateScrollProvider>
-              <Wrapper>
-                <Nav />
-                <ContentWrapper data-id='content-wrapper'>
-                  <SearchBar />
-                  {/* sometimes works weird on mobile on popstate*/}
-                  <AnimatePresence exitBeforeEnter>
-                    <Component {...pageProps} key={router.asPath} />
-                  </AnimatePresence>
-                </ContentWrapper>
-              </Wrapper>
-            </PopStateScrollProvider>
-          </VariantsProvider>
+          <RecoilRoot>
+            <Wrapper>
+              <Nav />
+              <ContentWrapper data-id='content-wrapper'>
+                <SearchBar />
+                {/* sometimes works weird on mobile on popstate*/}
+                <AnimatePresence exitBeforeEnter>
+                  <Component {...pageProps} key={router.asPath} />
+                </AnimatePresence>
+              </ContentWrapper>
+            </Wrapper>
+          </RecoilRoot>
         </SWRConfig>
       </ThemeProvider>
     </>

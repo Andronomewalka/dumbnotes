@@ -1,5 +1,9 @@
 import React, { FC, useState } from 'react';
 import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
+import { useSetRecoilState } from 'recoil';
+import { variantsState } from 'state';
+import { staggerVariants } from 'utils/staggerVariants';
 import {
   SearchBarResultsContainer,
   SearchBarResultsLi,
@@ -7,9 +11,6 @@ import {
   SearchBarResultsUl,
 } from './styles';
 import { PostType, SearchBarResultsType } from './types';
-import { motion } from 'framer-motion';
-import { useVariants } from 'contexts/VariantsContext';
-import { staggerVariants } from 'utils/staggerVariants';
 
 const containerVariants = {
   hide: {
@@ -45,7 +46,7 @@ const itemVariants = {
 
 export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
   const router = useRouter();
-  const { setVariants } = useVariants();
+  const setVariants = useSetRecoilState(variantsState);
   const [hovered, setHovered] = useState<Partial<PostType>>();
 
   const onRouteClick = (url: string) => {

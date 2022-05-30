@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
+import { variantsState } from 'state';
 import { MdxStyleType } from 'components/MdxShared';
-import { useVariants } from 'contexts/VariantsContext';
 
 export const MdxSection: FC<MdxStyleType> = ({ style, children }) => {
-  const { variants } = useVariants();
+  const variants = useRecoilValue(variantsState);
 
   return (
     <motion.section variants={variants} style={style}>
