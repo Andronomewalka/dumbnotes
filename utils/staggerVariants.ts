@@ -13,6 +13,9 @@ export const staggerVariants = {
     transition: {
       duration: 0.5,
       ease: [0.6, -0.05, 0.01, 0.99],
+      opacity: {
+        duration: 0.3,
+      },
     },
   },
   exit: {

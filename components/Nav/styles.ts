@@ -12,6 +12,7 @@ export const NavSplitterArea = styled.div<{ minWidth: string }>`
   width: ${(props) => props.minWidth};
   min-width: ${(props) => props.minWidth};
   padding: 20px 6px 20px 20px;
+  overflow-y: auto;
 
   transition: 0.4s 0.2s opacity linear, 0.3s width linear, 0.3s min-width linear,
     margin 0.3s linear, padding 0.3s linear;
