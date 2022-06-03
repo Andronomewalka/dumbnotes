@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { popStateScrollEffect } from './effects';
-import { PopStateScrollType } from './type';
+import { PopStateScrollType } from './types';
 
 export const popStateScrollInitialValue = {
   popStateOccured: false,

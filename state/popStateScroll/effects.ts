@@ -3,7 +3,7 @@ import { Router } from 'next/router';
 import { offBeforePopState, onBeforePopState } from 'utils/beforePopStateChain';
 import { getElemByDataId } from 'utils/getElemByDataId';
 import { popStateScrollInitialValue } from './atom';
-import { PopStateScrollType } from './type';
+import { PopStateScrollType } from './types';
 
 export const popStateScrollEffect: AtomEffect<PopStateScrollType> = ({ setSelf }) => {
   // ssr
