@@ -14,7 +14,9 @@ export const SearchBar: FC = () => {
   const [filter, setFilter] = useState('');
   const [isResultsOpen, setIsResultsOpen] = useState(false);
   const { data: payload } = useSWR(
-    filter && filter.length > 1 ? `/posts?filter=${filter}&exclude=["content"]` : null
+    filter && filter.length > 1
+      ? `/posts?filter=${filter}&exclude=["content", "date"]`
+      : null
   );
 
   const onSubmit = (input: string) => {

@@ -6,6 +6,7 @@ export interface PostBaseType {
 
 export interface PostType extends PostBaseType {
   content: string;
+  date: string;
 }
 
 export interface SearchBarInputType {

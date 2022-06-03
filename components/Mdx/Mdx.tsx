@@ -1,8 +1,10 @@
-import React, { FC, useState, useEffect, useRef } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import useSWR from 'swr';
 import rehypeHighlight from 'rehype-highlight';
+import { client } from 'utils/client';
+import { getPostCache, setPostCache, usePostCache } from 'hooks/usePostCache';
 import {
   MdxArticle,
   MdxImage,
@@ -20,8 +22,8 @@ import {
   MdxAboutInfo,
   MdxAboutLinks,
 } from 'components/MdxAbout';
-import { MdxType } from './types';
 import { MdxHome } from 'components/MdxHome';
+import { MdxType } from './types';
 
 const components = {
   MdxArticle,
@@ -40,23 +42,59 @@ const components = {
   MdxSources,
 };
 
-export const Mdx: FC<MdxType> = ({ url, prefetchedData }) => {
-  const { data: response } = useSWR(url);
-  const [swrData, setSwrData] = useState<any>(prefetchedData);
-  const firstSWRRef = useRef(true);
+/*
+  Cache strategy: 
+  1. Show prefetchedData (created at build time by SSG or runtime ISR) on the first time of each post
+  2. Add prefetchedData to cache, if it isn't already there
+  3. If lastUpdated has changed create updateCacheCallback
+  4. Run that callback on the next routeChangeComplete to not bother a user
+  5. Show cached post on the next navigation to the post
+*/
 
-  // first time we show prefetchedData, so skip swrData update for prevent animation flickering
+export const Mdx: FC<MdxType> = ({ url, prefetchedData, prefetchedUpdated }) => {
+  const { data: response } = useSWR(`${url}?exclude=["name","content","path"]`);
+
+  const [updateCacheCallback, setUpdateCacheCallback] = useState<() => void>(
+    () => () => {}
+  );
+
+  usePostCache(updateCacheCallback);
+
+  const cachedPost = getPostCache(url);
+  if (!cachedPost) {
+    setPostCache(url, {
+      cachedPost: prefetchedData,
+      cachedDate: prefetchedUpdated,
+    });
+  }
+  const [lastUpdated, setLastUpdated] = useState(
+    cachedPost?.cachedDate ?? prefetchedData
+  );
+
+  const post = (cachedPost?.cachedPost ?? prefetchedData) as any;
+
   useEffect(() => {
-    if (response?.data?.content && firstSWRRef.current) {
-      firstSWRRef.current = false;
-    } else if (response?.data?.content) {
-      serialize(response.data.content, {
-        mdxOptions: { rehypePlugins: [rehypeHighlight] },
-      }).then((newData) => {
-        setSwrData(newData);
+    const reponseDate = response?.data?.date;
+    if (reponseDate && reponseDate !== lastUpdated) {
+      setUpdateCacheCallback(() => async () => {
+        try {
+          const response = await client.get(url);
+          const payload = response.data;
+          const sourceRaw = payload.data.content;
+          const newDate = payload.data.date;
+          const mdxSource = await serialize(sourceRaw, {
+            mdxOptions: { rehypePlugins: [rehypeHighlight] },
+          });
+          setPostCache(url, {
+            cachedPost: mdxSource,
+            cachedDate: newDate,
+          });
+        } catch {}
       });
-    }
-  }, [response?.data?.content]);
 
-  return <MDXRemote {...swrData} components={components} />;
+      setLastUpdated(reponseDate);
+    }
+  }, [lastUpdated, response?.data?.date, url]);
+
+  return <MDXRemote {...post} components={components} />;
 };

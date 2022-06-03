@@ -7,23 +7,22 @@ import { client } from 'utils/client';
 
 const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   name,
-  fallback,
+  url,
+  prefetchedData,
+  lastUpdated,
   error,
 }) => {
-  let content = <span>{error}</span>;
-  if (fallback) {
-    const url = Object.keys(fallback)[0];
-    const prefetchedData = fallback[url];
-    content = <Mdx url={url} prefetchedData={prefetchedData} />;
-  }
-
   return (
     <>
       <Head>
         <title>{name}</title>
         <meta name='description' content={name} />
       </Head>
-      {content}
+      {prefetchedData ? (
+        <Mdx url={url} prefetchedData={prefetchedData} prefetchedUpdated={lastUpdated} />
+      ) : (
+        <span>{error}</span>
+      )}
     </>
   );
 };
@@ -36,15 +35,16 @@ export async function getStaticProps(ctx: any) {
     const response = await client.get(`/posts/${slug}`);
     const payload = response.data;
     const sourceRaw = payload.data.content;
+    const lastUpdated = payload.data.date;
     const mdxSource = await serialize(sourceRaw, {
       mdxOptions: { rehypePlugins: [rehypeHighlight] },
     });
     return {
       props: {
         name: payload.data.name,
-        fallback: {
-          [`/posts/${slug}`]: mdxSource,
-        },
+        url: `/posts/${slug}`,
+        prefetchedData: mdxSource,
+        lastUpdated: lastUpdated,
         error: payload.error,
       },
       revalidate: 86400, // once a day, if something with on-demand revalidation fucked up
