@@ -113,8 +113,11 @@ export const openUlNode = (node: NavNodeType, skipTransition: boolean = false) =
       ulElement.style.height = `${ulElement.scrollHeight}px`;
 
       const onTransitioned = () => {
-        ulElement.style.height = 'auto';
-        ulElement.style.overflowY = `inherit`;
+        // skip if node was closed before opening transition finished
+        if (node.isOpen) {
+          ulElement.style.height = 'auto';
+          ulElement.style.overflowY = `inherit`;
+        }
         ulElement.removeEventListener('transitionend', onTransitioned);
       };
 
