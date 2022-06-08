@@ -40,7 +40,40 @@ export const MdxArticleWrapper = styled.div<{ $stretch: boolean }>`
 
   /* multiline code container */
   .hljs {
+    color: #ccc;
+    background: #2d2d2d;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 1em;
     border-radius: ${(props) => props.theme.borderRadius};
+    line-height: 1.5;
+
+    .hljs-keyword,
+    .hljs-variable,
+    .hljs-literal {
+      color: #cc99cd;
+    }
+
+    .hljs-title,
+    .hljs-number {
+      color: #f08d49;
+    }
+
+    .class_,
+    .language_ {
+      color: #ccc;
+    }
+
+    .hljs-attr {
+      color: #f8c555;
+    }
+
+    .hljs-string {
+      color: #7ec699;
+    }
+
+    .hljs-comment {
+      color: #999;
+    }
   }
 `;
 
