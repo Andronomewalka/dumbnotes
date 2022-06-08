@@ -2,6 +2,6 @@ import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 export interface MdxType {
   url: string;
-  prefetchedData: MDXRemoteSerializeResult<Record<string, unknown>>;
-  prefetchedUpdated: string;
+  prefetchedPost: MDXRemoteSerializeResult<Record<string, unknown>>;
+  prefetchedDate: string;
 }

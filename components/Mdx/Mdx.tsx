@@ -51,7 +51,7 @@ const components = {
   5. Show cached post on the next navigation to the post
 */
 
-export const Mdx: FC<MdxType> = ({ url, prefetchedData, prefetchedUpdated }) => {
+export const Mdx: FC<MdxType> = ({ url, prefetchedPost, prefetchedDate }) => {
   const { data: response } = useSWR(`${url}?exclude=["name","content","path"]`);
 
   const [updateCacheCallback, setUpdateCacheCallback] = useState<() => void>(
@@ -63,15 +63,15 @@ export const Mdx: FC<MdxType> = ({ url, prefetchedData, prefetchedUpdated }) => 
   const cachedPost = getPostCache(url);
   if (!cachedPost) {
     setPostCache(url, {
-      cachedPost: prefetchedData,
-      cachedDate: prefetchedUpdated,
+      cachedPost: prefetchedPost,
+      cachedDate: prefetchedDate,
     });
   }
   const [lastUpdated, setLastUpdated] = useState(
-    cachedPost?.cachedDate ?? prefetchedData
+    cachedPost?.cachedDate ?? prefetchedDate
   );
 
-  const post = (cachedPost?.cachedPost ?? prefetchedData) as any;
+  const post = (cachedPost?.cachedPost ?? prefetchedPost) as any;
 
   useEffect(() => {
     const reponseDate = response?.data?.date;

@@ -8,8 +8,8 @@ import { client } from 'utils/client';
 const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   name,
   url,
-  prefetchedData,
-  lastUpdated,
+  prefetchedPost,
+  prefetchedDate,
   error,
 }) => {
   return (
@@ -18,8 +18,8 @@ const SlugPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <title>{name}</title>
         <meta name='description' content={name} />
       </Head>
-      {prefetchedData ? (
-        <Mdx url={url} prefetchedData={prefetchedData} prefetchedUpdated={lastUpdated} />
+      {prefetchedPost ? (
+        <Mdx url={url} prefetchedPost={prefetchedPost} prefetchedDate={prefetchedDate} />
       ) : (
         <span>{error}</span>
       )}
@@ -43,8 +43,8 @@ export async function getStaticProps(ctx: any) {
       props: {
         name: payload.data.name,
         url: `/posts/${slug}`,
-        prefetchedData: mdxSource,
-        lastUpdated: lastUpdated,
+        prefetchedPost: mdxSource,
+        prefetchedDate: lastUpdated,
         error: payload.error,
       },
       revalidate: 86400, // once a day, if something with on-demand revalidation fucked up
