@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { device } from 'utils/media';
 
 // customize md components
-export const MdxArticleWrapper = styled.div<{ $stretch: boolean }>`
+export const MdxArticleWrapper = styled.article<{ $stretch: boolean }>`
   width: 100%;
   height: ${(props) => (props.$stretch ? '100%' : 'auto')};
   max-width: ${(props) => (props.$stretch ? 'none' : '800px')};
@@ -43,9 +43,13 @@ export const MdxArticleWrapper = styled.div<{ $stretch: boolean }>`
     color: #ccc;
     background: #2d2d2d;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 1em;
+    font-size: 12pt;
     border-radius: ${(props) => props.theme.borderRadius};
     line-height: 1.5;
+
+    @media ${device.mobile} {
+      font-size: 11pt;
+    }
 
     .hljs-keyword,
     .hljs-variable,
