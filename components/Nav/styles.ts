@@ -98,11 +98,11 @@ export const NavWrapper = styled.nav`
     z-index: 20;
   }
 
-  ${NavUlExternal}:hover {
+  /* ${NavUlExternal}:hover {
     ${NavUl} ${NavLi}::before {
       opacity: 1;
     }
-  }
+  } */
 `;
 
 const BaseNavItem = css`
@@ -123,7 +123,7 @@ export const NavItemExpandable = styled.div<{ level: number }>`
 
   :hover,
   :focus {
-    background: ${(props) => props.theme.palette.white};
+    background: ${(props) => props.theme.palette.selected};
   }
 
   :focus {
@@ -142,7 +142,7 @@ export const NavItemLink = styled.a<{ isSelected: boolean; level: number }>`
   padding-left: ${(props) => `${props.level * 10}px`};
   cursor: pointer;
   background: ${(props) =>
-    props.isSelected ? props.theme.palette.white : 'transparent'};
+    props.isSelected ? props.theme.palette.selected : 'transparent'};
 
   ::after {
     position: absolute;
@@ -152,14 +152,15 @@ export const NavItemLink = styled.a<{ isSelected: boolean; level: number }>`
     height: 100%;
     border-radius: 5px;
     content: '';
-    box-shadow: ${(props) => (props.isSelected ? props.theme.shadow.focus : 'none')};
+    /* box-shadow: ${(props) =>
+      props.isSelected ? props.theme.shadow.focus : 'none'}; */
     opacity: ${(props) => (props.isSelected ? 1 : 0)};
     transition: opacity 0.3s ease;
   }
 
   :hover,
   :focus {
-    background: ${(props) => props.theme.palette.white};
+    background: ${(props) => props.theme.palette.selected};
   }
 
   :focus {

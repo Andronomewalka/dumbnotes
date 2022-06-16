@@ -3,8 +3,9 @@ import { createGlobalStyle, DefaultTheme } from 'styled-components';
 export const theme: DefaultTheme = {
   borderRadius: '5px',
   palette: {
-    background: '#F4F9FD',
+    background: '#F9FCFE',
     accent: '#3BEEB7',
+    selected: '#EAEDF8',
     white: '#FFFFFF',
     black: '#010101',
     gray: '#AFAFAF',

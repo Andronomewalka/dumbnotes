@@ -9,6 +9,7 @@ declare module 'styled-components' {
     palette: {
       background: string;
       accent: string;
+      selected: string;
       white: string;
       black: string;
       gray: string;
