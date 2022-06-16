@@ -56,7 +56,10 @@ export const MdxArticle: FC<MdxArticleType> = ({
         } else if (hasAnchor) {
           const anchor = router.asPath.substring(router.asPath.indexOf('#') + 1);
           if (anchor) {
-            const anchorElem = document.querySelector(`a[href$="${anchor}"]`);
+            const anchorElem = document.querySelector(
+              `#own-${anchor} a[href$="${anchor}"]`
+            );
+
             anchorElem?.parentElement?.scrollIntoView({
               behavior: 'auto',
               block: 'start',
