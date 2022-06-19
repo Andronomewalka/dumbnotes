@@ -6,6 +6,7 @@
     "dev": "next dev --hostname 127.0.0.1 -p 3000",
     "build": "next build",
     "start": "next start",
+    "start-local": "next start --hostname 127.0.0.1 -p 3000",
     "lint": "next lint",
     "analyze": "set ANALYZE=true&& next build"
   },
