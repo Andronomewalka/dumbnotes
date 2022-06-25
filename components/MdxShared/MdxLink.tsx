@@ -6,7 +6,7 @@ import { staggerVariants } from 'utils/staggerVariants';
 import { MdxLinkType } from './types';
 import { PlainLink } from './styles';
 
-export const MdxLink: FC<MdxLinkType> = ({ children, url, external = false }) => {
+export const MdxLink: FC<MdxLinkType> = ({ style, children, url, external = false }) => {
   const router = useRouter();
   const setVariants = useSetRecoilState(variantsState);
   const onRouteClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -28,7 +28,7 @@ export const MdxLink: FC<MdxLinkType> = ({ children, url, external = false }) =>
   };
 
   return (
-    <PlainLink onClick={onRouteClick} href={url} target='_blank'>
+    <PlainLink style={style} onClick={onRouteClick} href={url} target='_blank'>
       {children}
     </PlainLink>
   );

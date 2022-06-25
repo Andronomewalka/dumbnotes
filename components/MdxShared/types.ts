@@ -13,12 +13,12 @@ export interface MdxSubtitleType extends MdxStyleType {
   name: string;
 }
 
-export interface MdxLinkType {
+export interface MdxLinkType extends MdxStyleType {
   url: string;
   external?: boolean;
 }
 
-export interface MdxImageType {
+export interface MdxImageType extends MdxStyleType {
   src: string;
   width?: number;
   height?: number;

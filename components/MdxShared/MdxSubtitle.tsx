@@ -1,5 +1,5 @@
 import React, { FC, MouseEvent, useRef } from 'react';
-import { MdxSubtitleType } from 'components/MdxShared';
+import { MdxSubtitleType } from './types';
 import { MdxSubtitleWrapper } from './styles';
 
 export const MdxSubtitle: FC<MdxSubtitleType> = ({ name, style, children }) => {

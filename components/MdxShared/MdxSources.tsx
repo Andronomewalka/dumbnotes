@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { MdxStyleType } from 'components/MdxShared';
+import { MdxStyleType } from './types';
 import { MdxSourcesWrapper } from './styles';
 
 export const MdxSources: FC<MdxStyleType> = ({ style, children }) => {

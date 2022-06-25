@@ -3,16 +3,16 @@ import Image from 'next/image';
 import { MdxImageType } from './types';
 import { MdxImageWrapper } from './styles';
 
-export const MdxImage: FC<MdxImageType> = ({ src, width, height, stretch, alt }) => {
+export const MdxImage: FC<MdxImageType> = ({ style, src, width, height, stretch, alt }) => {
   return (
     <>
       {stretch ? (
         // if we don't know width and height aot
-        <MdxImageWrapper>
+        <MdxImageWrapper style={style}>
           <Image src={src} layout='fill' objectFit='contain' alt={alt} />
         </MdxImageWrapper>
       ) : (
-        <Image src={src} width={width} height={height} alt={alt} />
+        <Image style={style} src={src} width={width} height={height} alt={alt} />
       )}
     </>
   );

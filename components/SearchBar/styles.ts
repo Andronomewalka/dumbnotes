@@ -113,7 +113,7 @@ export const SearchBarResultsLiHover = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: ${(props) => props.theme.palette.gray2};
+  background: ${(props) => props.theme.palette.gray3};
   border-radius: ${(props) => props.theme.borderRadius};
   z-index: 0;
 `;

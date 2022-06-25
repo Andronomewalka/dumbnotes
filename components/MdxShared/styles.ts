@@ -34,7 +34,7 @@ export const MdxArticleWrapper = styled.article<{ $stretch: boolean }>`
   *:not(pre) > code {
     padding: 0.2rem 0.35rem;
     border-radius: ${(props) => props.theme.borderRadius};
-    background: ${(props) => props.theme.palette.gray2};
+    background: ${(props) => props.theme.palette.gray3};
     font-family: Consolas, monospace;
   }
 
