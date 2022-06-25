@@ -18,7 +18,7 @@ export const MdxToggle: FC<MdxToggleType> = ({ style, checked, label }) => {
 
   return (
     <MdxToggleWrapper
-      as={motion.label}
+      as={motion.button}
       variants={variants}
       style={style}
       $isOn={isOn}

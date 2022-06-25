@@ -187,12 +187,16 @@ export const MdxToggleThumb = styled.span`
   background: ${(props) => props.theme.palette.white};
 `
 
-export const MdxToggleWrapper = styled.label<{$isOn: boolean}>`
+export const MdxToggleWrapper = styled.button<{$isOn: boolean}>`
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   min-width: 140px;
   line-height: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 12pt;
 
   ${MdxToggleTrack} {
     justify-content: ${(props) => props.$isOn ? 'end' : 'start'};
