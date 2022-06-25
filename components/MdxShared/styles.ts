@@ -168,3 +168,34 @@ export const MdxImageWrapper = styled.div`
     height: unset !important;
   }
 `;
+
+export const MdxToggleTrack = styled.span`
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 22px;
+  margin-right: 12px;
+  border-radius: 20px;
+  padding: 3px;
+`
+
+export const MdxToggleThumb = styled.span`
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: ${(props) => props.theme.palette.white};
+`
+
+export const MdxToggleWrapper = styled.label<{$isOn: boolean}>`
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  min-width: 140px;
+  line-height: 0;
+
+  ${MdxToggleTrack} {
+    justify-content: ${(props) => props.$isOn ? 'end' : 'start'};
+    background: ${(props) => props.$isOn ? props.theme.palette.accent : props.theme.palette.gray2};
+  }
+`

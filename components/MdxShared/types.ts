@@ -25,3 +25,8 @@ export interface MdxImageType extends MdxStyleType {
   stretch?: boolean;
   alt: string;
 }
+
+export interface MdxToggleType extends MdxStyleType {
+  checked: boolean;
+  label: string
+}

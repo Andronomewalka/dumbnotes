@@ -7,5 +7,6 @@ export * from './MdxSourceLink';
 export * from './MdxSources';
 export * from './MdxSubtitle';
 export * from './MdxTitle';
+export * from './MdxToggle';
 export * from './styles';
 export * from './types';

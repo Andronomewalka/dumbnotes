@@ -37,11 +37,13 @@ const components = {
   MdxSources,
   MdxSubtitle,
   MdxTitle,
+  MdxToggle,
   MdxAbout,
   MdxAboutDisclaimer,
   MdxAboutInfo,
   MdxAboutLinks,
   MdxHome,
+  MdxSettings,
 };
 
 /*
