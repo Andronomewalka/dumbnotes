@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
-import useMediaQuery from 'hooks/useMediaQuery';
+import { useMediaQuery } from 'hooks/useMediaQuery';
 import { device } from 'utils/media';
 import { SplitterProp } from './types';
 import { Wrapper, Divider, ExpandButton, HoverArea } from './styles';
@@ -197,7 +197,13 @@ export const Splitter: React.FC<SplitterProp> = ({ containerRef, minContainerWid
     <Wrapper onTouchStart={onDividerMouseDown} onMouseDown={onDividerMouseDown}>
       <HoverArea ref={hoverRef} isOpen={isOpen} />
       <Divider />
-      <ExpandButton ref={expandButtonRef} onClick={onExpandClick} isOpen={isOpen}>
+      <ExpandButton
+        title={isOpen ? 'Collapse' : 'Expand'}
+        type='button'
+        ref={expandButtonRef}
+        onClick={onExpandClick}
+        isOpen={isOpen}
+      >
         <ExpandIcon />
       </ExpandButton>
     </Wrapper>

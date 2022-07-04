@@ -38,7 +38,9 @@ export const Divider = styled.hr`
   position: relative;
   height: 100%;
   transform: scaleX(2);
-  border: 1px solid ${(props) => props.theme.palette.accent};
+  width: 2px;
+  background: ${(props) => props.theme.palette.accent};
+  border: none;
   margin: 0;
   overflow: visible;
   transition: 0.2s all ease;
