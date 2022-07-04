@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import styled, { ThemeProvider } from 'styled-components';
 import { SWRConfig } from 'swr';
 import { RecoilRoot } from 'recoil';
+import { Settings } from 'components/Settings';
 import { Nav } from 'components/Nav';
 import { SearchBar } from 'components/SearchBar';
 import { client } from 'utils/client';
@@ -30,7 +31,10 @@ function MyApp({ Component, pageProps, router }: AppProps) {
             <Wrapper>
               <Nav />
               <ContentWrapper data-id='content-wrapper'>
-                <SearchBar />
+                <TopPanel>
+                  <SearchBar />
+                  <Settings />
+                </TopPanel>
                 {/* sometimes works weird on mobile on popstate*/}
                 <AnimatePresence exitBeforeEnter>
                   <Component {...pageProps} key={router.asPath} />
@@ -61,6 +65,19 @@ const ContentWrapper = styled.div`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+`;
+
+const TopPanel = styled.div`
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding: 20px 20px 15px;
+  background: #f9fcfe;
+  z-index: 10;
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  gap: 20px;
 `;
 
 export default MyApp;

@@ -2,12 +2,7 @@ import styled from 'styled-components';
 import { mediaSize, device } from 'utils/media';
 
 export const SearchBarWrapper = styled.header`
-  position: sticky;
-  top: 0;
-  left: 0;
-  padding: 20px 20px 15px;
-  background: ${(props) => props.theme.palette.background};
-  z-index: 10;
+  flex: 1 0;
 `;
 
 export const SearchBarFormWrapper = styled.form`
