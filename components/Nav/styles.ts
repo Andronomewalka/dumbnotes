@@ -83,7 +83,7 @@ export const NavLi = styled.li<{ level: number; bottom: boolean }>`
   }
 `;
 
-export const NavWrapper = styled.nav`
+export const NavWrapper = styled.nav<{isLevelIndicatorVisible: boolean}>`
   display: flex;
   height: 100%;
   opacity: 1;
@@ -98,11 +98,11 @@ export const NavWrapper = styled.nav`
     z-index: 20;
   }
 
-  /* ${NavUlExternal}:hover {
+  ${NavUlExternal}:hover {
     ${NavUl} ${NavLi}::before {
-      opacity: 1;
+      opacity: ${(props) => props.isLevelIndicatorVisible ? 1 : 0};
     }
-  } */
+  }
 `;
 
 const BaseNavItem = css`

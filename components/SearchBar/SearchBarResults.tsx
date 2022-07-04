@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
-import { useSetRecoilState } from 'recoil';
-import { variantsState } from 'state';
+import { useUpdateVariants } from 'hooks/useUpdateVariants';
 import { staggerVariants } from 'utils/staggerVariants';
 import {
   SearchBarResultsContainer,
@@ -46,7 +45,7 @@ const itemVariants = {
 
 export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
   const router = useRouter();
-  const setVariants = useSetRecoilState(variantsState);
+  const setVariants = useUpdateVariants();
   const [hovered, setHovered] = useState<Partial<PostType>>();
 
   const onRouteClick = (url: string) => {
@@ -68,7 +67,6 @@ export const SearchBarResults: FC<SearchBarResultsType> = ({ itemsRaw }) => {
             <SearchBarResultsLi
               key={cur.id}
               as={motion.li}
-              layout
               initial='hide'
               animate='show'
               variants={itemVariants}

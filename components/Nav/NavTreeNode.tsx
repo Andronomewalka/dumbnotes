@@ -1,8 +1,7 @@
 import React, { FC, MouseEvent } from 'react';
 import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
-import { variantsState } from 'state';
-import useMediaQuery from 'hooks/useMediaQuery';
+import { useMediaQuery } from 'hooks/useMediaQuery';
+import { useUpdateVariants } from 'hooks/useUpdateVariants';
 import { device } from 'utils/media';
 import { noVariants, staggerVariants } from 'utils/staggerVariants';
 import { NavNodeType } from './types';
@@ -10,7 +9,7 @@ import { NavUl, NavLi, NavExpandItems, NavItemLink, NavItemExpandable } from './
 
 export const NavTreeNode: FC<NavNodeType> = (prop) => {
   const router = useRouter();
-  const setVariants = useSetRecoilState(variantsState);
+  const setVariants = useUpdateVariants();
   const isTablet = useMediaQuery(device.tablet);
   const { id, name, path, bottom, subItems, isOpen, isSelected, level, onClick } = prop;
   const hasSubItems = (subItems && subItems.length > 0) ?? false;

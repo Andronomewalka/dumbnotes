@@ -1,7 +1,9 @@
 import React, { FC, useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import { useRecoilValue } from 'recoil';
 import { AnimatePresence, motion } from 'framer-motion';
+import { settingsLevelIndicatorState } from 'state';
 import { Splitter } from 'components/Splitter';
 import { NavTreeNode } from './NavTreeNode';
 import { NavStub } from './NavStub';
@@ -17,6 +19,7 @@ import {
   navStubVariants,
   navItemsVariants,
 } from './utils';
+import { useHydrated } from 'hooks/useHydrated';
 
 const minNavWidth = 250;
 // const navItemsBase = getNavNodes(navMock);
@@ -27,6 +30,9 @@ export const Nav: FC = () => {
   const [navItems, setNavItems] = useState<NavNodeType[]>([]);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const isFirstNavigation = useRef(true);
+
+  const isLevelIndicatorVisibleRaw = useRecoilValue(settingsLevelIndicatorState);
+  const isLevelIndicatorVisible = useHydrated(isLevelIndicatorVisibleRaw);
 
   // get base navigation when it's changed from swr response
   const navItemsBase = useMemo(() => {
@@ -129,7 +135,7 @@ export const Nav: FC = () => {
   const isNavLoading = !navItems || !navItems.length;
 
   return (
-    <NavWrapper>
+    <NavWrapper isLevelIndicatorVisible={isLevelIndicatorVisible ?? false}>
       <NavSplitterArea minWidth={`${minNavWidth}px`} ref={wrapperRef}>
         <AnimatePresence exitBeforeEnter>
           <NavUlExternal
