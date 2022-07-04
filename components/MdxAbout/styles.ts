@@ -68,7 +68,7 @@ export const MdxAboutLinksWrapper = styled.ul`
     margin: 0;
     border-radius: 10px;
     gap: 30px;
-    background: #ebf1facc;
+    background: ${(props) => props.theme.palette.violet};
     list-style: none;
 
     @media ${device.tablet} {

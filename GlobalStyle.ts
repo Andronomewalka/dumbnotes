@@ -14,6 +14,7 @@ export const theme: DefaultTheme = {
     blue: '#115BFA',
     dark: '#4F4F4F',
     red: '#F4023C',
+    violet: '#EEF3FB'
   },
   shadow: {
     focus: '0px 0px 20px rgba(0, 0, 0, 0.1)',

@@ -18,6 +18,7 @@ declare module 'styled-components' {
       blue: string;
       dark: string;
       red: string;
+      violet: string;
     };
     shadow: {
       focus: string;
