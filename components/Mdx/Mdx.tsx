@@ -1,10 +1,10 @@
-import React, { FC, useState, useEffect } from "react";
-import { MDXRemote } from "next-mdx-remote";
-import { serialize } from "next-mdx-remote/serialize";
-import useSWR from "swr";
-import rehypeHighlight from "rehype-highlight";
-import { client } from "utils/client";
-import { getPostCache, setPostCache, usePostCache } from "hooks/usePostCache";
+import React, { FC, useState, useEffect } from 'react';
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+import useSWR from 'swr';
+import rehypeHighlight from 'rehype-highlight';
+import { client } from 'utils/client';
+import { getPostCache, setPostCache, usePostCache } from 'hooks/usePostCache';
 import {
   MdxArticle,
   MdxImage,
@@ -15,17 +15,15 @@ import {
   MdxSources,
   MdxSubtitle,
   MdxTitle,
-  MdxToggle,
-} from "components/MdxShared";
+} from 'components/MdxShared';
 import {
   MdxAbout,
   MdxAboutDisclaimer,
   MdxAboutInfo,
   MdxAboutLinks,
-} from "components/MdxAbout";
-import { MdxHome } from "components/MdxHome";
-import { MdxSettings } from "components/MdxSettings";
-import { MdxType } from "./types";
+} from 'components/MdxAbout';
+import { MdxHome } from 'components/MdxHome';
+import { MdxType } from './types';
 
 const components = {
   MdxArticle,
@@ -37,13 +35,11 @@ const components = {
   MdxSources,
   MdxSubtitle,
   MdxTitle,
-  MdxToggle,
   MdxAbout,
   MdxAboutDisclaimer,
   MdxAboutInfo,
   MdxAboutLinks,
   MdxHome,
-  MdxSettings,
 };
 
 /*

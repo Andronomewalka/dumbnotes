@@ -1,14 +1,13 @@
 import React, { FC, MouseEvent } from 'react';
 import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
-import { variantsState } from 'state';
+import { useUpdateVariants } from 'hooks/useUpdateVariants';
 import { staggerVariants } from 'utils/staggerVariants';
 import { MdxLinkType } from './types';
 import { PlainLink } from './styles';
 
 export const MdxLink: FC<MdxLinkType> = ({ style, children, url, external = false }) => {
   const router = useRouter();
-  const setVariants = useSetRecoilState(variantsState);
+  const setVariants = useUpdateVariants();
   const onRouteClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (url.startsWith('#')) {
       event.preventDefault();
