@@ -6,9 +6,12 @@ export const SettingsWrapper = styled.div`
 `;
 
 export const SettingsButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 30px;
   height: 30px;
-  padding: 0;
+  padding: 2px 0 0 0;
   border: none;
   background: ${(props) => props.theme.palette.background};
 

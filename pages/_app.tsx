@@ -10,6 +10,7 @@ import { Nav } from 'components/Nav';
 import { SearchBar } from 'components/SearchBar';
 import { OwnThemeProvider } from 'components/OwnThemeProvider';
 import { client } from 'utils/client';
+import { device } from 'utils/media';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
@@ -79,6 +80,11 @@ const TopPanel = styled.div`
   justify-content: stretch;
   align-items: center;
   gap: 20px;
+
+  @media ${device.tablet} {
+    gap: 5px;
+    padding: 20px 8px 15px 20px;
+  }
 `;
 
 export default MyApp;
