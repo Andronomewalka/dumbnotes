@@ -26,20 +26,20 @@ export const ThemeSelector: FC = () => {
       {
         id: 0,
         theme: ThemeType.Dark,
-        icon: DarkThemeIcon(styledTheme.palette.dark),
+        icon: DarkThemeIcon(styledTheme.palette.staticDark),
       },
       {
         id: 1,
         theme: ThemeType.System,
-        icon: SystemThemeIcon(styledTheme.palette.dark),
+        icon: SystemThemeIcon(styledTheme.palette.staticDark),
       },
       {
         id: 2,
         theme: ThemeType.Light,
-        icon: LightThemeIcon(styledTheme.palette.dark),
+        icon: LightThemeIcon(styledTheme.palette.staticDark),
       },
     ],
-    []
+    [styledTheme.palette.staticDark]
   );
 
   return (

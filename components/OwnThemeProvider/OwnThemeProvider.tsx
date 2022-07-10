@@ -10,11 +10,34 @@ export const OwnThemeProvider: FC = ({ children }) => {
   const [theme, setTheme] = useState(lightTheme);
 
   useIsomorphicLayoutEffect(() => {
-    if (selectedTheme === ThemeType.Light || selectedTheme === ThemeType.System) {
+    if (selectedTheme === ThemeType.Light) {
       setTheme(lightTheme);
     } else if (selectedTheme === ThemeType.Dark) {
       setTheme(darkTheme);
+    } else if (selectedTheme === ThemeType.System) {
+      const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
+      if (darkThemeMq.matches) {
+        setTheme(darkTheme);
+      } else {
+        setTheme(lightTheme);
+      }
     }
+  }, [selectedTheme]);
+
+  useIsomorphicLayoutEffect(() => {
+    const darkThemeMqCallback = (e: MediaQueryListEvent) => {
+      if (selectedTheme === ThemeType.System) {
+        if (e.matches) {
+          setTheme(darkTheme);
+        } else {
+          setTheme(lightTheme);
+        }
+      }
+    };
+
+    const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
+    darkThemeMq.addEventListener('change', darkThemeMqCallback);
+    return () => darkThemeMq.removeEventListener('change', darkThemeMqCallback);
   }, [selectedTheme]);
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
