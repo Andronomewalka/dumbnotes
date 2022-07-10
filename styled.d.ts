@@ -3,6 +3,9 @@ interface IPalette {
   main: string;
   contrastText: string;
 }
+
+type ColorScheme = 'light' | 'dark';
+
 declare module 'styled-components' {
   export interface DefaultTheme {
     borderRadius: string;
@@ -20,10 +23,11 @@ declare module 'styled-components' {
       staticDark: string;
       red: string;
       violet: string;
+      whiteToSemiGray: string;
     };
     shadow: {
       focus: string;
     };
-    colorScheme: 'light' | 'dark';
+    colorScheme: ColorScheme;
   }
 }

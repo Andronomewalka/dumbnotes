@@ -83,6 +83,9 @@ const TopPanel = styled.div`
 
   @media ${device.tablet} {
     gap: 5px;
+  }
+
+  @media ${device.mobile} {
     padding: 20px 8px 15px 20px;
   }
 `;

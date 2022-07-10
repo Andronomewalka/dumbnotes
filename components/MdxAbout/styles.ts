@@ -27,7 +27,7 @@ export const MdxAboutInfoWrapper = styled.div`
   padding: 0 30px;
   border-radius: 10px;
   font-size: 14pt;
-  background: ${(props) => props.theme.palette.white};
+  background: ${(props) => props.theme.palette.whiteToSemiGray};
   box-shadow: ${(props) => props.theme.shadow.focus};
 
   h4 {

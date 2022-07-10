@@ -15,7 +15,7 @@ export const ToggleThumb = styled.span`
   width: 18px;
   height: 18px;
   border-radius: 9px;
-  background: ${(props) => props.theme.palette.white};
+  background: ${(props) => props.theme.palette.whiteToSemiGray};
 `;
 
 export const ToggleWrapper = styled.button<{ $isOn: boolean }>`

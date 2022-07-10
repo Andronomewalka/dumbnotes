@@ -1,4 +1,6 @@
-export const EmailIcon = () => (
+import { ColorScheme } from 'styled';
+
+export const EmailIcon = (colorScheme: ColorScheme) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     xmlnsXlink='http://www.w3.org/1999/xlink'
@@ -12,26 +14,30 @@ export const EmailIcon = () => (
   </svg>
 );
 
-export const CvIcon = () => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    xmlnsXlink='http://www.w3.org/1999/xlink'
-    focusable='false'
-    aria-hidden='true'
-    viewBox='0 0 24 24'
-    data-testid='AssignmentOutlinedIcon'
-  >
-    <path d='M7 15h7v2H7zm0-4h10v2H7zm0-4h10v2H7zm12-4h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04-.39.08-.74.28-1.01.55-.18.18-.33.4-.43.64-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z'></path>
-  </svg>
-);
+export const CvIcon = (colorScheme: ColorScheme) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      xmlnsXlink='http://www.w3.org/1999/xlink'
+      focusable='false'
+      viewBox='0 0 24 24'
+    >
+      <path
+        fill={colorScheme === 'dark' ? 'white' : 'dark'}
+        d='M7 15h7v2H7zm0-4h10v2H7zm0-4h10v2H7zm12-4h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04-.39.08-.74.28-1.01.55-.18.18-.33.4-.43.64-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z'
+      ></path>
+    </svg>
+  );
+};
 
-export const LinkedInIcon = () => (
+export const LinkedInIcon = (colorScheme: ColorScheme) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     xmlnsXlink='http://www.w3.org/1999/xlink'
     focusable='false'
     viewBox='0 0 34 34'
   >
+    <circle cx='17' cy='17' r='17' fill='#fff' />
     <path
       fill='#0a66c2'
       d='M34,2.5v29A2.5,2.5,0,0,1,31.5,34H2.5A2.5,2.5,0,0,1,0,31.5V2.5A2.5,2.5,0,0,1,2.5,0h29A2.5,2.5,0,0,1,34,2.5ZM10,13H5V29h5Zm.45-5.5A2.88,2.88,0,0,0,7.59,4.6H7.5a2.9,2.9,0,0,0,0,5.8h0a2.88,2.88,0,0,0,2.95-2.81ZM29,19.28c0-4.81-3.06-6.68-6.1-6.68a5.7,5.7,0,0,0-5.06,2.58H17.7V13H13V29h5V20.49a3.32,3.32,0,0,1,3-3.58h.19c1.59,0,2.77,1,2.77,3.52V29h5Z'
@@ -39,7 +45,7 @@ export const LinkedInIcon = () => (
   </svg>
 );
 
-export const TelegramIcon = () => (
+export const TelegramIcon = (colorScheme: ColorScheme) => (
   <svg xmlns='http://www.w3.org/2000/svg' focusable='false' viewBox='0 0 48 48'>
     <path fill='#29b6f6' d='M24 4A20 20 0 1 0 24 44A20 20 0 1 0 24 4Z' />
     <path
@@ -57,13 +63,18 @@ export const TelegramIcon = () => (
   </svg>
 );
 
-export const GitHubIcon = () => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    xmlnsXlink='http://www.w3.org/1999/xlink'
-    focusable='false'
-    viewBox='0 0 24 24'
-  >
-    <path d='M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27'></path>
-  </svg>
-);
+export const GitHubIcon = (colorScheme: ColorScheme) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      xmlnsXlink='http://www.w3.org/1999/xlink'
+      focusable='false'
+      viewBox='0 0 24 24'
+    >
+      <path
+        fill={colorScheme === 'dark' ? 'white' : 'dark'}
+        d='M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27'
+      ></path>
+    </svg>
+  );
+};

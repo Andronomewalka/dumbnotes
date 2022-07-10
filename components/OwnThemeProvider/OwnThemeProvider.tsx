@@ -16,22 +16,14 @@ export const OwnThemeProvider: FC = ({ children }) => {
       setTheme(darkTheme);
     } else if (selectedTheme === ThemeType.System) {
       const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
-      if (darkThemeMq.matches) {
-        setTheme(darkTheme);
-      } else {
-        setTheme(lightTheme);
-      }
+      setTheme(darkThemeMq.matches ? darkTheme : lightTheme);
     }
   }, [selectedTheme]);
 
   useIsomorphicLayoutEffect(() => {
     const darkThemeMqCallback = (e: MediaQueryListEvent) => {
       if (selectedTheme === ThemeType.System) {
-        if (e.matches) {
-          setTheme(darkTheme);
-        } else {
-          setTheme(lightTheme);
-        }
+        setTheme(e.matches ? darkTheme : lightTheme);
       }
     };
 

@@ -16,6 +16,7 @@ export const lightTheme: DefaultTheme = {
     staticDark: '#4F4F4F',
     red: '#F4023C',
     violet: '#EEF3FB',
+    whiteToSemiGray: '#FFFFFF',
   },
   shadow: {
     focus: '0px 0px 20px rgba(0, 0, 0, 0.1)',
@@ -39,6 +40,7 @@ export const darkTheme: DefaultTheme = {
     staticDark: '#4F4F4F',
     red: '#F4023C',
     violet: '#242526',
+    whiteToSemiGray: '#242526',
   },
   shadow: {
     focus: 'none',
