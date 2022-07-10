@@ -17,11 +17,13 @@ declare module 'styled-components' {
       gray3: string;
       blue: string;
       dark: string;
+      staticDark: string;
       red: string;
       violet: string;
     };
     shadow: {
       focus: string;
     };
+    colorScheme: 'light' | 'dark';
   }
 }

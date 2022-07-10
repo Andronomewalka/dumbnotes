@@ -83,7 +83,7 @@ export const NavLi = styled.li<{ level: number; bottom: boolean }>`
   }
 `;
 
-export const NavWrapper = styled.nav<{isLevelIndicatorVisible: boolean}>`
+export const NavWrapper = styled.nav<{ isLevelIndicatorVisible: boolean }>`
   display: flex;
   height: 100%;
   opacity: 1;
@@ -100,7 +100,7 @@ export const NavWrapper = styled.nav<{isLevelIndicatorVisible: boolean}>`
 
   ${NavUlExternal}:hover {
     ${NavUl} ${NavLi}::before {
-      opacity: ${(props) => props.isLevelIndicatorVisible ? 1 : 0};
+      opacity: ${(props) => (props.isLevelIndicatorVisible ? 1 : 0)};
     }
   }
 `;
@@ -190,11 +190,10 @@ export const NavExpandItems = styled.div<{ isOpen: boolean }>`
 export const NavStubItem = styled.li<{ number: number }>`
   ${BaseNavItem}
   margin-bottom: 5px;
-  background: linear-gradient(
-    90deg,
-    rgba(221, 223, 244, 1) 0%,
-    rgba(255, 255, 255, 0) 74%
-  );
+  background: ${(props) =>
+    props.theme.colorScheme === 'light'
+      ? 'linear-gradient(90deg, rgba(221, 223, 244, 1) 0%,rgba(255, 255, 255, 0) 74%)'
+      : 'linear-gradient(90deg, rgba(40,41,42,1) 0%, rgba(24,25,26,0) 74%)'};
   background-repeat: repeat-y;
   background-size: 85%, 100%;
   background-position: 0 0;

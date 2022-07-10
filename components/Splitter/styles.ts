@@ -54,6 +54,7 @@ export const Divider = styled.hr`
     transform-origin: left;
     content: '||';
     font-weight: bold;
+    color: ${(props) => props.theme.palette.staticDark};
     transition: 0.2s all ease;
   }
 

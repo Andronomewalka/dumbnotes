@@ -33,6 +33,7 @@ export const SearchBarInputWrapper = styled.input`
   outline: none;
   font-size: 12pt;
   box-shadow: ${(props) => props.theme.shadow.focus};
+  color: ${(props) => props.theme.palette.black};
 
   + ${SearchBarInputIcon} {
     svg {

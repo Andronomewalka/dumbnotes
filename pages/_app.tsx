@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { GlobalStyle, theme } from 'GlobalStyle';
+import { GlobalStyle } from 'GlobalStyle';
 import { AnimatePresence } from 'framer-motion';
 import styled, { ThemeProvider } from 'styled-components';
 import { SWRConfig } from 'swr';
@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil';
 import { Settings } from 'components/Settings';
 import { Nav } from 'components/Nav';
 import { SearchBar } from 'components/SearchBar';
+import { OwnThemeProvider } from 'components/OwnThemeProvider';
 import { client } from 'utils/client';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
@@ -16,18 +17,18 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1' />
       </Head>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <SWRConfig
-          value={{
-            fetcher: (url: string) =>
-              client
-                .get(url)
-                .then((response) => response.data)
-                .catch((e) => void console.log(e)),
-          }}
-        >
-          <RecoilRoot>
+      <RecoilRoot>
+        <OwnThemeProvider>
+          <GlobalStyle />
+          <SWRConfig
+            value={{
+              fetcher: (url: string) =>
+                client
+                  .get(url)
+                  .then((response) => response.data)
+                  .catch((e) => void console.log(e)),
+            }}
+          >
             <Wrapper>
               <Nav />
               <ContentWrapper data-id='content-wrapper'>
@@ -41,9 +42,9 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                 </AnimatePresence>
               </ContentWrapper>
             </Wrapper>
-          </RecoilRoot>
-        </SWRConfig>
-      </ThemeProvider>
+          </SWRConfig>
+        </OwnThemeProvider>
+      </RecoilRoot>
     </>
   );
 }
@@ -72,7 +73,7 @@ const TopPanel = styled.div`
   top: 0;
   left: 0;
   padding: 20px 20px 15px;
-  background: #f9fcfe;
+  background: ${(props) => props.theme.palette.background};
   z-index: 10;
   display: flex;
   justify-content: stretch;
